@@ -134,8 +134,7 @@ tokens = [
     'VARIABLE', 
     'VARIABLE2', 
     'NUMBER',
-    'CADENA1',
-    'CADENA2',
+    'CADENA',
     'ID'
 ]
 
@@ -192,7 +191,7 @@ def t_VARIABLE2(t):
         t.type = t
         return t
     else:
-        return t """
+        return t 
 
 def t_COMMENT(t):
     r'\/\/.*'
@@ -210,7 +209,7 @@ def t_COMMENT_MULTI(t):
     t.value = t.value  # Establecer el valor del token como el contenido del comentario
     t.lexer.lineno += t.value.count('\n')  # Actualizar el contador de líneas
     return t
-
+"""
 
 
 def t_ID(t):
@@ -219,13 +218,11 @@ def t_ID(t):
     return t
 
 
-def t_CADENA1(t):
-    r'\"([^\"].)*\"'
+# Definir la regla para la cadena (cadena entre comillas dobles o simples)
+def t_CADENA(t):
+    r'(\"[^\"]*\"|\'[^\']*\')'
     return t
 
-def t_CADENA2(t):
-    r'\'([^\'].)*\''
-    return t
 
 
 def t_LESSEQUAL(t):
@@ -332,7 +329,7 @@ def t_space(t):
     t.lexer.lineno += len(t.value)
     
 t_ignore = ' \t'
-
+"""
 def t_comments(t):
     r'/\*(.|\n)*?\*/'
     t.lexer.lineno += t.value.count('\n')
@@ -341,7 +338,7 @@ def t_comments(t):
 
 def t_comments_C99(t):
     r'//(.)*?\n'
-    t.lexer.lineno += 1
+    t.lexer.lineno += 1 """
 
 def t_error(t):
     print ("Lexical error: " + str(t.value[0]))
