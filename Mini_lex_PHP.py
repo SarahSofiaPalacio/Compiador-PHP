@@ -14,6 +14,7 @@ tokens = (
     'CASE',
     'CATCH',
     'CLASS',
+    'OBJECTOPERATOR',
     'CLONE',
     'CONST',
     'CONTINUE',
@@ -58,6 +59,7 @@ tokens = (
     'PRIVATE',
     'PROTECTED',
     'PUBLIC',
+    'READONLY',
     'REQUIRE',
     'REQUIRE_ONCE',
     'RETURN',
@@ -72,6 +74,8 @@ tokens = (
     'WHILE',
     'XOR',
     'PHP',
+    'OPEN_TAG',
+    'CLOSE_TAG',
 
     #SYMBOLS
     'ASSIGN',
@@ -83,7 +87,11 @@ tokens = (
     'MINUSMINUS',
     'MINUSEQUAL',
     'TIMES',
+    'MULEQUAL',
     'DIVIDE',
+    'DIVEQUAL',
+    'XOREQUAL',
+    'POW',
     'LESS',
     'LESSEQUAL',
     'GREATER',
@@ -92,7 +100,17 @@ tokens = (
     'DEQUAL',
     'DISTINT',
     'ISEQUAL',
+    'ISIDENTICAL',
+    'ISNOTIDENTICAL',
+    'BOOL_OR',
+    'BOOL_AND',
+    'ANDEQUAL',
     'SEMICOLON',
+    'SL',
+    'SLEQUAL',
+    'SR',
+    'SREQUAL',
+    'NOT',
     'COMMA',
     'LPAREN',
     'RPAREN',
@@ -127,6 +145,7 @@ t_LESS   = r'<'
 t_GREATER = r'>'
 t_SEMICOLON = ';'
 t_COMMA  = r','
+t_NOT = r'~'
 t_LPAREN = r'\('
 t_RPAREN  = r'\)'
 t_LBRACKET = r'\['
@@ -353,6 +372,10 @@ def t_PUBLIC(t):
     r'public'
     return t
 
+def t_READONLY(t): 
+    r'readonly'
+    return t
+
 def t_REQUIRE(t): 
     r'require'
     return t
@@ -405,8 +428,12 @@ def t_XOR(t):
     r'xor' 
     return t
 
-def t_PHP(t): 
-    r'php' 
+def t_OPEN_TAG(t): 
+    r'<\?php'
+    return t
+
+def t_CLOSE_TAG(t): 
+    r'\?>'
     return t
  
 
@@ -446,6 +473,10 @@ def t_CADENA2(t):
     return t
 
 
+def t_OBJECTOPERATOR(t):
+	r'->'
+	return t
+
 def t_LESSEQUAL(t):
 	r'<='
 	return t
@@ -464,6 +495,66 @@ def t_DEQUAL(t):
 
 def t_ISEQUAL(t):
 	r'=='
+	return t
+
+def t_ANDEQUAL(t): 
+    r'\&=' 
+    return t
+
+def t_ISIDENTICAL(t):
+	r'==='
+	return t
+
+def t_ISNOTIDENTICAL(t):
+	r'!=='
+	return t
+
+def t_BOOL_AND(t): 
+    r'\&\&' 
+    return t
+
+def t_BOOL_OR(t): 
+    r'\|\|' 
+    return t
+
+def t_PLUSEQUAL(t):
+	r'\+='
+	return t
+
+def t_MINUSEQUAL(t):
+	r'-='
+	return t
+
+def t_MULEQUAL(t):
+	r'\*='
+	return t
+
+def t_DIVEQUAL(t):
+	r'/='
+	return t
+
+def t_POW(t):
+	r'\*\*'
+	return t
+
+def t_XOREQUAL(t): 
+    r'\^=' 
+    return t
+
+def t_SL(t):
+	r'<<'
+	return t
+
+def t_SLEQUAL(t):
+	r'<<='
+	return t
+
+def t_SR(t):
+	r'>>='
+	return t
+
+def t_SREQUAL(t):
+	r'>>='
 	return t
     
 def t_MINUSMINUS(t):
@@ -511,7 +602,7 @@ if __name__ == '__main__':
 	if (len(sys.argv) > 1):
 		fin = sys.argv[1]
 	else:
-		fin = 'Test.php'
+		fin = 'Test2.php'
 	f = open(fin, 'r')
 	data = f.read()
 	print (data)
