@@ -55,6 +55,22 @@ reserved = {
     'NAMESPACE': 'namespace',
     'NEW': 'new',
     'OR': 'or',
+	"ABS": "abs",
+    "CEIL": "ceil",
+    "FLOOR": "floor",
+    "ROUND": "round",
+    "RAND": "rand",
+    "MAX": "max",
+    "MIN": "min",
+    "SIN": "sin",
+    "COS": "cos",
+    "SQRT": "sqrt",
+	"POW": "pow",
+    "EXP": "exp",
+    "LOG": "log",
+    "LOG10": "log10",
+    "DEG2RAD": "deg2rad",
+    "RAD2DEG": "rad2deg",
     'PRINT': 'print',
     'PRIVATE': 'private',
     'PROTECTED': 'protected',
@@ -192,7 +208,7 @@ def t_VARIABLE2(t):
         return t
     else:
         return t 
-
+"""
 def t_COMMENT(t):
     r'\/\/.*'
     t.value = t.value  # Establecer el valor del token como el contenido del comentario
@@ -209,7 +225,7 @@ def t_COMMENT_MULTI(t):
     t.value = t.value  # Establecer el valor del token como el contenido del comentario
     t.lexer.lineno += t.value.count('\n')  # Actualizar el contador de líneas
     return t
-"""
+
 
 
 def t_ID(t):
