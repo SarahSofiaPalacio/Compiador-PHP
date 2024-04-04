@@ -2,94 +2,115 @@ import ply.lex as lex
 import sys
 
 # lista de tokens
-tokens = (
+reserved = {
     # Reserverd words
-    
-    'ABSTRACT',
-    'AND',
-    'ARRAY',
-    'AS',
-    'BREAK',
-    'CALLABLE',
-    'CASE',
-    'CATCH',
-    'CLASS',
-    'OBJECTOPERATOR',
-    'CLONE',
-    'CONST',
-    'CONTINUE',
-    'DECLARE',
-    'DEFAULT',
-    'DIE',
-    'DO',
-    'ECHO',
-    'ELSE',
-    'ELSEIF',
-    'EMPTY',
-    'ENDCLARE',
-    'ENDFOR',
-    'ENDFOREACH',
-    'ENDIF',
-    'ENDSWITCH',
-    'ENDWHILE',
-    'EVAL',
-    'EXIT',
-    'EXTENDS',
-    'FINAL',
-    'FINALLY',
-    'FOR',
-    'FOREACH',
-    'FUNCTION',
-    'GLOBAL',
-    'GOTO',
-    'IF',
-    'IMPLEMENTS',
-    'INCLUDE',
-    'INCLUDE_ONCE',
-    'INSTANCEOF',
-    'INSTEADOF',
-    'INTERFACE',
-    'ISSET',
-    'LIST',
-    'MATCH',
-    'NAMESPACE',
-    'NEW',
-    'OR',
-    'PRINT',
-    'PRIVATE',
-    'PROTECTED',
-    'PUBLIC',
-    'READONLY',
-    'REQUIRE',
-    'REQUIRE_ONCE',
-    'RETURN',
-    'STATIC',
-    'SWITCH',
-    'THROW',
-    'TRAIT',
-    'TRY',
-    'UNSET',
-    'USE',
-    'VAR',
-    'WHILE',
-    'XOR',
-    'PHP',
-    'OPEN_TAG',
-    'CLOSE_TAG',
+    'ABSTRACT': 'abstract',
+    'AND': 'and',
+    'ARRAY': 'array',
+    'AS': 'as',
+    'BREAK': 'break',
+    'CALLABLE': 'callable',
+    'CASE': 'case',
+    'CATCH': 'catch',
+    'CLASS': 'class',
+    'CLONE': 'clone',
+	'OBJECTOPERATOR' : 'objectoperator',
+    'READONLY': 'readonly',
+    'CONST': 'const',
+    'CONTINUE': 'continue',
+    'DECLARE': 'declare',
+    'DEFAULT': 'default',
+    'DIE': 'die',
+    'DO': 'do',
+    'ECHO': 'echo',
+    'ELSE': 'else',
+    'ELSEIF': 'elseif',
+    'EMPTY': 'empty',
+    'ENDCLARE': 'endclare',
+    'ENDFOR': 'endfor',
+    'ENDFOREACH': 'endforeach',
+    'ENDIF': 'endif',
+    'ENDSWITCH': 'endswitch',
+    'ENDWHILE': 'endwhile',
+    'EVAL': 'eval',
+    'EXIT': 'exit',
+    'EXTENDS': 'extends',
+    'FINAL': 'final',
+    'FINALLY': 'finally',
+    'FOR': 'for',
+    'FOREACH': 'foreach',
+    'FUNCTION': 'function',
+    'GLOBAL': 'global',
+    'GOTO': 'goto',
+    'IF': 'if',
+    'IMPLEMENTS': 'implements',
+    'INCLUDE': 'include',
+    'INCLUDE_ONCE': 'include_once',
+    'INSTANCEOF': 'instanceof',
+    'INSTEADOF': 'insteadof',
+    'INTERFACE': 'interface',
+    'ISSET': 'isset',
+    'LIST': 'list',
+    'MATCH': 'match',
+    'NAMESPACE': 'namespace',
+    'NEW': 'new',
+    'OR': 'or',
+	"ABS": "abs",
+    "CEIL": "ceil",
+    "FLOOR": "floor",
+    "ROUND": "round",
+    "RAND": "rand",
+    "MAX": "max",
+    "MIN": "min",
+    "SIN": "sin",
+    "COS": "cos",
+    "SQRT": "sqrt",
+	"POW": "pow",
+    "EXP": "exp",
+    "LOG": "log",
+    "LOG10": "log10",
+    "DEG2RAD": "deg2rad",
+    "RAD2DEG": "rad2deg",
+    'PRINT': 'print',
+    'PRIVATE': 'private',
+    'PROTECTED': 'protected',
+    'PUBLIC': 'public',
+    'REQUIRE': 'require',
+    'REQUIRE_ONCE': 'require_once',
+    'RETURN': 'return',
+    'STATIC': 'static',
+    'SWITCH': 'switch',
+    'THROW': 'throw',
+    'TRAIT': 'trait',
+    'TRY': 'try',
+    'UNSET': 'unset',
+    'USE': 'use',
+    'VAR': 'var',
+    'WHILE': 'while',
+    'XOR': 'xor',
+    'PHP': 'php'
+}
 
+
+tokens = [
     #SYMBOLS
+	'OPEN_TAG',
+    'CLOSE_TAG',
     'ASSIGN',
+	'MULEQUAL',
     'MOD',
     'PLUS',
+	'BACKSLASH',
     'PLUSPLUS',
     'PLUSEQUAL',
     'MINUS',
     'MINUSMINUS',
     'MINUSEQUAL',
+	'COMMENT',
+	'COMMENT_MULTI',
     'TIMES',
-    'MULEQUAL',
     'DIVIDE',
-    'DIVEQUAL',
+	'DIVEQUAL',
     'XOREQUAL',
     'POW',
     'LESS',
@@ -100,13 +121,13 @@ tokens = (
     'DEQUAL',
     'DISTINT',
     'ISEQUAL',
-    'ISIDENTICAL',
+	'ISIDENTICAL',
     'ISNOTIDENTICAL',
     'BOOL_OR',
     'BOOL_AND',
     'ANDEQUAL',
     'SEMICOLON',
-    'SL',
+	'SL',
     'SLEQUAL',
     'SR',
     'SREQUAL',
@@ -125,27 +146,28 @@ tokens = (
     'QUESTIONMARK',
     'COMILLASIMPLE',
     'COMILLASDOBLES',
-
+    'COMMENT_HASHTAG',
     'VARIABLE', 
     'VARIABLE2', 
     'NUMBER',
-    'CADENA1',
-    'CADENA2',
-    'ID',
-)
+    'CADENA',
+    'ID'
+]
+
+tokens = tokens + list(reserved.values())
 
 t_MOD = r'%'
 t_PLUS   = r'\+'
 t_MINUS  = r'-'
 t_TIMES  = r'\*'
 t_DIVIDE = r'/'
+#t_BACKSLASH = r'\\',
 t_EQUAL  = r'='
 t_DISTINT = r'!'
 t_LESS   = r'<'
 t_GREATER = r'>'
 t_SEMICOLON = ';'
 t_COMMA  = r','
-t_NOT = r'~'
 t_LPAREN = r'\('
 t_RPAREN  = r'\)'
 t_LBRACKET = r'\['
@@ -160,273 +182,6 @@ t_COMILLASIMPLE = r'\''
 t_COMILLASDOBLES = r'\"'
 t_QUESTIONMARK = r'\?'
 
-def t_ABSTRACT(t):
-    r'abstract'
-    return t
-
-def t_AND(t): 
-    r'and'
-    return t
-
-def t_ARRAY(t): 
-    r'array'
-    return t
-
-def t_AS(t): 
-    r'as'
-    return t
-
-def t_BREAK(t):
-    r'break' 
-    return t
-
-def t_CALLABLE(t): 
-    r'callable'
-    return t
-
-def t_CASE(t): 
-    r'case'
-    return t
-
-def t_CATCH(t): 
-    r'catch'
-    return t
-
-def t_CLASS(t): 
-    r'class'
-    return t
-
-def t_CLONE(t): 
-    r'clone'
-    return t
-
-def t_CONST(t): 
-    r'const'
-    return t
-
-def t_CONTINUE(t): 
-    r'continue'
-    return t
-
-def t_DECLARE(t): 
-    r'declare'
-    return t
-
-def t_DEFAULT(t): 
-    r'default'
-    return t
-
-def t_DIE(t): 
-    r'die'
-    return t
-
-def t_DO(t): 
-    r'do'
-    return t
-
-def t_ECHO(t): 
-    r'echo'
-    return t
-
-def t_ELSE(t):
-    r'else'
-    return t
-
-def t_ELSEIF(t):
-    r'else'
-    return t
-
-def t_EMPTY(t):
-    r'empty'
-    return t
-
-def t_ENDCLARE(t):
-    r'endclare'
-    return t
-
-def t_ENDFOR(t):
-    r'endfor'
-    return t
-
-def t_ENDFOREACH(t):
-    r'endforeach'
-    return t
-
-def t_ENDIF(t):
-    r'endif'
-    return t
-
-def t_ENDSWITCH(t):
-    r'endswitch'
-    return t
-
-def t_ENDWHILE(t):
-    r'endwhile'
-    return t
-
-def t_EVAL(t):
-    r'eval'
-    return t
-
-def t_EXIT(t):
-    r'exit'
-    return t
-
-def t_EXTENDS(t):
-    r'extends'
-    return t
-
-def t_FINAL(t):
-    r'final'
-    return t
-
-def t_FINALLY(t):
-    r'finally'
-    return t
-
-def t_FOREACH(t):
-    r'foreach'
-    return t
-
-def t_FOR(t): 
-    r'for'
-    return t
-
-def t_FUNCTION(t):
-    r'function'
-    return t
-
-def t_GLOBAL(t):
-    r'global'
-    return t
-
-def t_GOTO(t):
-    r'goto'
-    return t
-
-def t_IF(t):
-    r'if'
-    return t
-
-def t_IMPLEMENTS(t):
-    r'implements'
-    return t
-
-def t_INCLUDE(t):
-    r'include'
-    return t
-
-def t_INCLUDE_ONCE(t):
-    r'include_once'
-    return t
-
-def t_INSTANCEOF(t):
-    r'instanceof'
-    return t
-
-def t_INSTEADOF(t):
-    r'insteadof'
-    return t
-
-def t_INTERFACE(t): 
-    r'interface'
-    return t
-
-def t_ISSET(t): 
-    r'isset'
-    return t
-
-def t_LIST(t):
-    r'list'
-    return t
-
-def t_MATCH(t): 
-    r'matc'
-    return t
-
-def t_NAMESPACE(t):      
-    r'namespace'
-    return t
-
-def t_NEW(t):
-    r'new'
-    return t
-
-def t_OR(t):
-    r'or'
-    return t
-
-def t_PRINT(t): 
-    r'print'
-    return t
-
-def t_PRIVATE(t): 
-    r'private'
-    return t
-
-def t_PROTECTED(t): 
-    r'protected'
-    return t
-
-def t_PUBLIC(t): 
-    r'public'
-    return t
-
-def t_READONLY(t): 
-    r'readonly'
-    return t
-
-def t_REQUIRE(t): 
-    r'require'
-    return t
-
-def t_REQUIRE_ONCE(t): 
-    r'require_once'
-    return t
-
-def t_RETURN(t): 
-    r'return'
-    return t
-
-def t_STATIC(t): 
-    r'static'
-    return t
-
-def t_SWITCH(t): 
-    r'switch'
-    return t
-
-def t_THROW(t): 
-    r'throw'
-    return t
-
-def t_TRAIT(t): 
-    r'trait'
-    return t
-
-def t_TRY(t): 
-    r'try'
-    return t
-
-def t_UNSET(t): 
-    r'unset'
-    return t
-
-def t_USE(t): 
-    r'use'
-    return t
-
-def t_VAR(t):
-    r'var'
-    return t
-
-def t_WHILE(t): 
-    r'while'
-    return t
-
-def t_XOR(t): 
-    r'xor' 
-    return t
 
 def t_OPEN_TAG(t): 
     r'<\?php'
@@ -435,8 +190,6 @@ def t_OPEN_TAG(t):
 def t_CLOSE_TAG(t): 
     r'\?>'
     return t
- 
-
  
 def t_NUMBER(t):
     r'\d+(\.\d+)?'
@@ -447,35 +200,46 @@ def t_NUMBER(t):
 def t_VARIABLE(t):
     r'\$[a-zA-Z_](\w)*'
     return t
-
+"""
 def t_VARIABLE2(t):
     r'[a-zA-Z](\w)*'
     if t.value in tokens:
         t.type = t
         return t
     else:
-        return t
+        return t 
+"""
+def t_COMMENT(t):
+    r'\/\/.*'
+    t.value = t.value  # Establecer el valor del token como el contenido del comentario
+    return t
+
+def t_COMMENT_HASHTAG(t):
+    r'\#.*'
+    t.value = t.value  # Establecer el valor del token como el contenido del comentario
+    return t
+
+# Expresión regular para comentarios de varias líneas
+def t_COMMENT_MULTI(t):
+    r'\/\*(.|\n)*?\*\/'
+    t.value = t.value  # Establecer el valor del token como el contenido del comentario
+    t.lexer.lineno += t.value.count('\n')  # Actualizar el contador de líneas
+    return t
+
+
 
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    if t.value in tokens:
-        t.type = t
-        return t 
-    else:
-        t_error(t)
-
-def t_CADENA1(t):
-    r'\"([^\"].)*\"'
-    return t
-
-def t_CADENA2(t):
-    r'\'([^\'].)*\''
+    t.type = reserved.get(t.value.upper(), 'ID')  # Verifica si la palabra está en el diccionario 'reserved'
     return t
 
 
-def t_OBJECTOPERATOR(t):
-	r'->'
-	return t
+# Definir la regla para la cadena (cadena entre comillas dobles o simples)
+def t_CADENA(t):
+    r'(\"[^\"]*\"|\'[^\']*\')'
+    return t
+
+
 
 def t_LESSEQUAL(t):
 	r'<='
@@ -495,6 +259,10 @@ def t_DEQUAL(t):
 
 def t_ISEQUAL(t):
 	r'=='
+	return t
+    
+def t_MINUSMINUS(t):
+	r'--'
 	return t
 
 def t_ANDEQUAL(t): 
@@ -537,6 +305,12 @@ def t_POW(t):
 	r'\*\*'
 	return t
 
+
+
+def t_BACKSLASH(t):
+    r'\\'
+    return t
+
 def t_XOREQUAL(t): 
     r'\^=' 
     return t
@@ -556,10 +330,6 @@ def t_SR(t):
 def t_SREQUAL(t):
 	r'>>='
 	return t
-    
-def t_MINUSMINUS(t):
-	r'--'
-	return t
 
 def t_PLUSPLUS(t):
 	r'\+\+'
@@ -568,20 +338,23 @@ def t_PLUSPLUS(t):
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
+ 
 
 def t_space(t):
     r'\s+'
     t.lexer.lineno += len(t.value)
     
 t_ignore = ' \t'
-
+"""
 def t_comments(t):
     r'/\*(.|\n)*?\*/'
     t.lexer.lineno += t.value.count('\n')
+	
+
 
 def t_comments_C99(t):
     r'//(.)*?\n'
-    t.lexer.lineno += 1
+    t.lexer.lineno += 1 """
 
 def t_error(t):
     print ("Lexical error: " + str(t.value[0]))
@@ -602,7 +375,7 @@ if __name__ == '__main__':
 	if (len(sys.argv) > 1):
 		fin = sys.argv[1]
 	else:
-		fin = 'Test2.php'
+		fin = 'Test.php'
 	f = open(fin, 'r')
 	data = f.read()
 	print (data)
