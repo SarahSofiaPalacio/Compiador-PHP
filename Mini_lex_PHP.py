@@ -91,7 +91,6 @@ reserved = {
     'PHP': 'php'
 }
 
-
 tokens = [
     #SYMBOLS
 	'OPEN_TAG',
@@ -196,50 +195,33 @@ def t_NUMBER(t):
     t.value = float(t.value)
     return t
 
-
 def t_VARIABLE(t):
     r'\$[a-zA-Z_](\w)*'
     return t
-"""
-def t_VARIABLE2(t):
-    r'[a-zA-Z](\w)*'
-    if t.value in tokens:
-        t.type = t
-        return t
-    else:
-        return t 
-"""
+
 def t_COMMENT(t):
     r'\/\/.*'
-    t.value = t.value  # Establecer el valor del token como el contenido del comentario
     return t
 
 def t_COMMENT_HASHTAG(t):
     r'\#.*'
-    t.value = t.value  # Establecer el valor del token como el contenido del comentario
     return t
 
 # Expresión regular para comentarios de varias líneas
 def t_COMMENT_MULTI(t):
     r'\/\*(.|\n)*?\*\/'
-    t.value = t.value  # Establecer el valor del token como el contenido del comentario
     t.lexer.lineno += t.value.count('\n')  # Actualizar el contador de líneas
     return t
 
-
-
 def t_ID(t):
-    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    r'[a-zA-Z_](\w)*' #[a-zA-Z_0-9]
     t.type = reserved.get(t.value.upper(), 'ID')  # Verifica si la palabra está en el diccionario 'reserved'
     return t
-
 
 # Definir la regla para la cadena (cadena entre comillas dobles o simples)
 def t_CADENA(t):
     r'(\"[^\"]*\"|\'[^\']*\')'
     return t
-
-
 
 def t_LESSEQUAL(t):
 	r'<='
@@ -305,8 +287,6 @@ def t_POW(t):
 	r'\*\*'
 	return t
 
-
-
 def t_BACKSLASH(t):
     r'\\'
     return t
@@ -369,7 +349,6 @@ def test(data, lexer):
 		print (tok)
 
 lexer = lex.lex()
-
  
 if __name__ == '__main__':
 	if (len(sys.argv) > 1):
