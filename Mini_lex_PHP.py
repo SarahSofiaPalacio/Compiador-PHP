@@ -146,11 +146,13 @@ tokens = [
     'COMILLASIMPLE',
     'COMILLASDOBLES',
     'COMMENT_HASHTAG',
-    'VARIABLE', 
-    'VARIABLE2', 
+	'INVALID_NUMBER_SEQUENCE',
+	'INVALID_VARIABLE',
+    'VARIABLE',  
     'NUMBER',
     'CADENA',
     'ID'
+	
 ]
 
 tokens = tokens + list(reserved.values())
@@ -160,7 +162,6 @@ t_PLUS   = r'\+'
 t_MINUS  = r'-'
 t_TIMES  = r'\*'
 t_DIVIDE = r'/'
-#t_BACKSLASH = r'\\',
 t_EQUAL  = r'='
 t_DISTINT = r'!'
 t_LESS   = r'<'
@@ -180,7 +181,7 @@ t_DOT = r'\.'
 t_COMILLASIMPLE = r'\''
 t_COMILLASDOBLES = r'\"'
 t_QUESTIONMARK = r'\?'
-
+t_NOT = r'~'
 
 def t_OPEN_TAG(t): 
     r'<\?php'
@@ -189,12 +190,22 @@ def t_OPEN_TAG(t):
 def t_CLOSE_TAG(t): 
     r'\?>'
     return t
- 
+
+def t_INVALID_NUMBER_SEQUENCE(t):
+    r'\d+[a-zA-Z_]+'
+    print(f"Error léxico: secuencia numérica inválida '{t.value}' {t.lineno} {t.lexpos}")
+    t.lexer.skip(1)  
+	
 def t_NUMBER(t):
     r'\d+(\.\d+)?'
     t.value = float(t.value)
     return t
 
+def t_INVALID_VARIABLE(t):
+    r'\$\d+'
+    print(f"Error léxico: Variable inválida '{t.value}' {t.lineno} {t.lexpos}")
+    t.lexer.skip(len(t.value)) 
+	
 def t_VARIABLE(t):
     r'\$[a-zA-Z_](\w)*'
     return t
@@ -354,7 +365,7 @@ if __name__ == '__main__':
 	if (len(sys.argv) > 1):
 		fin = sys.argv[1]
 	else:
-		fin = 'Test.php'
+		fin = 'Test2.php'
 	f = open(fin, 'r')
 	data = f.read()
 	print (data)
