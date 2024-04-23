@@ -155,7 +155,9 @@ tokens = [
 	
 ]
 
+TokensAll = tokens + list(reserved.values())
 tokens = tokens + list(reserved.values())
+print(TokensAll)
 
 t_MOD = r'%'
 t_PLUS   = r'\+'
@@ -365,7 +367,7 @@ if __name__ == '__main__':
 	if (len(sys.argv) > 1):
 		fin = sys.argv[1]
 	else:
-		fin = 'Test2.php'
+		fin = 'Test.php'
 	f = open(fin, 'r')
 	data = f.read()
 	print (data)

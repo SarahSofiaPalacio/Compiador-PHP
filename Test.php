@@ -1,35 +1,39 @@
 <?php
 // Comentario de una sola linea
-# Comentario de una sola linea
+#Comentario de una sola linea
 
  /* Comentario 
  de varias 
  lineas SDADASD
 
  */
-include 'studio';
-include "studio";
-const prueba="hola";
+
+const prueba2="qwert";
 const prueba=213;
 print("Hola mundo como en los viejo tiempos");
 $F = 5;
-<var> $X = 0 </var>;
-while ($X < $F) {
+
+$X = 0;
+while ($X < $F){
     $X = $X + 1;
 }
 echo ("\n El valor de X es: $X");
 $_hola = 3;
-$hola1 = 3, $hola2 = 3;
-$lista = array("dsda",3,4,5);
-$lista1 = array($F,$hola,$lista,);
+$hola1 = 3;
+$hola2 = 3;
+$hola = 3;
+#$lista = array("dsda",3,4,5);
+#$lista1 = array($F,$hola,$lista);
 print $hola;
 
 class SimpleClass
 {
-    // property declaration
-    $var = 2;
+    function do_foo()
+    {
+        echo "Doing foo."; 
+    }
 
 }
-$var = new SimpleClass();
+#$var = new SimpleClass();
 
 ?>
