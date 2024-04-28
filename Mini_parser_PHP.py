@@ -5,6 +5,13 @@ import sys
 
 VERBOSE = 1
 
+#nivel de prioridad de los operadores aritmeticos
+precedence = (
+    ('left', 'PLUS', 'MINUS'),
+    ('left', 'TIMES', 'DIVIDE'),
+    ('right', 'EQUAL'),  # Asegurarse de que `EQUAL` tenga mayor precedencia para manejar asignaciones correctamente
+)
+
 def p_program(p):
 	'program : header declaration_list'
 	pass
@@ -32,6 +39,7 @@ def p_declaration(p):
 				   | print_declaration
 				   | echo_declaration
 				   | iteration_stmt
+				   | if_statement
 				   | fun_declaration
 				   | fun_call
 				   | obj_declaration
@@ -43,6 +51,7 @@ def p_declaration(p):
 def p_data_type(p):
 	'''data_type	: NUMBER
 					| CADENA'''
+
 
 def p_header_declaration(p):
     '''header_declaration : include CADENA SEMICOLON'''
@@ -73,9 +82,9 @@ def p_var_declaration_1(p):
 def p_var_declaration_2(p):
 	'var_declaration : VARIABLE LBRACKET NUMBER RBRACKET SEMICOLON'
 	pass
-
-def p_var_declaration_3(p):                     
-	'''var_declaration2 :  VARIABLE
+#original pero genera conflicto reduce/reduce con Number y Variable con la gramatica additive_expression
+""" def p_var_declaration_3(p):                     
+	'''var_declaration2 : VARIABLE
                         | VARIABLE COMMA var_declaration2
                         | VARIABLE EQUAL NUMBER COMMA var_declaration2
                         | VARIABLE EQUAL NUMBER
@@ -91,7 +100,23 @@ def p_var_declaration_3(p):
                         | CADENA RBRACKET
 
         '''
-	pass
+	pass """
+ 
+#modificado para evitar conflicto reduce/reduce 
+def p_var_declaration_2(p):
+    '''var_declaration2 : VARIABLE assignment_tail'''
+
+def p_assignment_tail(p):
+    '''assignment_tail : EQUAL expression
+                       | EQUAL NUMBER COMMA var_declaration2
+                       | EQUAL VARIABLE COMMA var_declaration2
+                       | EQUAL CADENA
+                       | COMMA var_declaration2
+                       | EQUAL LBRACKET expression COMMA var_declaration2
+                       | EQUAL LBRACKET data_type COMMA var_declaration2
+                       | RBRACKET'''
+    pass
+#...............................................
 
 def p_iteration_stmt_1(p):
 	'iteration_stmt : while LPAREN expression RPAREN LBLOCK declaration RBLOCK'
@@ -101,16 +126,37 @@ def p_expression_1(p):
 	'''expression : additive_expression
 					| additive_expression comp_op additive_expression'''
 	pass
-
-def p_additive_expression(p):
+# Conflicto reduce/reduce con la gramatica original
+""" def p_additive_expression(p):
 	'''additive_expression : additive_expression math_op additive_expression
 							| NUMBER
 							| NUMBER MINUSMINUS
 							| NUMBER PLUSPLUS
 							| VARIABLE
         '''
-	pass
+	pass """
+# modificado para evitar conflicto reduce/reduce
+def p_additive_expression(p):
+    '''additive_expression : term
+                           | term math_op term'''
+    pass
 
+def p_term(p):
+    '''term : factor
+            | factor increment_decrement_op
+            | increment_decrement_op factor'''
+
+def p_factor(p):
+    '''factor : NUMBER
+              | VARIABLE
+              | LPAREN expression RPAREN'''
+    pass
+
+def p_increment_decrement_op(p):
+    '''increment_decrement_op : PLUSPLUS
+                              | MINUSMINUS'''
+    pass
+#...............................................
 def p_math_op(p):
 	'''math_op : PLUS 
 				| MINUS
@@ -129,7 +175,15 @@ def p_comp_op(p):
 			| ISEQUAL
 	'''
 	pass
+def p_if_statement(p):
+    '''if_statement : if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part'''
 
+def p_else_part(p):
+    '''else_part : elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+                 | else LBLOCK declaration_list RBLOCK
+                 | endif
+                 | empty'''
+                 
 def p_fun_declaration(p):
 	'fun_declaration : function ID LPAREN params RPAREN LBLOCK declaration RBLOCK'
 	pass
@@ -146,7 +200,7 @@ def p_create_obj_declaration(p):
 	'create_obj_declaration : new ID LPAREN params RPAREN'
 	pass
 
-def p_params(p):
+""" def p_params(p):
 	'''params : param_list
 			| var_declaration2
 			| empty_function'''
@@ -155,8 +209,17 @@ def p_params(p):
 def p_param_list_1(p):
 	'''param_list : param_list COMMA params
 				| params'''
-	pass
+	pass """
+#modificado para evitar conflicto reduce/reduce 
+def p_params(p):
+    '''params : single_param
+              | params COMMA single_param'''
 
+def p_single_param(p):
+    '''single_param : var_declaration2
+                    | empty_function'''
+    pass
+#...............................................
 def p_empty_function(p):
 	'empty_function :'
 	pass
