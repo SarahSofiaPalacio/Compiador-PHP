@@ -1,9 +1,7 @@
 import ply.yacc as yacc
-from Mini_lex_PHP import TokensAll 
-import Mini_lex_PHP
+# Importar el conjunto de palabras reservadas y simbolos reconocidos por el lexer
+from Mini_lex_PHP import tokens, lexer
 import sys
-
-tokens = TokensAll
 
 VERBOSE = 1
 
@@ -68,13 +66,10 @@ def p_echo_declaration(p):
 						| echo data_type SEMICOLON'''
 	pass
 
-
 def p_var_declaration_1(p):
 	'''var_declaration : var_declaration2 SEMICOLON'''
 	pass
 
-
-'''?????????????????????????????????????????????????????????????????????????????????????????'''
 def p_var_declaration_2(p):
 	'var_declaration : VARIABLE LBRACKET NUMBER RBRACKET SEMICOLON'
 	pass
@@ -86,6 +81,7 @@ def p_var_declaration_3(p):
                         | VARIABLE EQUAL NUMBER
                         | VARIABLE EQUAL VARIABLE COMMA var_declaration2
                         | VARIABLE EQUAL VARIABLE
+                        | VARIABLE EQUAL CADENA
 						| VARIABLE EQUAL expression
                         | COMMA 
                         | data_type COMMA var_declaration2
@@ -165,34 +161,39 @@ def p_empty_function(p):
 	'empty_function :'
 	pass
 
-
 def p_error(p):
-
-	tok = parser.token() 
-	print(tok)
+	# Manejo de errores sintacticos (la libreria invoca este metodo de forma automatica)
+	# 'p' contiene el token que causo el error
 	if VERBOSE:
 		if p is not None:
-			print ("ERROR SINTACTICO EN LA LINEA " + str(p.lexer.lineno) + " NO SE ESPERABA EL Token " + str(p.value))
+			print ("ERROR SINTACTICO EN LA LINEA " + str(p.lexer.lineno) + " NO SE ESPERABA EL Token " + str(p.value) + ": " + str(p))
 		else:
-			print ("ERROR SINTACTICO EN LA LINEA: " + str(Mini_lex_PHP.lexer.lineno))
+			print ("ERROR SINTACTICO EN LA LINEA: " + str(lexer.lineno))
 		return
 	else:
 		raise Exception('syntax', 'error')
 		
-		
-
+# Contruir el parser (con ayuda de la libreria ply)		
 parser = yacc.yacc()
 
 if __name__ == '__main__':
-
 	if (len(sys.argv) > 1):
-		fin = sys.argv[1]
+		# Si recibe un parametro, se toma como el nombre del archivo a leer
+		php_code = sys.argv[1]
 	else:
-		fin = 'Test.php'
-
-	f = open(fin, 'r')
-	data = f.read()
-	#print(tokens)
+		# Si no recibe un parametro, se toma el archivo Test.php como el nombre del archivo a leer
+		php_code = 'Test3.php'
+	try:
+		# Leer el archivo
+		file = open(php_code, 'r')
+	except:
+		# Si el archivo no se encuentra en el directorio, terminar el programa
+		print("El archivo no se encuentra en el directorio")
+		sys.exit()
+	# Guardar el contenido del archivo en la variable data
+	data = file.read()
+	# Enviar el código fuente al parser para que lo analice
 	parser.parse(data, tracking=True)
 	print("Amiguito, tengo el placer de informar que Tu parser reconocio correctamente todo")
-	#input()
+ 
+	#input() <--- Evaluar eliminación (funcion definida en otra libreria)

@@ -155,9 +155,9 @@ tokens = [
 	
 ]
 
-TokensAll = tokens + list(reserved.values())
+# TokensAll contiene el conjunto de simbolos y palabras reservadas
 tokens = tokens + list(reserved.values())
-print(TokensAll)
+#print(tokens)
 
 t_MOD = r'%'
 t_PLUS   = r'\+'
@@ -343,34 +343,46 @@ def t_comments(t):
     r'/\*(.|\n)*?\*/'
     t.lexer.lineno += t.value.count('\n')
 	
-
-
 def t_comments_C99(t):
     r'//(.)*?\n'
-    t.lexer.lineno += 1 """
+    t.lexer.lineno += 1 
+    """
 
 def t_error(t):
     print ("Lexical error: " + str(t.value[0]))
     t.lexer.skip(1)
     
 def test(data, lexer):
+    # Enviar el código fuente al lexer
 	lexer.input(data)
 	while True:
-		tok = lexer.token()
-		if not tok:
+        # Imprimir todos los tokens reconocidos por el lexer, si no hay más tokens, termina el programa
+		token = lexer.token()
+		if not token:
 			break
-		print (tok)
+		print(token)
 
+# Contruir el lexer (con ayuda de la libreria ply)
 lexer = lex.lex()
- 
+
 if __name__ == '__main__':
-	if (len(sys.argv) > 1):
-		fin = sys.argv[1]
-	else:
-		fin = 'Test.php'
-	f = open(fin, 'r')
-	data = f.read()
-	print (data)
-	lexer.input(data)
-	test(data, lexer)
-	#input()
+    if (len(sys.argv) > 1):
+        # Si recibe un parametro, se toma como el nombre del archivo a leer
+        php_code = sys.argv[1]
+    else:
+        # Si no recibe un parametro, se toma el archivo Test.php como el nombre del archivo a leer
+        php_code = 'Test3.php'
+    try:
+        # Leer el archivo
+        file = open(php_code, 'r')
+    except:
+        # Si el archivo no se encuentra en el directorio, terminar el programa
+        print("El archivo no se encuentra en el directorio")
+        sys.exit()
+    # Guardar el contenido del archivo en la variable data
+    data = file.read()
+    print(data)
+    # Ejecutar la prueba del lexer con el archivo que se quiere analizar
+    test(data, lexer)
+
+    #input() <--- Evaluar eliminación (funcion definida en otra libreria)
