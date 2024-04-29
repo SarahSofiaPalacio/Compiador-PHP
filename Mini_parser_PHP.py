@@ -121,6 +121,8 @@ def p_var_declaration_3(p):
                         | VARIABLE EQUAL CADENA
 						| VARIABLE EQUAL array_declaration
 						| VARIABLE EQUAL expression
+						| array_declaration
+						| Concatenar_Cadenas_declaration
 
         '''
 	pass
@@ -299,6 +301,13 @@ def p_foreach_loop(p):
 
 def p_array(p):
 	'array_declaration : array LPAREN params RPAREN'
+	pass
+
+def p_Concatenar_Cadenas_declaration(p):
+	'''Concatenar_Cadenas_declaration : VARIABLE DOT VARIABLE
+										| CADENA DOT CADENA
+										| CADENA DOT VARIABLE
+										| VARIABLE DOT CADENA'''
 	pass
 
 def p_empty_function(p):
