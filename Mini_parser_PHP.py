@@ -121,17 +121,19 @@ def p_var_declaration_3(p):
                         | VARIABLE EQUAL CADENA
 						| VARIABLE EQUAL array_declaration
 						| VARIABLE EQUAL expression
-                        | NUMBER RBRACKET
-                        | CADENA RBRACKET
 
         '''
 	pass
  
-#modificado para evitar conflicto reduce/reduce 
+#modificado para evitar conflicto reduce/reduce
+#Añadido conexion con assignment_tail 
 def p_var_declaration_2(p):
-    '''var_declaration2 : VARIABLE assignment_tail'''
+    '''var_declaration2 : VARIABLE assignment_tail
+						| VARIABLE EQUAL assignment_tail'''
 
-def p_assignment_tail(p):
+
+#Eliminacion de conflictos con reglas que incluyen COMMA, debido a ya estar en params
+"""def p_assignment_tail(p):
     '''assignment_tail : EQUAL expression
                        | EQUAL NUMBER COMMA var_declaration2
                        | EQUAL VARIABLE COMMA var_declaration2
@@ -140,7 +142,19 @@ def p_assignment_tail(p):
                        | EQUAL LBRACKET expression COMMA var_declaration2
                        | EQUAL LBRACKET data_type COMMA var_declaration2
                        | RBRACKET'''
+    pass"""
+
+def p_assignment_tail(p):
+    '''assignment_tail : COMMA var_declaration2
+					   | LBRACKET params RBRACKET
+					   | LBLOCK params RBLOCK
+					   | VARIABLE LBRACKET expression COMMA params
+					   | VARIABLE LBRACKET params RBRACKET
+					   | VARIABLE LBLOCK params RBLOCK
+					   '''
     pass
+
+
 #...............................................
 
 def p_iteration_stmt_1(p):
