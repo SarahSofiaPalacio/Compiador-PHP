@@ -3,7 +3,7 @@
 include "a";
 
 // Definir un array de colores
-$colores = array(2, "2",2,56745,"41341", $b);
+$colores = array(2);
 
 // Uso de foreach para iterar sobre el array de colores
 echo "Lista de colores:";

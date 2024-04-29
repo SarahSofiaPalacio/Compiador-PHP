@@ -254,6 +254,7 @@ def p_params(p):
 
 def p_single_param(p):
     '''single_param : var_declaration2
+					| data_type
                     | empty_function
 					'''
     pass
