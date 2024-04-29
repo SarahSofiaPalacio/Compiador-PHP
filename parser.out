@@ -6,8 +6,6 @@ Unused terminals:
     ANDEQUAL
     ASSIGN
     BACKSLASH
-    BOOL_AND
-    BOOL_OR
     COLON
     COMILLASDOBLES
     COMILLASIMPLE
@@ -21,7 +19,6 @@ Unused terminals:
     MINUSEQUAL
     MOD
     MULEQUAL
-    NOT
     PLUSEQUAL
     POW
     QUESTIONMARK
@@ -32,7 +29,6 @@ Unused terminals:
     XOREQUAL
     abs
     abstract
-    and
     array
     as
     break
@@ -78,7 +74,6 @@ Unused terminals:
     min
     namespace
     objectoperator
-    or
     php
     pow
     private
@@ -151,42 +146,49 @@ Rule 42    assignment_tail -> EQUAL LBRACKET data_type COMMA var_declaration2
 Rule 43    assignment_tail -> RBRACKET
 Rule 44    iteration_stmt -> while LPAREN expression RPAREN LBLOCK declaration RBLOCK
 Rule 45    expression -> additive_expression
-Rule 46    expression -> additive_expression comp_op additive_expression
-Rule 47    additive_expression -> term
-Rule 48    additive_expression -> term math_op term
-Rule 49    term -> factor
-Rule 50    term -> factor increment_decrement_op
-Rule 51    term -> increment_decrement_op factor
-Rule 52    factor -> NUMBER
-Rule 53    factor -> VARIABLE
-Rule 54    factor -> LPAREN expression RPAREN
-Rule 55    increment_decrement_op -> PLUSPLUS
-Rule 56    increment_decrement_op -> MINUSMINUS
-Rule 57    math_op -> PLUS
-Rule 58    math_op -> MINUS
-Rule 59    math_op -> TIMES
-Rule 60    math_op -> DIVIDE
-Rule 61    comp_op -> LESS
-Rule 62    comp_op -> LESSEQUAL
-Rule 63    comp_op -> GREATER
-Rule 64    comp_op -> GREATEREQUAL
-Rule 65    comp_op -> DEQUAL
-Rule 66    comp_op -> DISTINT
-Rule 67    comp_op -> ISEQUAL
-Rule 68    if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-Rule 69    else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-Rule 70    else_part -> else LBLOCK declaration_list RBLOCK
-Rule 71    else_part -> endif
-Rule 72    else_part -> empty
-Rule 73    fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
-Rule 74    fun_call -> ID LPAREN params RPAREN
-Rule 75    obj_declaration -> class ID LBLOCK declaration RBLOCK
-Rule 76    create_obj_declaration -> new ID LPAREN params RPAREN
-Rule 77    params -> single_param
-Rule 78    params -> params COMMA single_param
-Rule 79    single_param -> var_declaration2
-Rule 80    single_param -> empty_function
-Rule 81    empty_function -> <empty>
+Rule 46    expression -> additive_expression logical_op additive_expression
+Rule 47    expression -> additive_expression comp_op additive_expression
+Rule 48    expression -> additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression
+Rule 49    additive_expression -> term
+Rule 50    additive_expression -> term math_op term
+Rule 51    term -> factor
+Rule 52    term -> factor increment_decrement_op
+Rule 53    term -> increment_decrement_op factor
+Rule 54    factor -> NUMBER
+Rule 55    factor -> VARIABLE
+Rule 56    factor -> LPAREN expression RPAREN
+Rule 57    increment_decrement_op -> PLUSPLUS
+Rule 58    increment_decrement_op -> MINUSMINUS
+Rule 59    math_op -> PLUS
+Rule 60    math_op -> MINUS
+Rule 61    math_op -> TIMES
+Rule 62    math_op -> DIVIDE
+Rule 63    comp_op -> LESS
+Rule 64    comp_op -> LESSEQUAL
+Rule 65    comp_op -> GREATER
+Rule 66    comp_op -> GREATEREQUAL
+Rule 67    comp_op -> DEQUAL
+Rule 68    comp_op -> DISTINT
+Rule 69    comp_op -> ISEQUAL
+Rule 70    logical_op -> BOOL_OR
+Rule 71    logical_op -> BOOL_AND
+Rule 72    logical_op -> NOT
+Rule 73    logical_op -> or
+Rule 74    logical_op -> and
+Rule 75    if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+Rule 76    else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+Rule 77    else_part -> else LBLOCK declaration_list RBLOCK
+Rule 78    else_part -> endif
+Rule 79    else_part -> empty
+Rule 80    fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
+Rule 81    fun_call -> ID LPAREN params RPAREN
+Rule 82    obj_declaration -> class ID LBLOCK declaration RBLOCK
+Rule 83    create_obj_declaration -> new ID LPAREN params RPAREN
+Rule 84    params -> single_param
+Rule 85    params -> params COMMA single_param
+Rule 86    single_param -> var_declaration2
+Rule 87    single_param -> empty_function
+Rule 88    empty_function -> <empty>
 
 Terminals, with rules where they appear
 
@@ -194,64 +196,64 @@ AMPERSANT            :
 ANDEQUAL             : 
 ASSIGN               : 
 BACKSLASH            : 
-BOOL_AND             : 
-BOOL_OR              : 
+BOOL_AND             : 71
+BOOL_OR              : 70
 CADENA               : 23 24 39
 CLOSE_TAG            : 3
 COLON                : 
 COMILLASDOBLES       : 
 COMILLASIMPLE        : 
-COMMA                : 37 38 40 41 42 78
+COMMA                : 37 38 40 41 42 85
 COMMENT              : 6
 COMMENT_HASHTAG      : 7
 COMMENT_MULTI        : 8
-DEQUAL               : 65
-DISTINT              : 66
+DEQUAL               : 67
+DISTINT              : 68
 DIVEQUAL             : 
-DIVIDE               : 60
+DIVIDE               : 62
 DOT                  : 
 EQUAL                : 25 36 37 38 39 41 42
-GREATER              : 63
-GREATEREQUAL         : 64
+GREATER              : 65
+GREATEREQUAL         : 66
 HASHTAG              : 
-ID                   : 25 73 74 75 76
+ID                   : 25 80 81 82 83
 INVALID_NUMBER_SEQUENCE : 
 INVALID_VARIABLE     : 
-ISEQUAL              : 67
+ISEQUAL              : 69
 ISIDENTICAL          : 
 ISNOTIDENTICAL       : 
-LBLOCK               : 44 68 69 70 73 75
+LBLOCK               : 44 75 76 77 80 82
 LBRACKET             : 41 42
-LESS                 : 61
-LESSEQUAL            : 62
-LPAREN               : 27 28 31 32 44 54 68 69 73 74 76
-MINUS                : 58
+LESS                 : 63
+LESSEQUAL            : 64
+LPAREN               : 27 28 31 32 44 56 75 76 80 81 83
+MINUS                : 60
 MINUSEQUAL           : 
-MINUSMINUS           : 56
+MINUSMINUS           : 58
 MOD                  : 
 MULEQUAL             : 
-NOT                  : 
-NUMBER               : 22 37 52
+NOT                  : 72
+NUMBER               : 22 37 54
 OPEN_TAG             : 2
-PLUS                 : 57
+PLUS                 : 59
 PLUSEQUAL            : 
-PLUSPLUS             : 55
+PLUSPLUS             : 57
 POW                  : 
 QUESTIONMARK         : 
-RBLOCK               : 44 68 69 70 73 75
+RBLOCK               : 44 75 76 77 80 82
 RBRACKET             : 43
-RPAREN               : 27 28 31 32 44 54 68 69 73 74 76
+RPAREN               : 27 28 31 32 44 56 75 76 80 81 83
 SEMICOLON            : 24 25 26 27 28 29 30 31 32 33 34
 SL                   : 
 SLEQUAL              : 
 SR                   : 
 SREQUAL              : 
-TIMES                : 59
-VARIABLE             : 35 38 53
+TIMES                : 61
+VARIABLE             : 35 38 55
 XOREQUAL             : 
 abs                  : 
 abstract             : 
-and                  : 
+and                  : 74
 array                : 
 as                   : 
 break                : 
@@ -259,7 +261,7 @@ callable             :
 case                 : 
 catch                : 
 ceil                 : 
-class                : 75
+class                : 82
 clone                : 
 const                : 25
 continue             : 
@@ -270,13 +272,13 @@ deg2rad              :
 die                  : 
 do                   : 
 echo                 : 30 31 32 33
-else                 : 70
-elseif               : 69
-empty                : 21 72
+else                 : 77
+elseif               : 76
+empty                : 21 79
 endclare             : 
 endfor               : 
 endforeach           : 
-endif                : 71
+endif                : 78
 endswitch            : 
 endwhile             : 
 error                : 
@@ -289,10 +291,10 @@ finally              :
 floor                : 
 for                  : 
 foreach              : 
-function             : 73
+function             : 80
 global               : 
 goto                 : 
-if                   : 68
+if                   : 75
 implements           : 
 include              : 24
 include_once         : 
@@ -307,9 +309,9 @@ match                :
 max                  : 
 min                  : 
 namespace            : 
-new                  : 76
+new                  : 83
 objectoperator       : 
-or                   : 
+or                   : 73
 php                  : 
 pow                  : 
 print                : 26 27 28 29
@@ -338,36 +340,37 @@ xor                  :
 
 Nonterminals, with rules where they appear
 
-additive_expression  : 45 46 46
+additive_expression  : 45 46 46 47 47 48 48 48 48
 assignment_tail      : 35
-comp_op              : 46
+comp_op              : 47 48 48
 constant_declaration : 11
 create_obj_declaration : 19
 data_type            : 25 28 29 32 33 42
-declaration          : 4 5 44 73 75
-declaration_list     : 1 5 68 69 70
+declaration          : 4 5 44 80 82
+declaration_list     : 1 5 75 76 77
 echo_declaration     : 13
-else_part            : 68 69
-empty_function       : 80
-expression           : 36 41 44 54 68 69
-factor               : 49 50 51
+else_part            : 75 76
+empty_function       : 87
+expression           : 36 41 44 56 75 76
+factor               : 51 52 53
 footer_declaration   : 20
 fun_call             : 17
 fun_declaration      : 16
 header               : 1
 header_declaration   : 9
 if_statement         : 15
-increment_decrement_op : 50 51
+increment_decrement_op : 52 53
 iteration_stmt       : 14
-math_op              : 48
+logical_op           : 46 48
+math_op              : 50
 obj_declaration      : 18
-params               : 73 74 76 78
+params               : 80 81 83 85
 print_declaration    : 12
 program              : 0
-single_param         : 77 78
-term                 : 47 48 48
+single_param         : 84 85
+term                 : 49 50 50
 var_declaration      : 10
-var_declaration2     : 26 27 30 31 34 37 38 40 41 42 79
+var_declaration2     : 26 27 30 31 34 37 38 40 41 42 86
 
 Parsing method: LALR
 
@@ -421,11 +424,11 @@ state 2
     (32) echo_declaration -> . echo LPAREN data_type RPAREN SEMICOLON
     (33) echo_declaration -> . echo data_type SEMICOLON
     (44) iteration_stmt -> . while LPAREN expression RPAREN LBLOCK declaration RBLOCK
-    (68) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-    (73) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
-    (74) fun_call -> . ID LPAREN params RPAREN
-    (75) obj_declaration -> . class ID LBLOCK declaration RBLOCK
-    (76) create_obj_declaration -> . new ID LPAREN params RPAREN
+    (75) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (80) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
+    (81) fun_call -> . ID LPAREN params RPAREN
+    (82) obj_declaration -> . class ID LBLOCK declaration RBLOCK
+    (83) create_obj_declaration -> . new ID LPAREN params RPAREN
     (3) footer_declaration -> . CLOSE_TAG
     (35) var_declaration2 -> . VARIABLE assignment_tail
 
@@ -516,11 +519,11 @@ state 4
     (32) echo_declaration -> . echo LPAREN data_type RPAREN SEMICOLON
     (33) echo_declaration -> . echo data_type SEMICOLON
     (44) iteration_stmt -> . while LPAREN expression RPAREN LBLOCK declaration RBLOCK
-    (68) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-    (73) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
-    (74) fun_call -> . ID LPAREN params RPAREN
-    (75) obj_declaration -> . class ID LBLOCK declaration RBLOCK
-    (76) create_obj_declaration -> . new ID LPAREN params RPAREN
+    (75) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (80) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
+    (81) fun_call -> . ID LPAREN params RPAREN
+    (82) obj_declaration -> . class ID LBLOCK declaration RBLOCK
+    (83) create_obj_declaration -> . new ID LPAREN params RPAREN
     (3) footer_declaration -> . CLOSE_TAG
     (35) var_declaration2 -> . VARIABLE assignment_tail
 
@@ -988,7 +991,7 @@ state 24
 
 state 25
 
-    (74) fun_call -> ID . LPAREN params RPAREN
+    (81) fun_call -> ID . LPAREN params RPAREN
 
     LPAREN          shift and go to state 39
 
@@ -1038,28 +1041,28 @@ state 28
 
 state 29
 
-    (68) if_statement -> if . LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (75) if_statement -> if . LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
 
     LPAREN          shift and go to state 49
 
 
 state 30
 
-    (73) fun_declaration -> function . ID LPAREN params RPAREN LBLOCK declaration RBLOCK
+    (80) fun_declaration -> function . ID LPAREN params RPAREN LBLOCK declaration RBLOCK
 
     ID              shift and go to state 50
 
 
 state 31
 
-    (75) obj_declaration -> class . ID LBLOCK declaration RBLOCK
+    (82) obj_declaration -> class . ID LBLOCK declaration RBLOCK
 
     ID              shift and go to state 51
 
 
 state 32
 
-    (76) create_obj_declaration -> new . ID LPAREN params RPAREN
+    (83) create_obj_declaration -> new . ID LPAREN params RPAREN
 
     ID              shift and go to state 52
 
@@ -1170,17 +1173,17 @@ state 38
 
 state 39
 
-    (74) fun_call -> ID LPAREN . params RPAREN
-    (77) params -> . single_param
-    (78) params -> . params COMMA single_param
-    (79) single_param -> . var_declaration2
-    (80) single_param -> . empty_function
+    (81) fun_call -> ID LPAREN . params RPAREN
+    (84) params -> . single_param
+    (85) params -> . params COMMA single_param
+    (86) single_param -> . var_declaration2
+    (87) single_param -> . empty_function
     (35) var_declaration2 -> . VARIABLE assignment_tail
-    (81) empty_function -> .
+    (88) empty_function -> .
 
     VARIABLE        shift and go to state 34
-    RPAREN          reduce using rule 81 (empty_function -> .)
-    COMMA           reduce using rule 81 (empty_function -> .)
+    RPAREN          reduce using rule 88 (empty_function -> .)
+    COMMA           reduce using rule 88 (empty_function -> .)
 
     params                         shift and go to state 59
     single_param                   shift and go to state 60
@@ -1266,17 +1269,19 @@ state 48
 
     (44) iteration_stmt -> while LPAREN . expression RPAREN LBLOCK declaration RBLOCK
     (45) expression -> . additive_expression
-    (46) expression -> . additive_expression comp_op additive_expression
-    (47) additive_expression -> . term
-    (48) additive_expression -> . term math_op term
-    (49) term -> . factor
-    (50) term -> . factor increment_decrement_op
-    (51) term -> . increment_decrement_op factor
-    (52) factor -> . NUMBER
-    (53) factor -> . VARIABLE
-    (54) factor -> . LPAREN expression RPAREN
-    (55) increment_decrement_op -> . PLUSPLUS
-    (56) increment_decrement_op -> . MINUSMINUS
+    (46) expression -> . additive_expression logical_op additive_expression
+    (47) expression -> . additive_expression comp_op additive_expression
+    (48) expression -> . additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression
+    (49) additive_expression -> . term
+    (50) additive_expression -> . term math_op term
+    (51) term -> . factor
+    (52) term -> . factor increment_decrement_op
+    (53) term -> . increment_decrement_op factor
+    (54) factor -> . NUMBER
+    (55) factor -> . VARIABLE
+    (56) factor -> . LPAREN expression RPAREN
+    (57) increment_decrement_op -> . PLUSPLUS
+    (58) increment_decrement_op -> . MINUSMINUS
 
     NUMBER          shift and go to state 77
     VARIABLE        shift and go to state 78
@@ -1292,19 +1297,21 @@ state 48
 
 state 49
 
-    (68) if_statement -> if LPAREN . expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (75) if_statement -> if LPAREN . expression RPAREN LBLOCK declaration_list RBLOCK else_part
     (45) expression -> . additive_expression
-    (46) expression -> . additive_expression comp_op additive_expression
-    (47) additive_expression -> . term
-    (48) additive_expression -> . term math_op term
-    (49) term -> . factor
-    (50) term -> . factor increment_decrement_op
-    (51) term -> . increment_decrement_op factor
-    (52) factor -> . NUMBER
-    (53) factor -> . VARIABLE
-    (54) factor -> . LPAREN expression RPAREN
-    (55) increment_decrement_op -> . PLUSPLUS
-    (56) increment_decrement_op -> . MINUSMINUS
+    (46) expression -> . additive_expression logical_op additive_expression
+    (47) expression -> . additive_expression comp_op additive_expression
+    (48) expression -> . additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression
+    (49) additive_expression -> . term
+    (50) additive_expression -> . term math_op term
+    (51) term -> . factor
+    (52) term -> . factor increment_decrement_op
+    (53) term -> . increment_decrement_op factor
+    (54) factor -> . NUMBER
+    (55) factor -> . VARIABLE
+    (56) factor -> . LPAREN expression RPAREN
+    (57) increment_decrement_op -> . PLUSPLUS
+    (58) increment_decrement_op -> . MINUSMINUS
 
     NUMBER          shift and go to state 77
     VARIABLE        shift and go to state 78
@@ -1320,21 +1327,21 @@ state 49
 
 state 50
 
-    (73) fun_declaration -> function ID . LPAREN params RPAREN LBLOCK declaration RBLOCK
+    (80) fun_declaration -> function ID . LPAREN params RPAREN LBLOCK declaration RBLOCK
 
     LPAREN          shift and go to state 82
 
 
 state 51
 
-    (75) obj_declaration -> class ID . LBLOCK declaration RBLOCK
+    (82) obj_declaration -> class ID . LBLOCK declaration RBLOCK
 
     LBLOCK          shift and go to state 83
 
 
 state 52
 
-    (76) create_obj_declaration -> new ID . LPAREN params RPAREN
+    (83) create_obj_declaration -> new ID . LPAREN params RPAREN
 
     LPAREN          shift and go to state 84
 
@@ -1357,17 +1364,19 @@ state 54
     (41) assignment_tail -> EQUAL . LBRACKET expression COMMA var_declaration2
     (42) assignment_tail -> EQUAL . LBRACKET data_type COMMA var_declaration2
     (45) expression -> . additive_expression
-    (46) expression -> . additive_expression comp_op additive_expression
-    (47) additive_expression -> . term
-    (48) additive_expression -> . term math_op term
-    (49) term -> . factor
-    (50) term -> . factor increment_decrement_op
-    (51) term -> . increment_decrement_op factor
-    (52) factor -> . NUMBER
-    (53) factor -> . VARIABLE
-    (54) factor -> . LPAREN expression RPAREN
-    (55) increment_decrement_op -> . PLUSPLUS
-    (56) increment_decrement_op -> . MINUSMINUS
+    (46) expression -> . additive_expression logical_op additive_expression
+    (47) expression -> . additive_expression comp_op additive_expression
+    (48) expression -> . additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression
+    (49) additive_expression -> . term
+    (50) additive_expression -> . term math_op term
+    (51) term -> . factor
+    (52) term -> . factor increment_decrement_op
+    (53) term -> . increment_decrement_op factor
+    (54) factor -> . NUMBER
+    (55) factor -> . VARIABLE
+    (56) factor -> . LPAREN expression RPAREN
+    (57) increment_decrement_op -> . PLUSPLUS
+    (58) increment_decrement_op -> . MINUSMINUS
 
     NUMBER          shift and go to state 86
     VARIABLE        shift and go to state 87
@@ -1438,8 +1447,8 @@ state 58
 
 state 59
 
-    (74) fun_call -> ID LPAREN params . RPAREN
-    (78) params -> params . COMMA single_param
+    (81) fun_call -> ID LPAREN params . RPAREN
+    (85) params -> params . COMMA single_param
 
     RPAREN          shift and go to state 92
     COMMA           shift and go to state 93
@@ -1447,26 +1456,26 @@ state 59
 
 state 60
 
-    (77) params -> single_param .
+    (84) params -> single_param .
 
-    RPAREN          reduce using rule 77 (params -> single_param .)
-    COMMA           reduce using rule 77 (params -> single_param .)
+    RPAREN          reduce using rule 84 (params -> single_param .)
+    COMMA           reduce using rule 84 (params -> single_param .)
 
 
 state 61
 
-    (79) single_param -> var_declaration2 .
+    (86) single_param -> var_declaration2 .
 
-    RPAREN          reduce using rule 79 (single_param -> var_declaration2 .)
-    COMMA           reduce using rule 79 (single_param -> var_declaration2 .)
+    RPAREN          reduce using rule 86 (single_param -> var_declaration2 .)
+    COMMA           reduce using rule 86 (single_param -> var_declaration2 .)
 
 
 state 62
 
-    (80) single_param -> empty_function .
+    (87) single_param -> empty_function .
 
-    RPAREN          reduce using rule 80 (single_param -> empty_function .)
-    COMMA           reduce using rule 80 (single_param -> empty_function .)
+    RPAREN          reduce using rule 87 (single_param -> empty_function .)
+    COMMA           reduce using rule 87 (single_param -> empty_function .)
 
 
 state 63
@@ -1595,19 +1604,21 @@ state 70
 
 state 71
 
-    (54) factor -> LPAREN . expression RPAREN
+    (56) factor -> LPAREN . expression RPAREN
     (45) expression -> . additive_expression
-    (46) expression -> . additive_expression comp_op additive_expression
-    (47) additive_expression -> . term
-    (48) additive_expression -> . term math_op term
-    (49) term -> . factor
-    (50) term -> . factor increment_decrement_op
-    (51) term -> . increment_decrement_op factor
-    (52) factor -> . NUMBER
-    (53) factor -> . VARIABLE
-    (54) factor -> . LPAREN expression RPAREN
-    (55) increment_decrement_op -> . PLUSPLUS
-    (56) increment_decrement_op -> . MINUSMINUS
+    (46) expression -> . additive_expression logical_op additive_expression
+    (47) expression -> . additive_expression comp_op additive_expression
+    (48) expression -> . additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression
+    (49) additive_expression -> . term
+    (50) additive_expression -> . term math_op term
+    (51) term -> . factor
+    (52) term -> . factor increment_decrement_op
+    (53) term -> . increment_decrement_op factor
+    (54) factor -> . NUMBER
+    (55) factor -> . VARIABLE
+    (56) factor -> . LPAREN expression RPAREN
+    (57) increment_decrement_op -> . PLUSPLUS
+    (58) increment_decrement_op -> . MINUSMINUS
 
     NUMBER          shift and go to state 77
     VARIABLE        shift and go to state 78
@@ -1631,212 +1642,255 @@ state 72
 state 73
 
     (45) expression -> additive_expression .
-    (46) expression -> additive_expression . comp_op additive_expression
-    (61) comp_op -> . LESS
-    (62) comp_op -> . LESSEQUAL
-    (63) comp_op -> . GREATER
-    (64) comp_op -> . GREATEREQUAL
-    (65) comp_op -> . DEQUAL
-    (66) comp_op -> . DISTINT
-    (67) comp_op -> . ISEQUAL
+    (46) expression -> additive_expression . logical_op additive_expression
+    (47) expression -> additive_expression . comp_op additive_expression
+    (48) expression -> additive_expression . comp_op additive_expression logical_op additive_expression comp_op additive_expression
+    (70) logical_op -> . BOOL_OR
+    (71) logical_op -> . BOOL_AND
+    (72) logical_op -> . NOT
+    (73) logical_op -> . or
+    (74) logical_op -> . and
+    (63) comp_op -> . LESS
+    (64) comp_op -> . LESSEQUAL
+    (65) comp_op -> . GREATER
+    (66) comp_op -> . GREATEREQUAL
+    (67) comp_op -> . DEQUAL
+    (68) comp_op -> . DISTINT
+    (69) comp_op -> . ISEQUAL
 
     RPAREN          reduce using rule 45 (expression -> additive_expression .)
     SEMICOLON       reduce using rule 45 (expression -> additive_expression .)
     COMMA           reduce using rule 45 (expression -> additive_expression .)
-    LESS            shift and go to state 101
-    LESSEQUAL       shift and go to state 102
-    GREATER         shift and go to state 103
-    GREATEREQUAL    shift and go to state 104
-    DEQUAL          shift and go to state 105
-    DISTINT         shift and go to state 106
-    ISEQUAL         shift and go to state 107
+    BOOL_OR         shift and go to state 102
+    BOOL_AND        shift and go to state 103
+    NOT             shift and go to state 104
+    or              shift and go to state 105
+    and             shift and go to state 106
+    LESS            shift and go to state 107
+    LESSEQUAL       shift and go to state 108
+    GREATER         shift and go to state 109
+    GREATEREQUAL    shift and go to state 110
+    DEQUAL          shift and go to state 111
+    DISTINT         shift and go to state 112
+    ISEQUAL         shift and go to state 113
 
-    comp_op                        shift and go to state 100
+    logical_op                     shift and go to state 100
+    comp_op                        shift and go to state 101
 
 state 74
 
-    (47) additive_expression -> term .
-    (48) additive_expression -> term . math_op term
-    (57) math_op -> . PLUS
-    (58) math_op -> . MINUS
-    (59) math_op -> . TIMES
-    (60) math_op -> . DIVIDE
+    (49) additive_expression -> term .
+    (50) additive_expression -> term . math_op term
+    (59) math_op -> . PLUS
+    (60) math_op -> . MINUS
+    (61) math_op -> . TIMES
+    (62) math_op -> . DIVIDE
 
-    LESS            reduce using rule 47 (additive_expression -> term .)
-    LESSEQUAL       reduce using rule 47 (additive_expression -> term .)
-    GREATER         reduce using rule 47 (additive_expression -> term .)
-    GREATEREQUAL    reduce using rule 47 (additive_expression -> term .)
-    DEQUAL          reduce using rule 47 (additive_expression -> term .)
-    DISTINT         reduce using rule 47 (additive_expression -> term .)
-    ISEQUAL         reduce using rule 47 (additive_expression -> term .)
-    RPAREN          reduce using rule 47 (additive_expression -> term .)
-    SEMICOLON       reduce using rule 47 (additive_expression -> term .)
-    COMMA           reduce using rule 47 (additive_expression -> term .)
-    PLUS            shift and go to state 109
-    MINUS           shift and go to state 110
-    TIMES           shift and go to state 111
-    DIVIDE          shift and go to state 112
+    BOOL_OR         reduce using rule 49 (additive_expression -> term .)
+    BOOL_AND        reduce using rule 49 (additive_expression -> term .)
+    NOT             reduce using rule 49 (additive_expression -> term .)
+    or              reduce using rule 49 (additive_expression -> term .)
+    and             reduce using rule 49 (additive_expression -> term .)
+    LESS            reduce using rule 49 (additive_expression -> term .)
+    LESSEQUAL       reduce using rule 49 (additive_expression -> term .)
+    GREATER         reduce using rule 49 (additive_expression -> term .)
+    GREATEREQUAL    reduce using rule 49 (additive_expression -> term .)
+    DEQUAL          reduce using rule 49 (additive_expression -> term .)
+    DISTINT         reduce using rule 49 (additive_expression -> term .)
+    ISEQUAL         reduce using rule 49 (additive_expression -> term .)
+    RPAREN          reduce using rule 49 (additive_expression -> term .)
+    SEMICOLON       reduce using rule 49 (additive_expression -> term .)
+    COMMA           reduce using rule 49 (additive_expression -> term .)
+    PLUS            shift and go to state 115
+    MINUS           shift and go to state 116
+    TIMES           shift and go to state 117
+    DIVIDE          shift and go to state 118
 
-    math_op                        shift and go to state 108
+    math_op                        shift and go to state 114
 
 state 75
 
-    (49) term -> factor .
-    (50) term -> factor . increment_decrement_op
-    (55) increment_decrement_op -> . PLUSPLUS
-    (56) increment_decrement_op -> . MINUSMINUS
+    (51) term -> factor .
+    (52) term -> factor . increment_decrement_op
+    (57) increment_decrement_op -> . PLUSPLUS
+    (58) increment_decrement_op -> . MINUSMINUS
 
-    PLUS            reduce using rule 49 (term -> factor .)
-    MINUS           reduce using rule 49 (term -> factor .)
-    TIMES           reduce using rule 49 (term -> factor .)
-    DIVIDE          reduce using rule 49 (term -> factor .)
-    LESS            reduce using rule 49 (term -> factor .)
-    LESSEQUAL       reduce using rule 49 (term -> factor .)
-    GREATER         reduce using rule 49 (term -> factor .)
-    GREATEREQUAL    reduce using rule 49 (term -> factor .)
-    DEQUAL          reduce using rule 49 (term -> factor .)
-    DISTINT         reduce using rule 49 (term -> factor .)
-    ISEQUAL         reduce using rule 49 (term -> factor .)
-    RPAREN          reduce using rule 49 (term -> factor .)
-    SEMICOLON       reduce using rule 49 (term -> factor .)
-    COMMA           reduce using rule 49 (term -> factor .)
+    PLUS            reduce using rule 51 (term -> factor .)
+    MINUS           reduce using rule 51 (term -> factor .)
+    TIMES           reduce using rule 51 (term -> factor .)
+    DIVIDE          reduce using rule 51 (term -> factor .)
+    BOOL_OR         reduce using rule 51 (term -> factor .)
+    BOOL_AND        reduce using rule 51 (term -> factor .)
+    NOT             reduce using rule 51 (term -> factor .)
+    or              reduce using rule 51 (term -> factor .)
+    and             reduce using rule 51 (term -> factor .)
+    LESS            reduce using rule 51 (term -> factor .)
+    LESSEQUAL       reduce using rule 51 (term -> factor .)
+    GREATER         reduce using rule 51 (term -> factor .)
+    GREATEREQUAL    reduce using rule 51 (term -> factor .)
+    DEQUAL          reduce using rule 51 (term -> factor .)
+    DISTINT         reduce using rule 51 (term -> factor .)
+    ISEQUAL         reduce using rule 51 (term -> factor .)
+    RPAREN          reduce using rule 51 (term -> factor .)
+    SEMICOLON       reduce using rule 51 (term -> factor .)
+    COMMA           reduce using rule 51 (term -> factor .)
     PLUSPLUS        shift and go to state 79
     MINUSMINUS      shift and go to state 80
 
-    increment_decrement_op         shift and go to state 113
+    increment_decrement_op         shift and go to state 119
 
 state 76
 
-    (51) term -> increment_decrement_op . factor
-    (52) factor -> . NUMBER
-    (53) factor -> . VARIABLE
-    (54) factor -> . LPAREN expression RPAREN
+    (53) term -> increment_decrement_op . factor
+    (54) factor -> . NUMBER
+    (55) factor -> . VARIABLE
+    (56) factor -> . LPAREN expression RPAREN
 
     NUMBER          shift and go to state 77
     VARIABLE        shift and go to state 78
     LPAREN          shift and go to state 71
 
-    factor                         shift and go to state 114
+    factor                         shift and go to state 120
 
 state 77
 
-    (52) factor -> NUMBER .
+    (54) factor -> NUMBER .
 
-    PLUSPLUS        reduce using rule 52 (factor -> NUMBER .)
-    MINUSMINUS      reduce using rule 52 (factor -> NUMBER .)
-    PLUS            reduce using rule 52 (factor -> NUMBER .)
-    MINUS           reduce using rule 52 (factor -> NUMBER .)
-    TIMES           reduce using rule 52 (factor -> NUMBER .)
-    DIVIDE          reduce using rule 52 (factor -> NUMBER .)
-    LESS            reduce using rule 52 (factor -> NUMBER .)
-    LESSEQUAL       reduce using rule 52 (factor -> NUMBER .)
-    GREATER         reduce using rule 52 (factor -> NUMBER .)
-    GREATEREQUAL    reduce using rule 52 (factor -> NUMBER .)
-    DEQUAL          reduce using rule 52 (factor -> NUMBER .)
-    DISTINT         reduce using rule 52 (factor -> NUMBER .)
-    ISEQUAL         reduce using rule 52 (factor -> NUMBER .)
-    RPAREN          reduce using rule 52 (factor -> NUMBER .)
-    SEMICOLON       reduce using rule 52 (factor -> NUMBER .)
-    COMMA           reduce using rule 52 (factor -> NUMBER .)
+    PLUSPLUS        reduce using rule 54 (factor -> NUMBER .)
+    MINUSMINUS      reduce using rule 54 (factor -> NUMBER .)
+    PLUS            reduce using rule 54 (factor -> NUMBER .)
+    MINUS           reduce using rule 54 (factor -> NUMBER .)
+    TIMES           reduce using rule 54 (factor -> NUMBER .)
+    DIVIDE          reduce using rule 54 (factor -> NUMBER .)
+    BOOL_OR         reduce using rule 54 (factor -> NUMBER .)
+    BOOL_AND        reduce using rule 54 (factor -> NUMBER .)
+    NOT             reduce using rule 54 (factor -> NUMBER .)
+    or              reduce using rule 54 (factor -> NUMBER .)
+    and             reduce using rule 54 (factor -> NUMBER .)
+    LESS            reduce using rule 54 (factor -> NUMBER .)
+    LESSEQUAL       reduce using rule 54 (factor -> NUMBER .)
+    GREATER         reduce using rule 54 (factor -> NUMBER .)
+    GREATEREQUAL    reduce using rule 54 (factor -> NUMBER .)
+    DEQUAL          reduce using rule 54 (factor -> NUMBER .)
+    DISTINT         reduce using rule 54 (factor -> NUMBER .)
+    ISEQUAL         reduce using rule 54 (factor -> NUMBER .)
+    RPAREN          reduce using rule 54 (factor -> NUMBER .)
+    SEMICOLON       reduce using rule 54 (factor -> NUMBER .)
+    COMMA           reduce using rule 54 (factor -> NUMBER .)
 
 
 state 78
 
-    (53) factor -> VARIABLE .
+    (55) factor -> VARIABLE .
 
-    PLUSPLUS        reduce using rule 53 (factor -> VARIABLE .)
-    MINUSMINUS      reduce using rule 53 (factor -> VARIABLE .)
-    PLUS            reduce using rule 53 (factor -> VARIABLE .)
-    MINUS           reduce using rule 53 (factor -> VARIABLE .)
-    TIMES           reduce using rule 53 (factor -> VARIABLE .)
-    DIVIDE          reduce using rule 53 (factor -> VARIABLE .)
-    LESS            reduce using rule 53 (factor -> VARIABLE .)
-    LESSEQUAL       reduce using rule 53 (factor -> VARIABLE .)
-    GREATER         reduce using rule 53 (factor -> VARIABLE .)
-    GREATEREQUAL    reduce using rule 53 (factor -> VARIABLE .)
-    DEQUAL          reduce using rule 53 (factor -> VARIABLE .)
-    DISTINT         reduce using rule 53 (factor -> VARIABLE .)
-    ISEQUAL         reduce using rule 53 (factor -> VARIABLE .)
-    RPAREN          reduce using rule 53 (factor -> VARIABLE .)
-    SEMICOLON       reduce using rule 53 (factor -> VARIABLE .)
-    COMMA           reduce using rule 53 (factor -> VARIABLE .)
+    PLUSPLUS        reduce using rule 55 (factor -> VARIABLE .)
+    MINUSMINUS      reduce using rule 55 (factor -> VARIABLE .)
+    PLUS            reduce using rule 55 (factor -> VARIABLE .)
+    MINUS           reduce using rule 55 (factor -> VARIABLE .)
+    TIMES           reduce using rule 55 (factor -> VARIABLE .)
+    DIVIDE          reduce using rule 55 (factor -> VARIABLE .)
+    BOOL_OR         reduce using rule 55 (factor -> VARIABLE .)
+    BOOL_AND        reduce using rule 55 (factor -> VARIABLE .)
+    NOT             reduce using rule 55 (factor -> VARIABLE .)
+    or              reduce using rule 55 (factor -> VARIABLE .)
+    and             reduce using rule 55 (factor -> VARIABLE .)
+    LESS            reduce using rule 55 (factor -> VARIABLE .)
+    LESSEQUAL       reduce using rule 55 (factor -> VARIABLE .)
+    GREATER         reduce using rule 55 (factor -> VARIABLE .)
+    GREATEREQUAL    reduce using rule 55 (factor -> VARIABLE .)
+    DEQUAL          reduce using rule 55 (factor -> VARIABLE .)
+    DISTINT         reduce using rule 55 (factor -> VARIABLE .)
+    ISEQUAL         reduce using rule 55 (factor -> VARIABLE .)
+    RPAREN          reduce using rule 55 (factor -> VARIABLE .)
+    SEMICOLON       reduce using rule 55 (factor -> VARIABLE .)
+    COMMA           reduce using rule 55 (factor -> VARIABLE .)
 
 
 state 79
 
-    (55) increment_decrement_op -> PLUSPLUS .
+    (57) increment_decrement_op -> PLUSPLUS .
 
-    NUMBER          reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    VARIABLE        reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    LPAREN          reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    PLUS            reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    MINUS           reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    TIMES           reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    DIVIDE          reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    LESS            reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    LESSEQUAL       reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    GREATER         reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    GREATEREQUAL    reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    DEQUAL          reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    DISTINT         reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    ISEQUAL         reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    RPAREN          reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    SEMICOLON       reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
-    COMMA           reduce using rule 55 (increment_decrement_op -> PLUSPLUS .)
+    NUMBER          reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    VARIABLE        reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    LPAREN          reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    PLUS            reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    MINUS           reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    TIMES           reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    DIVIDE          reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    BOOL_OR         reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    BOOL_AND        reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    NOT             reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    or              reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    and             reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    LESS            reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    LESSEQUAL       reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    GREATER         reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    GREATEREQUAL    reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    DEQUAL          reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    DISTINT         reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    ISEQUAL         reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    RPAREN          reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    SEMICOLON       reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
+    COMMA           reduce using rule 57 (increment_decrement_op -> PLUSPLUS .)
 
 
 state 80
 
-    (56) increment_decrement_op -> MINUSMINUS .
+    (58) increment_decrement_op -> MINUSMINUS .
 
-    NUMBER          reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    VARIABLE        reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    LPAREN          reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    PLUS            reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    MINUS           reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    TIMES           reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    DIVIDE          reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    LESS            reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    LESSEQUAL       reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    GREATER         reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    GREATEREQUAL    reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    DEQUAL          reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    DISTINT         reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    ISEQUAL         reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    RPAREN          reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    SEMICOLON       reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
-    COMMA           reduce using rule 56 (increment_decrement_op -> MINUSMINUS .)
+    NUMBER          reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    VARIABLE        reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    LPAREN          reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    PLUS            reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    MINUS           reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    TIMES           reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    DIVIDE          reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    BOOL_OR         reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    BOOL_AND        reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    NOT             reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    or              reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    and             reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    LESS            reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    LESSEQUAL       reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    GREATER         reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    GREATEREQUAL    reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    DEQUAL          reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    DISTINT         reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    ISEQUAL         reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    RPAREN          reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    SEMICOLON       reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
+    COMMA           reduce using rule 58 (increment_decrement_op -> MINUSMINUS .)
 
 
 state 81
 
-    (68) if_statement -> if LPAREN expression . RPAREN LBLOCK declaration_list RBLOCK else_part
+    (75) if_statement -> if LPAREN expression . RPAREN LBLOCK declaration_list RBLOCK else_part
 
-    RPAREN          shift and go to state 115
+    RPAREN          shift and go to state 121
 
 
 state 82
 
-    (73) fun_declaration -> function ID LPAREN . params RPAREN LBLOCK declaration RBLOCK
-    (77) params -> . single_param
-    (78) params -> . params COMMA single_param
-    (79) single_param -> . var_declaration2
-    (80) single_param -> . empty_function
+    (80) fun_declaration -> function ID LPAREN . params RPAREN LBLOCK declaration RBLOCK
+    (84) params -> . single_param
+    (85) params -> . params COMMA single_param
+    (86) single_param -> . var_declaration2
+    (87) single_param -> . empty_function
     (35) var_declaration2 -> . VARIABLE assignment_tail
-    (81) empty_function -> .
+    (88) empty_function -> .
 
     VARIABLE        shift and go to state 34
-    RPAREN          reduce using rule 81 (empty_function -> .)
-    COMMA           reduce using rule 81 (empty_function -> .)
+    RPAREN          reduce using rule 88 (empty_function -> .)
+    COMMA           reduce using rule 88 (empty_function -> .)
 
-    params                         shift and go to state 116
+    params                         shift and go to state 122
     single_param                   shift and go to state 60
     var_declaration2               shift and go to state 61
     empty_function                 shift and go to state 62
 
 state 83
 
-    (75) obj_declaration -> class ID LBLOCK . declaration RBLOCK
+    (82) obj_declaration -> class ID LBLOCK . declaration RBLOCK
     (6) declaration -> . COMMENT
     (7) declaration -> . COMMENT_HASHTAG
     (8) declaration -> . COMMENT_MULTI
@@ -1865,11 +1919,11 @@ state 83
     (32) echo_declaration -> . echo LPAREN data_type RPAREN SEMICOLON
     (33) echo_declaration -> . echo data_type SEMICOLON
     (44) iteration_stmt -> . while LPAREN expression RPAREN LBLOCK declaration RBLOCK
-    (68) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-    (73) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
-    (74) fun_call -> . ID LPAREN params RPAREN
-    (75) obj_declaration -> . class ID LBLOCK declaration RBLOCK
-    (76) create_obj_declaration -> . new ID LPAREN params RPAREN
+    (75) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (80) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
+    (81) fun_call -> . ID LPAREN params RPAREN
+    (82) obj_declaration -> . class ID LBLOCK declaration RBLOCK
+    (83) create_obj_declaration -> . new ID LPAREN params RPAREN
     (3) footer_declaration -> . CLOSE_TAG
     (35) var_declaration2 -> . VARIABLE assignment_tail
 
@@ -1890,7 +1944,7 @@ state 83
     CLOSE_TAG       shift and go to state 33
     VARIABLE        shift and go to state 34
 
-    declaration                    shift and go to state 117
+    declaration                    shift and go to state 123
     header_declaration             shift and go to state 9
     var_declaration                shift and go to state 10
     constant_declaration           shift and go to state 11
@@ -1907,19 +1961,19 @@ state 83
 
 state 84
 
-    (76) create_obj_declaration -> new ID LPAREN . params RPAREN
-    (77) params -> . single_param
-    (78) params -> . params COMMA single_param
-    (79) single_param -> . var_declaration2
-    (80) single_param -> . empty_function
+    (83) create_obj_declaration -> new ID LPAREN . params RPAREN
+    (84) params -> . single_param
+    (85) params -> . params COMMA single_param
+    (86) single_param -> . var_declaration2
+    (87) single_param -> . empty_function
     (35) var_declaration2 -> . VARIABLE assignment_tail
-    (81) empty_function -> .
+    (88) empty_function -> .
 
     VARIABLE        shift and go to state 34
-    RPAREN          reduce using rule 81 (empty_function -> .)
-    COMMA           reduce using rule 81 (empty_function -> .)
+    RPAREN          reduce using rule 88 (empty_function -> .)
+    COMMA           reduce using rule 88 (empty_function -> .)
 
-    params                         shift and go to state 118
+    params                         shift and go to state 124
     single_param                   shift and go to state 60
     var_declaration2               shift and go to state 61
     empty_function                 shift and go to state 62
@@ -1936,53 +1990,63 @@ state 85
 state 86
 
     (37) assignment_tail -> EQUAL NUMBER . COMMA var_declaration2
-    (52) factor -> NUMBER .
+    (54) factor -> NUMBER .
 
   ! shift/reduce conflict for COMMA resolved as shift
-    COMMA           shift and go to state 119
-    PLUSPLUS        reduce using rule 52 (factor -> NUMBER .)
-    MINUSMINUS      reduce using rule 52 (factor -> NUMBER .)
-    PLUS            reduce using rule 52 (factor -> NUMBER .)
-    MINUS           reduce using rule 52 (factor -> NUMBER .)
-    TIMES           reduce using rule 52 (factor -> NUMBER .)
-    DIVIDE          reduce using rule 52 (factor -> NUMBER .)
-    LESS            reduce using rule 52 (factor -> NUMBER .)
-    LESSEQUAL       reduce using rule 52 (factor -> NUMBER .)
-    GREATER         reduce using rule 52 (factor -> NUMBER .)
-    GREATEREQUAL    reduce using rule 52 (factor -> NUMBER .)
-    DEQUAL          reduce using rule 52 (factor -> NUMBER .)
-    DISTINT         reduce using rule 52 (factor -> NUMBER .)
-    ISEQUAL         reduce using rule 52 (factor -> NUMBER .)
-    SEMICOLON       reduce using rule 52 (factor -> NUMBER .)
-    RPAREN          reduce using rule 52 (factor -> NUMBER .)
+    COMMA           shift and go to state 125
+    PLUSPLUS        reduce using rule 54 (factor -> NUMBER .)
+    MINUSMINUS      reduce using rule 54 (factor -> NUMBER .)
+    PLUS            reduce using rule 54 (factor -> NUMBER .)
+    MINUS           reduce using rule 54 (factor -> NUMBER .)
+    TIMES           reduce using rule 54 (factor -> NUMBER .)
+    DIVIDE          reduce using rule 54 (factor -> NUMBER .)
+    BOOL_OR         reduce using rule 54 (factor -> NUMBER .)
+    BOOL_AND        reduce using rule 54 (factor -> NUMBER .)
+    NOT             reduce using rule 54 (factor -> NUMBER .)
+    or              reduce using rule 54 (factor -> NUMBER .)
+    and             reduce using rule 54 (factor -> NUMBER .)
+    LESS            reduce using rule 54 (factor -> NUMBER .)
+    LESSEQUAL       reduce using rule 54 (factor -> NUMBER .)
+    GREATER         reduce using rule 54 (factor -> NUMBER .)
+    GREATEREQUAL    reduce using rule 54 (factor -> NUMBER .)
+    DEQUAL          reduce using rule 54 (factor -> NUMBER .)
+    DISTINT         reduce using rule 54 (factor -> NUMBER .)
+    ISEQUAL         reduce using rule 54 (factor -> NUMBER .)
+    SEMICOLON       reduce using rule 54 (factor -> NUMBER .)
+    RPAREN          reduce using rule 54 (factor -> NUMBER .)
 
-  ! COMMA           [ reduce using rule 52 (factor -> NUMBER .) ]
+  ! COMMA           [ reduce using rule 54 (factor -> NUMBER .) ]
 
 
 state 87
 
     (38) assignment_tail -> EQUAL VARIABLE . COMMA var_declaration2
-    (53) factor -> VARIABLE .
+    (55) factor -> VARIABLE .
 
   ! shift/reduce conflict for COMMA resolved as shift
-    COMMA           shift and go to state 120
-    PLUSPLUS        reduce using rule 53 (factor -> VARIABLE .)
-    MINUSMINUS      reduce using rule 53 (factor -> VARIABLE .)
-    PLUS            reduce using rule 53 (factor -> VARIABLE .)
-    MINUS           reduce using rule 53 (factor -> VARIABLE .)
-    TIMES           reduce using rule 53 (factor -> VARIABLE .)
-    DIVIDE          reduce using rule 53 (factor -> VARIABLE .)
-    LESS            reduce using rule 53 (factor -> VARIABLE .)
-    LESSEQUAL       reduce using rule 53 (factor -> VARIABLE .)
-    GREATER         reduce using rule 53 (factor -> VARIABLE .)
-    GREATEREQUAL    reduce using rule 53 (factor -> VARIABLE .)
-    DEQUAL          reduce using rule 53 (factor -> VARIABLE .)
-    DISTINT         reduce using rule 53 (factor -> VARIABLE .)
-    ISEQUAL         reduce using rule 53 (factor -> VARIABLE .)
-    SEMICOLON       reduce using rule 53 (factor -> VARIABLE .)
-    RPAREN          reduce using rule 53 (factor -> VARIABLE .)
+    COMMA           shift and go to state 126
+    PLUSPLUS        reduce using rule 55 (factor -> VARIABLE .)
+    MINUSMINUS      reduce using rule 55 (factor -> VARIABLE .)
+    PLUS            reduce using rule 55 (factor -> VARIABLE .)
+    MINUS           reduce using rule 55 (factor -> VARIABLE .)
+    TIMES           reduce using rule 55 (factor -> VARIABLE .)
+    DIVIDE          reduce using rule 55 (factor -> VARIABLE .)
+    BOOL_OR         reduce using rule 55 (factor -> VARIABLE .)
+    BOOL_AND        reduce using rule 55 (factor -> VARIABLE .)
+    NOT             reduce using rule 55 (factor -> VARIABLE .)
+    or              reduce using rule 55 (factor -> VARIABLE .)
+    and             reduce using rule 55 (factor -> VARIABLE .)
+    LESS            reduce using rule 55 (factor -> VARIABLE .)
+    LESSEQUAL       reduce using rule 55 (factor -> VARIABLE .)
+    GREATER         reduce using rule 55 (factor -> VARIABLE .)
+    GREATEREQUAL    reduce using rule 55 (factor -> VARIABLE .)
+    DEQUAL          reduce using rule 55 (factor -> VARIABLE .)
+    DISTINT         reduce using rule 55 (factor -> VARIABLE .)
+    ISEQUAL         reduce using rule 55 (factor -> VARIABLE .)
+    SEMICOLON       reduce using rule 55 (factor -> VARIABLE .)
+    RPAREN          reduce using rule 55 (factor -> VARIABLE .)
 
-  ! COMMA           [ reduce using rule 53 (factor -> VARIABLE .) ]
+  ! COMMA           [ reduce using rule 55 (factor -> VARIABLE .) ]
 
 
 state 88
@@ -1999,29 +2063,31 @@ state 89
     (41) assignment_tail -> EQUAL LBRACKET . expression COMMA var_declaration2
     (42) assignment_tail -> EQUAL LBRACKET . data_type COMMA var_declaration2
     (45) expression -> . additive_expression
-    (46) expression -> . additive_expression comp_op additive_expression
+    (46) expression -> . additive_expression logical_op additive_expression
+    (47) expression -> . additive_expression comp_op additive_expression
+    (48) expression -> . additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression
     (22) data_type -> . NUMBER
     (23) data_type -> . CADENA
-    (47) additive_expression -> . term
-    (48) additive_expression -> . term math_op term
-    (49) term -> . factor
-    (50) term -> . factor increment_decrement_op
-    (51) term -> . increment_decrement_op factor
-    (52) factor -> . NUMBER
-    (53) factor -> . VARIABLE
-    (54) factor -> . LPAREN expression RPAREN
-    (55) increment_decrement_op -> . PLUSPLUS
-    (56) increment_decrement_op -> . MINUSMINUS
+    (49) additive_expression -> . term
+    (50) additive_expression -> . term math_op term
+    (51) term -> . factor
+    (52) term -> . factor increment_decrement_op
+    (53) term -> . increment_decrement_op factor
+    (54) factor -> . NUMBER
+    (55) factor -> . VARIABLE
+    (56) factor -> . LPAREN expression RPAREN
+    (57) increment_decrement_op -> . PLUSPLUS
+    (58) increment_decrement_op -> . MINUSMINUS
 
-    NUMBER          shift and go to state 123
+    NUMBER          shift and go to state 129
     CADENA          shift and go to state 44
     VARIABLE        shift and go to state 78
     LPAREN          shift and go to state 71
     PLUSPLUS        shift and go to state 79
     MINUSMINUS      shift and go to state 80
 
-    expression                     shift and go to state 121
-    data_type                      shift and go to state 122
+    expression                     shift and go to state 127
+    data_type                      shift and go to state 128
     additive_expression            shift and go to state 73
     term                           shift and go to state 74
     factor                         shift and go to state 75
@@ -2040,46 +2106,46 @@ state 91
 
     (25) constant_declaration -> const ID EQUAL data_type . SEMICOLON
 
-    SEMICOLON       shift and go to state 124
+    SEMICOLON       shift and go to state 130
 
 
 state 92
 
-    (74) fun_call -> ID LPAREN params RPAREN .
+    (81) fun_call -> ID LPAREN params RPAREN .
 
-    COMMENT         reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    COMMENT_HASHTAG reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    COMMENT_MULTI   reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    empty           reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    include         reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    const           reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    print           reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    echo            reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    while           reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    if              reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    function        reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    ID              reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    class           reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    new             reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    CLOSE_TAG       reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    VARIABLE        reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    $end            reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
-    RBLOCK          reduce using rule 74 (fun_call -> ID LPAREN params RPAREN .)
+    COMMENT         reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    COMMENT_HASHTAG reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    COMMENT_MULTI   reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    empty           reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    include         reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    const           reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    print           reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    echo            reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    while           reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    if              reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    function        reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    ID              reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    class           reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    new             reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    CLOSE_TAG       reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    VARIABLE        reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    $end            reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
+    RBLOCK          reduce using rule 81 (fun_call -> ID LPAREN params RPAREN .)
 
 
 state 93
 
-    (78) params -> params COMMA . single_param
-    (79) single_param -> . var_declaration2
-    (80) single_param -> . empty_function
+    (85) params -> params COMMA . single_param
+    (86) single_param -> . var_declaration2
+    (87) single_param -> . empty_function
     (35) var_declaration2 -> . VARIABLE assignment_tail
-    (81) empty_function -> .
+    (88) empty_function -> .
 
     VARIABLE        shift and go to state 34
-    RPAREN          reduce using rule 81 (empty_function -> .)
-    COMMA           reduce using rule 81 (empty_function -> .)
+    RPAREN          reduce using rule 88 (empty_function -> .)
+    COMMA           reduce using rule 88 (empty_function -> .)
 
-    single_param                   shift and go to state 125
+    single_param                   shift and go to state 131
     var_declaration2               shift and go to state 61
     empty_function                 shift and go to state 62
 
@@ -2087,57 +2153,57 @@ state 94
 
     (27) print_declaration -> print LPAREN var_declaration2 RPAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 126
+    SEMICOLON       shift and go to state 132
 
 
 state 95
 
     (28) print_declaration -> print LPAREN data_type RPAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 127
+    SEMICOLON       shift and go to state 133
 
 
 state 96
 
     (31) echo_declaration -> echo LPAREN var_declaration2 RPAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 128
+    SEMICOLON       shift and go to state 134
 
 
 state 97
 
     (32) echo_declaration -> echo LPAREN data_type RPAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 129
+    SEMICOLON       shift and go to state 135
 
 
 state 98
 
-    (54) factor -> LPAREN expression . RPAREN
+    (56) factor -> LPAREN expression . RPAREN
 
-    RPAREN          shift and go to state 130
+    RPAREN          shift and go to state 136
 
 
 state 99
 
     (44) iteration_stmt -> while LPAREN expression RPAREN . LBLOCK declaration RBLOCK
 
-    LBLOCK          shift and go to state 131
+    LBLOCK          shift and go to state 137
 
 
 state 100
 
-    (46) expression -> additive_expression comp_op . additive_expression
-    (47) additive_expression -> . term
-    (48) additive_expression -> . term math_op term
-    (49) term -> . factor
-    (50) term -> . factor increment_decrement_op
-    (51) term -> . increment_decrement_op factor
-    (52) factor -> . NUMBER
-    (53) factor -> . VARIABLE
-    (54) factor -> . LPAREN expression RPAREN
-    (55) increment_decrement_op -> . PLUSPLUS
-    (56) increment_decrement_op -> . MINUSMINUS
+    (46) expression -> additive_expression logical_op . additive_expression
+    (49) additive_expression -> . term
+    (50) additive_expression -> . term math_op term
+    (51) term -> . factor
+    (52) term -> . factor increment_decrement_op
+    (53) term -> . increment_decrement_op factor
+    (54) factor -> . NUMBER
+    (55) factor -> . VARIABLE
+    (56) factor -> . LPAREN expression RPAREN
+    (57) increment_decrement_op -> . PLUSPLUS
+    (58) increment_decrement_op -> . MINUSMINUS
 
     NUMBER          shift and go to state 77
     VARIABLE        shift and go to state 78
@@ -2145,99 +2211,25 @@ state 100
     PLUSPLUS        shift and go to state 79
     MINUSMINUS      shift and go to state 80
 
-    additive_expression            shift and go to state 132
+    additive_expression            shift and go to state 138
     term                           shift and go to state 74
     factor                         shift and go to state 75
     increment_decrement_op         shift and go to state 76
 
 state 101
 
-    (61) comp_op -> LESS .
-
-    NUMBER          reduce using rule 61 (comp_op -> LESS .)
-    VARIABLE        reduce using rule 61 (comp_op -> LESS .)
-    LPAREN          reduce using rule 61 (comp_op -> LESS .)
-    PLUSPLUS        reduce using rule 61 (comp_op -> LESS .)
-    MINUSMINUS      reduce using rule 61 (comp_op -> LESS .)
-
-
-state 102
-
-    (62) comp_op -> LESSEQUAL .
-
-    NUMBER          reduce using rule 62 (comp_op -> LESSEQUAL .)
-    VARIABLE        reduce using rule 62 (comp_op -> LESSEQUAL .)
-    LPAREN          reduce using rule 62 (comp_op -> LESSEQUAL .)
-    PLUSPLUS        reduce using rule 62 (comp_op -> LESSEQUAL .)
-    MINUSMINUS      reduce using rule 62 (comp_op -> LESSEQUAL .)
-
-
-state 103
-
-    (63) comp_op -> GREATER .
-
-    NUMBER          reduce using rule 63 (comp_op -> GREATER .)
-    VARIABLE        reduce using rule 63 (comp_op -> GREATER .)
-    LPAREN          reduce using rule 63 (comp_op -> GREATER .)
-    PLUSPLUS        reduce using rule 63 (comp_op -> GREATER .)
-    MINUSMINUS      reduce using rule 63 (comp_op -> GREATER .)
-
-
-state 104
-
-    (64) comp_op -> GREATEREQUAL .
-
-    NUMBER          reduce using rule 64 (comp_op -> GREATEREQUAL .)
-    VARIABLE        reduce using rule 64 (comp_op -> GREATEREQUAL .)
-    LPAREN          reduce using rule 64 (comp_op -> GREATEREQUAL .)
-    PLUSPLUS        reduce using rule 64 (comp_op -> GREATEREQUAL .)
-    MINUSMINUS      reduce using rule 64 (comp_op -> GREATEREQUAL .)
-
-
-state 105
-
-    (65) comp_op -> DEQUAL .
-
-    NUMBER          reduce using rule 65 (comp_op -> DEQUAL .)
-    VARIABLE        reduce using rule 65 (comp_op -> DEQUAL .)
-    LPAREN          reduce using rule 65 (comp_op -> DEQUAL .)
-    PLUSPLUS        reduce using rule 65 (comp_op -> DEQUAL .)
-    MINUSMINUS      reduce using rule 65 (comp_op -> DEQUAL .)
-
-
-state 106
-
-    (66) comp_op -> DISTINT .
-
-    NUMBER          reduce using rule 66 (comp_op -> DISTINT .)
-    VARIABLE        reduce using rule 66 (comp_op -> DISTINT .)
-    LPAREN          reduce using rule 66 (comp_op -> DISTINT .)
-    PLUSPLUS        reduce using rule 66 (comp_op -> DISTINT .)
-    MINUSMINUS      reduce using rule 66 (comp_op -> DISTINT .)
-
-
-state 107
-
-    (67) comp_op -> ISEQUAL .
-
-    NUMBER          reduce using rule 67 (comp_op -> ISEQUAL .)
-    VARIABLE        reduce using rule 67 (comp_op -> ISEQUAL .)
-    LPAREN          reduce using rule 67 (comp_op -> ISEQUAL .)
-    PLUSPLUS        reduce using rule 67 (comp_op -> ISEQUAL .)
-    MINUSMINUS      reduce using rule 67 (comp_op -> ISEQUAL .)
-
-
-state 108
-
-    (48) additive_expression -> term math_op . term
-    (49) term -> . factor
-    (50) term -> . factor increment_decrement_op
-    (51) term -> . increment_decrement_op factor
-    (52) factor -> . NUMBER
-    (53) factor -> . VARIABLE
-    (54) factor -> . LPAREN expression RPAREN
-    (55) increment_decrement_op -> . PLUSPLUS
-    (56) increment_decrement_op -> . MINUSMINUS
+    (47) expression -> additive_expression comp_op . additive_expression
+    (48) expression -> additive_expression comp_op . additive_expression logical_op additive_expression comp_op additive_expression
+    (49) additive_expression -> . term
+    (50) additive_expression -> . term math_op term
+    (51) term -> . factor
+    (52) term -> . factor increment_decrement_op
+    (53) term -> . increment_decrement_op factor
+    (54) factor -> . NUMBER
+    (55) factor -> . VARIABLE
+    (56) factor -> . LPAREN expression RPAREN
+    (57) increment_decrement_op -> . PLUSPLUS
+    (58) increment_decrement_op -> . MINUSMINUS
 
     NUMBER          shift and go to state 77
     VARIABLE        shift and go to state 78
@@ -2245,183 +2237,353 @@ state 108
     PLUSPLUS        shift and go to state 79
     MINUSMINUS      shift and go to state 80
 
-    term                           shift and go to state 133
+    additive_expression            shift and go to state 139
+    term                           shift and go to state 74
     factor                         shift and go to state 75
     increment_decrement_op         shift and go to state 76
 
+state 102
+
+    (70) logical_op -> BOOL_OR .
+
+    NUMBER          reduce using rule 70 (logical_op -> BOOL_OR .)
+    VARIABLE        reduce using rule 70 (logical_op -> BOOL_OR .)
+    LPAREN          reduce using rule 70 (logical_op -> BOOL_OR .)
+    PLUSPLUS        reduce using rule 70 (logical_op -> BOOL_OR .)
+    MINUSMINUS      reduce using rule 70 (logical_op -> BOOL_OR .)
+
+
+state 103
+
+    (71) logical_op -> BOOL_AND .
+
+    NUMBER          reduce using rule 71 (logical_op -> BOOL_AND .)
+    VARIABLE        reduce using rule 71 (logical_op -> BOOL_AND .)
+    LPAREN          reduce using rule 71 (logical_op -> BOOL_AND .)
+    PLUSPLUS        reduce using rule 71 (logical_op -> BOOL_AND .)
+    MINUSMINUS      reduce using rule 71 (logical_op -> BOOL_AND .)
+
+
+state 104
+
+    (72) logical_op -> NOT .
+
+    NUMBER          reduce using rule 72 (logical_op -> NOT .)
+    VARIABLE        reduce using rule 72 (logical_op -> NOT .)
+    LPAREN          reduce using rule 72 (logical_op -> NOT .)
+    PLUSPLUS        reduce using rule 72 (logical_op -> NOT .)
+    MINUSMINUS      reduce using rule 72 (logical_op -> NOT .)
+
+
+state 105
+
+    (73) logical_op -> or .
+
+    NUMBER          reduce using rule 73 (logical_op -> or .)
+    VARIABLE        reduce using rule 73 (logical_op -> or .)
+    LPAREN          reduce using rule 73 (logical_op -> or .)
+    PLUSPLUS        reduce using rule 73 (logical_op -> or .)
+    MINUSMINUS      reduce using rule 73 (logical_op -> or .)
+
+
+state 106
+
+    (74) logical_op -> and .
+
+    NUMBER          reduce using rule 74 (logical_op -> and .)
+    VARIABLE        reduce using rule 74 (logical_op -> and .)
+    LPAREN          reduce using rule 74 (logical_op -> and .)
+    PLUSPLUS        reduce using rule 74 (logical_op -> and .)
+    MINUSMINUS      reduce using rule 74 (logical_op -> and .)
+
+
+state 107
+
+    (63) comp_op -> LESS .
+
+    NUMBER          reduce using rule 63 (comp_op -> LESS .)
+    VARIABLE        reduce using rule 63 (comp_op -> LESS .)
+    LPAREN          reduce using rule 63 (comp_op -> LESS .)
+    PLUSPLUS        reduce using rule 63 (comp_op -> LESS .)
+    MINUSMINUS      reduce using rule 63 (comp_op -> LESS .)
+
+
+state 108
+
+    (64) comp_op -> LESSEQUAL .
+
+    NUMBER          reduce using rule 64 (comp_op -> LESSEQUAL .)
+    VARIABLE        reduce using rule 64 (comp_op -> LESSEQUAL .)
+    LPAREN          reduce using rule 64 (comp_op -> LESSEQUAL .)
+    PLUSPLUS        reduce using rule 64 (comp_op -> LESSEQUAL .)
+    MINUSMINUS      reduce using rule 64 (comp_op -> LESSEQUAL .)
+
+
 state 109
 
-    (57) math_op -> PLUS .
+    (65) comp_op -> GREATER .
 
-    NUMBER          reduce using rule 57 (math_op -> PLUS .)
-    VARIABLE        reduce using rule 57 (math_op -> PLUS .)
-    LPAREN          reduce using rule 57 (math_op -> PLUS .)
-    PLUSPLUS        reduce using rule 57 (math_op -> PLUS .)
-    MINUSMINUS      reduce using rule 57 (math_op -> PLUS .)
+    NUMBER          reduce using rule 65 (comp_op -> GREATER .)
+    VARIABLE        reduce using rule 65 (comp_op -> GREATER .)
+    LPAREN          reduce using rule 65 (comp_op -> GREATER .)
+    PLUSPLUS        reduce using rule 65 (comp_op -> GREATER .)
+    MINUSMINUS      reduce using rule 65 (comp_op -> GREATER .)
 
 
 state 110
 
-    (58) math_op -> MINUS .
+    (66) comp_op -> GREATEREQUAL .
 
-    NUMBER          reduce using rule 58 (math_op -> MINUS .)
-    VARIABLE        reduce using rule 58 (math_op -> MINUS .)
-    LPAREN          reduce using rule 58 (math_op -> MINUS .)
-    PLUSPLUS        reduce using rule 58 (math_op -> MINUS .)
-    MINUSMINUS      reduce using rule 58 (math_op -> MINUS .)
+    NUMBER          reduce using rule 66 (comp_op -> GREATEREQUAL .)
+    VARIABLE        reduce using rule 66 (comp_op -> GREATEREQUAL .)
+    LPAREN          reduce using rule 66 (comp_op -> GREATEREQUAL .)
+    PLUSPLUS        reduce using rule 66 (comp_op -> GREATEREQUAL .)
+    MINUSMINUS      reduce using rule 66 (comp_op -> GREATEREQUAL .)
 
 
 state 111
 
-    (59) math_op -> TIMES .
+    (67) comp_op -> DEQUAL .
 
-    NUMBER          reduce using rule 59 (math_op -> TIMES .)
-    VARIABLE        reduce using rule 59 (math_op -> TIMES .)
-    LPAREN          reduce using rule 59 (math_op -> TIMES .)
-    PLUSPLUS        reduce using rule 59 (math_op -> TIMES .)
-    MINUSMINUS      reduce using rule 59 (math_op -> TIMES .)
+    NUMBER          reduce using rule 67 (comp_op -> DEQUAL .)
+    VARIABLE        reduce using rule 67 (comp_op -> DEQUAL .)
+    LPAREN          reduce using rule 67 (comp_op -> DEQUAL .)
+    PLUSPLUS        reduce using rule 67 (comp_op -> DEQUAL .)
+    MINUSMINUS      reduce using rule 67 (comp_op -> DEQUAL .)
 
 
 state 112
 
-    (60) math_op -> DIVIDE .
+    (68) comp_op -> DISTINT .
 
-    NUMBER          reduce using rule 60 (math_op -> DIVIDE .)
-    VARIABLE        reduce using rule 60 (math_op -> DIVIDE .)
-    LPAREN          reduce using rule 60 (math_op -> DIVIDE .)
-    PLUSPLUS        reduce using rule 60 (math_op -> DIVIDE .)
-    MINUSMINUS      reduce using rule 60 (math_op -> DIVIDE .)
+    NUMBER          reduce using rule 68 (comp_op -> DISTINT .)
+    VARIABLE        reduce using rule 68 (comp_op -> DISTINT .)
+    LPAREN          reduce using rule 68 (comp_op -> DISTINT .)
+    PLUSPLUS        reduce using rule 68 (comp_op -> DISTINT .)
+    MINUSMINUS      reduce using rule 68 (comp_op -> DISTINT .)
 
 
 state 113
 
-    (50) term -> factor increment_decrement_op .
+    (69) comp_op -> ISEQUAL .
 
-    PLUS            reduce using rule 50 (term -> factor increment_decrement_op .)
-    MINUS           reduce using rule 50 (term -> factor increment_decrement_op .)
-    TIMES           reduce using rule 50 (term -> factor increment_decrement_op .)
-    DIVIDE          reduce using rule 50 (term -> factor increment_decrement_op .)
-    LESS            reduce using rule 50 (term -> factor increment_decrement_op .)
-    LESSEQUAL       reduce using rule 50 (term -> factor increment_decrement_op .)
-    GREATER         reduce using rule 50 (term -> factor increment_decrement_op .)
-    GREATEREQUAL    reduce using rule 50 (term -> factor increment_decrement_op .)
-    DEQUAL          reduce using rule 50 (term -> factor increment_decrement_op .)
-    DISTINT         reduce using rule 50 (term -> factor increment_decrement_op .)
-    ISEQUAL         reduce using rule 50 (term -> factor increment_decrement_op .)
-    RPAREN          reduce using rule 50 (term -> factor increment_decrement_op .)
-    SEMICOLON       reduce using rule 50 (term -> factor increment_decrement_op .)
-    COMMA           reduce using rule 50 (term -> factor increment_decrement_op .)
+    NUMBER          reduce using rule 69 (comp_op -> ISEQUAL .)
+    VARIABLE        reduce using rule 69 (comp_op -> ISEQUAL .)
+    LPAREN          reduce using rule 69 (comp_op -> ISEQUAL .)
+    PLUSPLUS        reduce using rule 69 (comp_op -> ISEQUAL .)
+    MINUSMINUS      reduce using rule 69 (comp_op -> ISEQUAL .)
 
 
 state 114
 
-    (51) term -> increment_decrement_op factor .
+    (50) additive_expression -> term math_op . term
+    (51) term -> . factor
+    (52) term -> . factor increment_decrement_op
+    (53) term -> . increment_decrement_op factor
+    (54) factor -> . NUMBER
+    (55) factor -> . VARIABLE
+    (56) factor -> . LPAREN expression RPAREN
+    (57) increment_decrement_op -> . PLUSPLUS
+    (58) increment_decrement_op -> . MINUSMINUS
 
-    PLUS            reduce using rule 51 (term -> increment_decrement_op factor .)
-    MINUS           reduce using rule 51 (term -> increment_decrement_op factor .)
-    TIMES           reduce using rule 51 (term -> increment_decrement_op factor .)
-    DIVIDE          reduce using rule 51 (term -> increment_decrement_op factor .)
-    LESS            reduce using rule 51 (term -> increment_decrement_op factor .)
-    LESSEQUAL       reduce using rule 51 (term -> increment_decrement_op factor .)
-    GREATER         reduce using rule 51 (term -> increment_decrement_op factor .)
-    GREATEREQUAL    reduce using rule 51 (term -> increment_decrement_op factor .)
-    DEQUAL          reduce using rule 51 (term -> increment_decrement_op factor .)
-    DISTINT         reduce using rule 51 (term -> increment_decrement_op factor .)
-    ISEQUAL         reduce using rule 51 (term -> increment_decrement_op factor .)
-    RPAREN          reduce using rule 51 (term -> increment_decrement_op factor .)
-    SEMICOLON       reduce using rule 51 (term -> increment_decrement_op factor .)
-    COMMA           reduce using rule 51 (term -> increment_decrement_op factor .)
+    NUMBER          shift and go to state 77
+    VARIABLE        shift and go to state 78
+    LPAREN          shift and go to state 71
+    PLUSPLUS        shift and go to state 79
+    MINUSMINUS      shift and go to state 80
 
+    term                           shift and go to state 140
+    factor                         shift and go to state 75
+    increment_decrement_op         shift and go to state 76
 
 state 115
 
-    (68) if_statement -> if LPAREN expression RPAREN . LBLOCK declaration_list RBLOCK else_part
+    (59) math_op -> PLUS .
 
-    LBLOCK          shift and go to state 134
+    NUMBER          reduce using rule 59 (math_op -> PLUS .)
+    VARIABLE        reduce using rule 59 (math_op -> PLUS .)
+    LPAREN          reduce using rule 59 (math_op -> PLUS .)
+    PLUSPLUS        reduce using rule 59 (math_op -> PLUS .)
+    MINUSMINUS      reduce using rule 59 (math_op -> PLUS .)
 
 
 state 116
 
-    (73) fun_declaration -> function ID LPAREN params . RPAREN LBLOCK declaration RBLOCK
-    (78) params -> params . COMMA single_param
+    (60) math_op -> MINUS .
 
-    RPAREN          shift and go to state 135
-    COMMA           shift and go to state 93
+    NUMBER          reduce using rule 60 (math_op -> MINUS .)
+    VARIABLE        reduce using rule 60 (math_op -> MINUS .)
+    LPAREN          reduce using rule 60 (math_op -> MINUS .)
+    PLUSPLUS        reduce using rule 60 (math_op -> MINUS .)
+    MINUSMINUS      reduce using rule 60 (math_op -> MINUS .)
 
 
 state 117
 
-    (75) obj_declaration -> class ID LBLOCK declaration . RBLOCK
+    (61) math_op -> TIMES .
 
-    RBLOCK          shift and go to state 136
+    NUMBER          reduce using rule 61 (math_op -> TIMES .)
+    VARIABLE        reduce using rule 61 (math_op -> TIMES .)
+    LPAREN          reduce using rule 61 (math_op -> TIMES .)
+    PLUSPLUS        reduce using rule 61 (math_op -> TIMES .)
+    MINUSMINUS      reduce using rule 61 (math_op -> TIMES .)
 
 
 state 118
 
-    (76) create_obj_declaration -> new ID LPAREN params . RPAREN
-    (78) params -> params . COMMA single_param
+    (62) math_op -> DIVIDE .
 
-    RPAREN          shift and go to state 137
-    COMMA           shift and go to state 93
+    NUMBER          reduce using rule 62 (math_op -> DIVIDE .)
+    VARIABLE        reduce using rule 62 (math_op -> DIVIDE .)
+    LPAREN          reduce using rule 62 (math_op -> DIVIDE .)
+    PLUSPLUS        reduce using rule 62 (math_op -> DIVIDE .)
+    MINUSMINUS      reduce using rule 62 (math_op -> DIVIDE .)
 
 
 state 119
+
+    (52) term -> factor increment_decrement_op .
+
+    PLUS            reduce using rule 52 (term -> factor increment_decrement_op .)
+    MINUS           reduce using rule 52 (term -> factor increment_decrement_op .)
+    TIMES           reduce using rule 52 (term -> factor increment_decrement_op .)
+    DIVIDE          reduce using rule 52 (term -> factor increment_decrement_op .)
+    BOOL_OR         reduce using rule 52 (term -> factor increment_decrement_op .)
+    BOOL_AND        reduce using rule 52 (term -> factor increment_decrement_op .)
+    NOT             reduce using rule 52 (term -> factor increment_decrement_op .)
+    or              reduce using rule 52 (term -> factor increment_decrement_op .)
+    and             reduce using rule 52 (term -> factor increment_decrement_op .)
+    LESS            reduce using rule 52 (term -> factor increment_decrement_op .)
+    LESSEQUAL       reduce using rule 52 (term -> factor increment_decrement_op .)
+    GREATER         reduce using rule 52 (term -> factor increment_decrement_op .)
+    GREATEREQUAL    reduce using rule 52 (term -> factor increment_decrement_op .)
+    DEQUAL          reduce using rule 52 (term -> factor increment_decrement_op .)
+    DISTINT         reduce using rule 52 (term -> factor increment_decrement_op .)
+    ISEQUAL         reduce using rule 52 (term -> factor increment_decrement_op .)
+    RPAREN          reduce using rule 52 (term -> factor increment_decrement_op .)
+    SEMICOLON       reduce using rule 52 (term -> factor increment_decrement_op .)
+    COMMA           reduce using rule 52 (term -> factor increment_decrement_op .)
+
+
+state 120
+
+    (53) term -> increment_decrement_op factor .
+
+    PLUS            reduce using rule 53 (term -> increment_decrement_op factor .)
+    MINUS           reduce using rule 53 (term -> increment_decrement_op factor .)
+    TIMES           reduce using rule 53 (term -> increment_decrement_op factor .)
+    DIVIDE          reduce using rule 53 (term -> increment_decrement_op factor .)
+    BOOL_OR         reduce using rule 53 (term -> increment_decrement_op factor .)
+    BOOL_AND        reduce using rule 53 (term -> increment_decrement_op factor .)
+    NOT             reduce using rule 53 (term -> increment_decrement_op factor .)
+    or              reduce using rule 53 (term -> increment_decrement_op factor .)
+    and             reduce using rule 53 (term -> increment_decrement_op factor .)
+    LESS            reduce using rule 53 (term -> increment_decrement_op factor .)
+    LESSEQUAL       reduce using rule 53 (term -> increment_decrement_op factor .)
+    GREATER         reduce using rule 53 (term -> increment_decrement_op factor .)
+    GREATEREQUAL    reduce using rule 53 (term -> increment_decrement_op factor .)
+    DEQUAL          reduce using rule 53 (term -> increment_decrement_op factor .)
+    DISTINT         reduce using rule 53 (term -> increment_decrement_op factor .)
+    ISEQUAL         reduce using rule 53 (term -> increment_decrement_op factor .)
+    RPAREN          reduce using rule 53 (term -> increment_decrement_op factor .)
+    SEMICOLON       reduce using rule 53 (term -> increment_decrement_op factor .)
+    COMMA           reduce using rule 53 (term -> increment_decrement_op factor .)
+
+
+state 121
+
+    (75) if_statement -> if LPAREN expression RPAREN . LBLOCK declaration_list RBLOCK else_part
+
+    LBLOCK          shift and go to state 141
+
+
+state 122
+
+    (80) fun_declaration -> function ID LPAREN params . RPAREN LBLOCK declaration RBLOCK
+    (85) params -> params . COMMA single_param
+
+    RPAREN          shift and go to state 142
+    COMMA           shift and go to state 93
+
+
+state 123
+
+    (82) obj_declaration -> class ID LBLOCK declaration . RBLOCK
+
+    RBLOCK          shift and go to state 143
+
+
+state 124
+
+    (83) create_obj_declaration -> new ID LPAREN params . RPAREN
+    (85) params -> params . COMMA single_param
+
+    RPAREN          shift and go to state 144
+    COMMA           shift and go to state 93
+
+
+state 125
 
     (37) assignment_tail -> EQUAL NUMBER COMMA . var_declaration2
     (35) var_declaration2 -> . VARIABLE assignment_tail
 
     VARIABLE        shift and go to state 34
 
-    var_declaration2               shift and go to state 138
+    var_declaration2               shift and go to state 145
 
-state 120
+state 126
 
     (38) assignment_tail -> EQUAL VARIABLE COMMA . var_declaration2
     (35) var_declaration2 -> . VARIABLE assignment_tail
 
     VARIABLE        shift and go to state 34
 
-    var_declaration2               shift and go to state 139
+    var_declaration2               shift and go to state 146
 
-state 121
+state 127
 
     (41) assignment_tail -> EQUAL LBRACKET expression . COMMA var_declaration2
 
-    COMMA           shift and go to state 140
+    COMMA           shift and go to state 147
 
 
-state 122
+state 128
 
     (42) assignment_tail -> EQUAL LBRACKET data_type . COMMA var_declaration2
 
-    COMMA           shift and go to state 141
+    COMMA           shift and go to state 148
 
 
-state 123
+state 129
 
     (22) data_type -> NUMBER .
-    (52) factor -> NUMBER .
+    (54) factor -> NUMBER .
 
   ! reduce/reduce conflict for COMMA resolved using rule 22 (data_type -> NUMBER .)
     COMMA           reduce using rule 22 (data_type -> NUMBER .)
-    PLUSPLUS        reduce using rule 52 (factor -> NUMBER .)
-    MINUSMINUS      reduce using rule 52 (factor -> NUMBER .)
-    PLUS            reduce using rule 52 (factor -> NUMBER .)
-    MINUS           reduce using rule 52 (factor -> NUMBER .)
-    TIMES           reduce using rule 52 (factor -> NUMBER .)
-    DIVIDE          reduce using rule 52 (factor -> NUMBER .)
-    LESS            reduce using rule 52 (factor -> NUMBER .)
-    LESSEQUAL       reduce using rule 52 (factor -> NUMBER .)
-    GREATER         reduce using rule 52 (factor -> NUMBER .)
-    GREATEREQUAL    reduce using rule 52 (factor -> NUMBER .)
-    DEQUAL          reduce using rule 52 (factor -> NUMBER .)
-    DISTINT         reduce using rule 52 (factor -> NUMBER .)
-    ISEQUAL         reduce using rule 52 (factor -> NUMBER .)
+    PLUSPLUS        reduce using rule 54 (factor -> NUMBER .)
+    MINUSMINUS      reduce using rule 54 (factor -> NUMBER .)
+    PLUS            reduce using rule 54 (factor -> NUMBER .)
+    MINUS           reduce using rule 54 (factor -> NUMBER .)
+    TIMES           reduce using rule 54 (factor -> NUMBER .)
+    DIVIDE          reduce using rule 54 (factor -> NUMBER .)
+    BOOL_OR         reduce using rule 54 (factor -> NUMBER .)
+    BOOL_AND        reduce using rule 54 (factor -> NUMBER .)
+    NOT             reduce using rule 54 (factor -> NUMBER .)
+    or              reduce using rule 54 (factor -> NUMBER .)
+    and             reduce using rule 54 (factor -> NUMBER .)
+    LESS            reduce using rule 54 (factor -> NUMBER .)
+    LESSEQUAL       reduce using rule 54 (factor -> NUMBER .)
+    GREATER         reduce using rule 54 (factor -> NUMBER .)
+    GREATEREQUAL    reduce using rule 54 (factor -> NUMBER .)
+    DEQUAL          reduce using rule 54 (factor -> NUMBER .)
+    DISTINT         reduce using rule 54 (factor -> NUMBER .)
+    ISEQUAL         reduce using rule 54 (factor -> NUMBER .)
 
-  ! COMMA           [ reduce using rule 52 (factor -> NUMBER .) ]
+  ! COMMA           [ reduce using rule 54 (factor -> NUMBER .) ]
 
 
-state 124
+state 130
 
     (25) constant_declaration -> const ID EQUAL data_type SEMICOLON .
 
@@ -2445,15 +2607,15 @@ state 124
     RBLOCK          reduce using rule 25 (constant_declaration -> const ID EQUAL data_type SEMICOLON .)
 
 
-state 125
+state 131
 
-    (78) params -> params COMMA single_param .
+    (85) params -> params COMMA single_param .
 
-    RPAREN          reduce using rule 78 (params -> params COMMA single_param .)
-    COMMA           reduce using rule 78 (params -> params COMMA single_param .)
+    RPAREN          reduce using rule 85 (params -> params COMMA single_param .)
+    COMMA           reduce using rule 85 (params -> params COMMA single_param .)
 
 
-state 126
+state 132
 
     (27) print_declaration -> print LPAREN var_declaration2 RPAREN SEMICOLON .
 
@@ -2477,7 +2639,7 @@ state 126
     RBLOCK          reduce using rule 27 (print_declaration -> print LPAREN var_declaration2 RPAREN SEMICOLON .)
 
 
-state 127
+state 133
 
     (28) print_declaration -> print LPAREN data_type RPAREN SEMICOLON .
 
@@ -2501,7 +2663,7 @@ state 127
     RBLOCK          reduce using rule 28 (print_declaration -> print LPAREN data_type RPAREN SEMICOLON .)
 
 
-state 128
+state 134
 
     (31) echo_declaration -> echo LPAREN var_declaration2 RPAREN SEMICOLON .
 
@@ -2525,7 +2687,7 @@ state 128
     RBLOCK          reduce using rule 31 (echo_declaration -> echo LPAREN var_declaration2 RPAREN SEMICOLON .)
 
 
-state 129
+state 135
 
     (32) echo_declaration -> echo LPAREN data_type RPAREN SEMICOLON .
 
@@ -2549,29 +2711,34 @@ state 129
     RBLOCK          reduce using rule 32 (echo_declaration -> echo LPAREN data_type RPAREN SEMICOLON .)
 
 
-state 130
+state 136
 
-    (54) factor -> LPAREN expression RPAREN .
+    (56) factor -> LPAREN expression RPAREN .
 
-    PLUSPLUS        reduce using rule 54 (factor -> LPAREN expression RPAREN .)
-    MINUSMINUS      reduce using rule 54 (factor -> LPAREN expression RPAREN .)
-    PLUS            reduce using rule 54 (factor -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 54 (factor -> LPAREN expression RPAREN .)
-    TIMES           reduce using rule 54 (factor -> LPAREN expression RPAREN .)
-    DIVIDE          reduce using rule 54 (factor -> LPAREN expression RPAREN .)
-    LESS            reduce using rule 54 (factor -> LPAREN expression RPAREN .)
-    LESSEQUAL       reduce using rule 54 (factor -> LPAREN expression RPAREN .)
-    GREATER         reduce using rule 54 (factor -> LPAREN expression RPAREN .)
-    GREATEREQUAL    reduce using rule 54 (factor -> LPAREN expression RPAREN .)
-    DEQUAL          reduce using rule 54 (factor -> LPAREN expression RPAREN .)
-    DISTINT         reduce using rule 54 (factor -> LPAREN expression RPAREN .)
-    ISEQUAL         reduce using rule 54 (factor -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 54 (factor -> LPAREN expression RPAREN .)
-    SEMICOLON       reduce using rule 54 (factor -> LPAREN expression RPAREN .)
-    COMMA           reduce using rule 54 (factor -> LPAREN expression RPAREN .)
+    PLUSPLUS        reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    MINUSMINUS      reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    BOOL_OR         reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    BOOL_AND        reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    NOT             reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    or              reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    and             reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    LESS            reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    LESSEQUAL       reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    GREATER         reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    GREATEREQUAL    reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    DEQUAL          reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    DISTINT         reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    ISEQUAL         reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    SEMICOLON       reduce using rule 56 (factor -> LPAREN expression RPAREN .)
+    COMMA           reduce using rule 56 (factor -> LPAREN expression RPAREN .)
 
 
-state 131
+state 137
 
     (44) iteration_stmt -> while LPAREN expression RPAREN LBLOCK . declaration RBLOCK
     (6) declaration -> . COMMENT
@@ -2602,352 +2769,11 @@ state 131
     (32) echo_declaration -> . echo LPAREN data_type RPAREN SEMICOLON
     (33) echo_declaration -> . echo data_type SEMICOLON
     (44) iteration_stmt -> . while LPAREN expression RPAREN LBLOCK declaration RBLOCK
-    (68) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-    (73) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
-    (74) fun_call -> . ID LPAREN params RPAREN
-    (75) obj_declaration -> . class ID LBLOCK declaration RBLOCK
-    (76) create_obj_declaration -> . new ID LPAREN params RPAREN
-    (3) footer_declaration -> . CLOSE_TAG
-    (35) var_declaration2 -> . VARIABLE assignment_tail
-
-    COMMENT         shift and go to state 6
-    COMMENT_HASHTAG shift and go to state 7
-    COMMENT_MULTI   shift and go to state 8
-    empty           shift and go to state 21
-    include         shift and go to state 22
-    const           shift and go to state 24
-    print           shift and go to state 26
-    echo            shift and go to state 27
-    while           shift and go to state 28
-    if              shift and go to state 29
-    function        shift and go to state 30
-    ID              shift and go to state 25
-    class           shift and go to state 31
-    new             shift and go to state 32
-    CLOSE_TAG       shift and go to state 33
-    VARIABLE        shift and go to state 34
-
-    declaration                    shift and go to state 142
-    header_declaration             shift and go to state 9
-    var_declaration                shift and go to state 10
-    constant_declaration           shift and go to state 11
-    print_declaration              shift and go to state 12
-    echo_declaration               shift and go to state 13
-    iteration_stmt                 shift and go to state 14
-    if_statement                   shift and go to state 15
-    fun_declaration                shift and go to state 16
-    fun_call                       shift and go to state 17
-    obj_declaration                shift and go to state 18
-    create_obj_declaration         shift and go to state 19
-    footer_declaration             shift and go to state 20
-    var_declaration2               shift and go to state 23
-
-state 132
-
-    (46) expression -> additive_expression comp_op additive_expression .
-
-    RPAREN          reduce using rule 46 (expression -> additive_expression comp_op additive_expression .)
-    SEMICOLON       reduce using rule 46 (expression -> additive_expression comp_op additive_expression .)
-    COMMA           reduce using rule 46 (expression -> additive_expression comp_op additive_expression .)
-
-
-state 133
-
-    (48) additive_expression -> term math_op term .
-
-    LESS            reduce using rule 48 (additive_expression -> term math_op term .)
-    LESSEQUAL       reduce using rule 48 (additive_expression -> term math_op term .)
-    GREATER         reduce using rule 48 (additive_expression -> term math_op term .)
-    GREATEREQUAL    reduce using rule 48 (additive_expression -> term math_op term .)
-    DEQUAL          reduce using rule 48 (additive_expression -> term math_op term .)
-    DISTINT         reduce using rule 48 (additive_expression -> term math_op term .)
-    ISEQUAL         reduce using rule 48 (additive_expression -> term math_op term .)
-    RPAREN          reduce using rule 48 (additive_expression -> term math_op term .)
-    SEMICOLON       reduce using rule 48 (additive_expression -> term math_op term .)
-    COMMA           reduce using rule 48 (additive_expression -> term math_op term .)
-
-
-state 134
-
-    (68) if_statement -> if LPAREN expression RPAREN LBLOCK . declaration_list RBLOCK else_part
-    (4) declaration_list -> . declaration
-    (5) declaration_list -> . declaration_list declaration
-    (6) declaration -> . COMMENT
-    (7) declaration -> . COMMENT_HASHTAG
-    (8) declaration -> . COMMENT_MULTI
-    (9) declaration -> . header_declaration
-    (10) declaration -> . var_declaration
-    (11) declaration -> . constant_declaration
-    (12) declaration -> . print_declaration
-    (13) declaration -> . echo_declaration
-    (14) declaration -> . iteration_stmt
-    (15) declaration -> . if_statement
-    (16) declaration -> . fun_declaration
-    (17) declaration -> . fun_call
-    (18) declaration -> . obj_declaration
-    (19) declaration -> . create_obj_declaration
-    (20) declaration -> . footer_declaration
-    (21) declaration -> . empty
-    (24) header_declaration -> . include CADENA SEMICOLON
-    (34) var_declaration -> . var_declaration2 SEMICOLON
-    (25) constant_declaration -> . const ID EQUAL data_type SEMICOLON
-    (26) print_declaration -> . print var_declaration2 SEMICOLON
-    (27) print_declaration -> . print LPAREN var_declaration2 RPAREN SEMICOLON
-    (28) print_declaration -> . print LPAREN data_type RPAREN SEMICOLON
-    (29) print_declaration -> . print data_type SEMICOLON
-    (30) echo_declaration -> . echo var_declaration2 SEMICOLON
-    (31) echo_declaration -> . echo LPAREN var_declaration2 RPAREN SEMICOLON
-    (32) echo_declaration -> . echo LPAREN data_type RPAREN SEMICOLON
-    (33) echo_declaration -> . echo data_type SEMICOLON
-    (44) iteration_stmt -> . while LPAREN expression RPAREN LBLOCK declaration RBLOCK
-    (68) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-    (73) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
-    (74) fun_call -> . ID LPAREN params RPAREN
-    (75) obj_declaration -> . class ID LBLOCK declaration RBLOCK
-    (76) create_obj_declaration -> . new ID LPAREN params RPAREN
-    (3) footer_declaration -> . CLOSE_TAG
-    (35) var_declaration2 -> . VARIABLE assignment_tail
-
-    COMMENT         shift and go to state 6
-    COMMENT_HASHTAG shift and go to state 7
-    COMMENT_MULTI   shift and go to state 8
-    empty           shift and go to state 21
-    include         shift and go to state 22
-    const           shift and go to state 24
-    print           shift and go to state 26
-    echo            shift and go to state 27
-    while           shift and go to state 28
-    if              shift and go to state 29
-    function        shift and go to state 30
-    ID              shift and go to state 25
-    class           shift and go to state 31
-    new             shift and go to state 32
-    CLOSE_TAG       shift and go to state 33
-    VARIABLE        shift and go to state 34
-
-    declaration_list               shift and go to state 143
-    declaration                    shift and go to state 5
-    header_declaration             shift and go to state 9
-    var_declaration                shift and go to state 10
-    constant_declaration           shift and go to state 11
-    print_declaration              shift and go to state 12
-    echo_declaration               shift and go to state 13
-    iteration_stmt                 shift and go to state 14
-    if_statement                   shift and go to state 15
-    fun_declaration                shift and go to state 16
-    fun_call                       shift and go to state 17
-    obj_declaration                shift and go to state 18
-    create_obj_declaration         shift and go to state 19
-    footer_declaration             shift and go to state 20
-    var_declaration2               shift and go to state 23
-
-state 135
-
-    (73) fun_declaration -> function ID LPAREN params RPAREN . LBLOCK declaration RBLOCK
-
-    LBLOCK          shift and go to state 144
-
-
-state 136
-
-    (75) obj_declaration -> class ID LBLOCK declaration RBLOCK .
-
-    COMMENT         reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    COMMENT_HASHTAG reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    COMMENT_MULTI   reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    empty           reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    include         reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    const           reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    print           reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    echo            reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    while           reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    if              reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    function        reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    ID              reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    class           reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    new             reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    CLOSE_TAG       reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    VARIABLE        reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    $end            reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-    RBLOCK          reduce using rule 75 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
-
-
-state 137
-
-    (76) create_obj_declaration -> new ID LPAREN params RPAREN .
-
-    COMMENT         reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    COMMENT_HASHTAG reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    COMMENT_MULTI   reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    empty           reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    include         reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    const           reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    print           reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    echo            reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    while           reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    if              reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    function        reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    ID              reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    class           reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    new             reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    CLOSE_TAG       reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    VARIABLE        reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    $end            reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-    RBLOCK          reduce using rule 76 (create_obj_declaration -> new ID LPAREN params RPAREN .)
-
-
-state 138
-
-    (37) assignment_tail -> EQUAL NUMBER COMMA var_declaration2 .
-
-    SEMICOLON       reduce using rule 37 (assignment_tail -> EQUAL NUMBER COMMA var_declaration2 .)
-    RPAREN          reduce using rule 37 (assignment_tail -> EQUAL NUMBER COMMA var_declaration2 .)
-    COMMA           reduce using rule 37 (assignment_tail -> EQUAL NUMBER COMMA var_declaration2 .)
-
-
-state 139
-
-    (38) assignment_tail -> EQUAL VARIABLE COMMA var_declaration2 .
-
-    SEMICOLON       reduce using rule 38 (assignment_tail -> EQUAL VARIABLE COMMA var_declaration2 .)
-    RPAREN          reduce using rule 38 (assignment_tail -> EQUAL VARIABLE COMMA var_declaration2 .)
-    COMMA           reduce using rule 38 (assignment_tail -> EQUAL VARIABLE COMMA var_declaration2 .)
-
-
-state 140
-
-    (41) assignment_tail -> EQUAL LBRACKET expression COMMA . var_declaration2
-    (35) var_declaration2 -> . VARIABLE assignment_tail
-
-    VARIABLE        shift and go to state 34
-
-    var_declaration2               shift and go to state 145
-
-state 141
-
-    (42) assignment_tail -> EQUAL LBRACKET data_type COMMA . var_declaration2
-    (35) var_declaration2 -> . VARIABLE assignment_tail
-
-    VARIABLE        shift and go to state 34
-
-    var_declaration2               shift and go to state 146
-
-state 142
-
-    (44) iteration_stmt -> while LPAREN expression RPAREN LBLOCK declaration . RBLOCK
-
-    RBLOCK          shift and go to state 147
-
-
-state 143
-
-    (68) if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list . RBLOCK else_part
-    (5) declaration_list -> declaration_list . declaration
-    (6) declaration -> . COMMENT
-    (7) declaration -> . COMMENT_HASHTAG
-    (8) declaration -> . COMMENT_MULTI
-    (9) declaration -> . header_declaration
-    (10) declaration -> . var_declaration
-    (11) declaration -> . constant_declaration
-    (12) declaration -> . print_declaration
-    (13) declaration -> . echo_declaration
-    (14) declaration -> . iteration_stmt
-    (15) declaration -> . if_statement
-    (16) declaration -> . fun_declaration
-    (17) declaration -> . fun_call
-    (18) declaration -> . obj_declaration
-    (19) declaration -> . create_obj_declaration
-    (20) declaration -> . footer_declaration
-    (21) declaration -> . empty
-    (24) header_declaration -> . include CADENA SEMICOLON
-    (34) var_declaration -> . var_declaration2 SEMICOLON
-    (25) constant_declaration -> . const ID EQUAL data_type SEMICOLON
-    (26) print_declaration -> . print var_declaration2 SEMICOLON
-    (27) print_declaration -> . print LPAREN var_declaration2 RPAREN SEMICOLON
-    (28) print_declaration -> . print LPAREN data_type RPAREN SEMICOLON
-    (29) print_declaration -> . print data_type SEMICOLON
-    (30) echo_declaration -> . echo var_declaration2 SEMICOLON
-    (31) echo_declaration -> . echo LPAREN var_declaration2 RPAREN SEMICOLON
-    (32) echo_declaration -> . echo LPAREN data_type RPAREN SEMICOLON
-    (33) echo_declaration -> . echo data_type SEMICOLON
-    (44) iteration_stmt -> . while LPAREN expression RPAREN LBLOCK declaration RBLOCK
-    (68) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-    (73) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
-    (74) fun_call -> . ID LPAREN params RPAREN
-    (75) obj_declaration -> . class ID LBLOCK declaration RBLOCK
-    (76) create_obj_declaration -> . new ID LPAREN params RPAREN
-    (3) footer_declaration -> . CLOSE_TAG
-    (35) var_declaration2 -> . VARIABLE assignment_tail
-
-    RBLOCK          shift and go to state 148
-    COMMENT         shift and go to state 6
-    COMMENT_HASHTAG shift and go to state 7
-    COMMENT_MULTI   shift and go to state 8
-    empty           shift and go to state 21
-    include         shift and go to state 22
-    const           shift and go to state 24
-    print           shift and go to state 26
-    echo            shift and go to state 27
-    while           shift and go to state 28
-    if              shift and go to state 29
-    function        shift and go to state 30
-    ID              shift and go to state 25
-    class           shift and go to state 31
-    new             shift and go to state 32
-    CLOSE_TAG       shift and go to state 33
-    VARIABLE        shift and go to state 34
-
-    declaration                    shift and go to state 35
-    header_declaration             shift and go to state 9
-    var_declaration                shift and go to state 10
-    constant_declaration           shift and go to state 11
-    print_declaration              shift and go to state 12
-    echo_declaration               shift and go to state 13
-    iteration_stmt                 shift and go to state 14
-    if_statement                   shift and go to state 15
-    fun_declaration                shift and go to state 16
-    fun_call                       shift and go to state 17
-    obj_declaration                shift and go to state 18
-    create_obj_declaration         shift and go to state 19
-    footer_declaration             shift and go to state 20
-    var_declaration2               shift and go to state 23
-
-state 144
-
-    (73) fun_declaration -> function ID LPAREN params RPAREN LBLOCK . declaration RBLOCK
-    (6) declaration -> . COMMENT
-    (7) declaration -> . COMMENT_HASHTAG
-    (8) declaration -> . COMMENT_MULTI
-    (9) declaration -> . header_declaration
-    (10) declaration -> . var_declaration
-    (11) declaration -> . constant_declaration
-    (12) declaration -> . print_declaration
-    (13) declaration -> . echo_declaration
-    (14) declaration -> . iteration_stmt
-    (15) declaration -> . if_statement
-    (16) declaration -> . fun_declaration
-    (17) declaration -> . fun_call
-    (18) declaration -> . obj_declaration
-    (19) declaration -> . create_obj_declaration
-    (20) declaration -> . footer_declaration
-    (21) declaration -> . empty
-    (24) header_declaration -> . include CADENA SEMICOLON
-    (34) var_declaration -> . var_declaration2 SEMICOLON
-    (25) constant_declaration -> . const ID EQUAL data_type SEMICOLON
-    (26) print_declaration -> . print var_declaration2 SEMICOLON
-    (27) print_declaration -> . print LPAREN var_declaration2 RPAREN SEMICOLON
-    (28) print_declaration -> . print LPAREN data_type RPAREN SEMICOLON
-    (29) print_declaration -> . print data_type SEMICOLON
-    (30) echo_declaration -> . echo var_declaration2 SEMICOLON
-    (31) echo_declaration -> . echo LPAREN var_declaration2 RPAREN SEMICOLON
-    (32) echo_declaration -> . echo LPAREN data_type RPAREN SEMICOLON
-    (33) echo_declaration -> . echo data_type SEMICOLON
-    (44) iteration_stmt -> . while LPAREN expression RPAREN LBLOCK declaration RBLOCK
-    (68) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-    (73) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
-    (74) fun_call -> . ID LPAREN params RPAREN
-    (75) obj_declaration -> . class ID LBLOCK declaration RBLOCK
-    (76) create_obj_declaration -> . new ID LPAREN params RPAREN
+    (75) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (80) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
+    (81) fun_call -> . ID LPAREN params RPAREN
+    (82) obj_declaration -> . class ID LBLOCK declaration RBLOCK
+    (83) create_obj_declaration -> . new ID LPAREN params RPAREN
     (3) footer_declaration -> . CLOSE_TAG
     (35) var_declaration2 -> . VARIABLE assignment_tail
 
@@ -2983,7 +2809,399 @@ state 144
     footer_declaration             shift and go to state 20
     var_declaration2               shift and go to state 23
 
+state 138
+
+    (46) expression -> additive_expression logical_op additive_expression .
+
+    RPAREN          reduce using rule 46 (expression -> additive_expression logical_op additive_expression .)
+    SEMICOLON       reduce using rule 46 (expression -> additive_expression logical_op additive_expression .)
+    COMMA           reduce using rule 46 (expression -> additive_expression logical_op additive_expression .)
+
+
+state 139
+
+    (47) expression -> additive_expression comp_op additive_expression .
+    (48) expression -> additive_expression comp_op additive_expression . logical_op additive_expression comp_op additive_expression
+    (70) logical_op -> . BOOL_OR
+    (71) logical_op -> . BOOL_AND
+    (72) logical_op -> . NOT
+    (73) logical_op -> . or
+    (74) logical_op -> . and
+
+    RPAREN          reduce using rule 47 (expression -> additive_expression comp_op additive_expression .)
+    SEMICOLON       reduce using rule 47 (expression -> additive_expression comp_op additive_expression .)
+    COMMA           reduce using rule 47 (expression -> additive_expression comp_op additive_expression .)
+    BOOL_OR         shift and go to state 102
+    BOOL_AND        shift and go to state 103
+    NOT             shift and go to state 104
+    or              shift and go to state 105
+    and             shift and go to state 106
+
+    logical_op                     shift and go to state 150
+
+state 140
+
+    (50) additive_expression -> term math_op term .
+
+    BOOL_OR         reduce using rule 50 (additive_expression -> term math_op term .)
+    BOOL_AND        reduce using rule 50 (additive_expression -> term math_op term .)
+    NOT             reduce using rule 50 (additive_expression -> term math_op term .)
+    or              reduce using rule 50 (additive_expression -> term math_op term .)
+    and             reduce using rule 50 (additive_expression -> term math_op term .)
+    LESS            reduce using rule 50 (additive_expression -> term math_op term .)
+    LESSEQUAL       reduce using rule 50 (additive_expression -> term math_op term .)
+    GREATER         reduce using rule 50 (additive_expression -> term math_op term .)
+    GREATEREQUAL    reduce using rule 50 (additive_expression -> term math_op term .)
+    DEQUAL          reduce using rule 50 (additive_expression -> term math_op term .)
+    DISTINT         reduce using rule 50 (additive_expression -> term math_op term .)
+    ISEQUAL         reduce using rule 50 (additive_expression -> term math_op term .)
+    RPAREN          reduce using rule 50 (additive_expression -> term math_op term .)
+    SEMICOLON       reduce using rule 50 (additive_expression -> term math_op term .)
+    COMMA           reduce using rule 50 (additive_expression -> term math_op term .)
+
+
+state 141
+
+    (75) if_statement -> if LPAREN expression RPAREN LBLOCK . declaration_list RBLOCK else_part
+    (4) declaration_list -> . declaration
+    (5) declaration_list -> . declaration_list declaration
+    (6) declaration -> . COMMENT
+    (7) declaration -> . COMMENT_HASHTAG
+    (8) declaration -> . COMMENT_MULTI
+    (9) declaration -> . header_declaration
+    (10) declaration -> . var_declaration
+    (11) declaration -> . constant_declaration
+    (12) declaration -> . print_declaration
+    (13) declaration -> . echo_declaration
+    (14) declaration -> . iteration_stmt
+    (15) declaration -> . if_statement
+    (16) declaration -> . fun_declaration
+    (17) declaration -> . fun_call
+    (18) declaration -> . obj_declaration
+    (19) declaration -> . create_obj_declaration
+    (20) declaration -> . footer_declaration
+    (21) declaration -> . empty
+    (24) header_declaration -> . include CADENA SEMICOLON
+    (34) var_declaration -> . var_declaration2 SEMICOLON
+    (25) constant_declaration -> . const ID EQUAL data_type SEMICOLON
+    (26) print_declaration -> . print var_declaration2 SEMICOLON
+    (27) print_declaration -> . print LPAREN var_declaration2 RPAREN SEMICOLON
+    (28) print_declaration -> . print LPAREN data_type RPAREN SEMICOLON
+    (29) print_declaration -> . print data_type SEMICOLON
+    (30) echo_declaration -> . echo var_declaration2 SEMICOLON
+    (31) echo_declaration -> . echo LPAREN var_declaration2 RPAREN SEMICOLON
+    (32) echo_declaration -> . echo LPAREN data_type RPAREN SEMICOLON
+    (33) echo_declaration -> . echo data_type SEMICOLON
+    (44) iteration_stmt -> . while LPAREN expression RPAREN LBLOCK declaration RBLOCK
+    (75) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (80) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
+    (81) fun_call -> . ID LPAREN params RPAREN
+    (82) obj_declaration -> . class ID LBLOCK declaration RBLOCK
+    (83) create_obj_declaration -> . new ID LPAREN params RPAREN
+    (3) footer_declaration -> . CLOSE_TAG
+    (35) var_declaration2 -> . VARIABLE assignment_tail
+
+    COMMENT         shift and go to state 6
+    COMMENT_HASHTAG shift and go to state 7
+    COMMENT_MULTI   shift and go to state 8
+    empty           shift and go to state 21
+    include         shift and go to state 22
+    const           shift and go to state 24
+    print           shift and go to state 26
+    echo            shift and go to state 27
+    while           shift and go to state 28
+    if              shift and go to state 29
+    function        shift and go to state 30
+    ID              shift and go to state 25
+    class           shift and go to state 31
+    new             shift and go to state 32
+    CLOSE_TAG       shift and go to state 33
+    VARIABLE        shift and go to state 34
+
+    declaration_list               shift and go to state 151
+    declaration                    shift and go to state 5
+    header_declaration             shift and go to state 9
+    var_declaration                shift and go to state 10
+    constant_declaration           shift and go to state 11
+    print_declaration              shift and go to state 12
+    echo_declaration               shift and go to state 13
+    iteration_stmt                 shift and go to state 14
+    if_statement                   shift and go to state 15
+    fun_declaration                shift and go to state 16
+    fun_call                       shift and go to state 17
+    obj_declaration                shift and go to state 18
+    create_obj_declaration         shift and go to state 19
+    footer_declaration             shift and go to state 20
+    var_declaration2               shift and go to state 23
+
+state 142
+
+    (80) fun_declaration -> function ID LPAREN params RPAREN . LBLOCK declaration RBLOCK
+
+    LBLOCK          shift and go to state 152
+
+
+state 143
+
+    (82) obj_declaration -> class ID LBLOCK declaration RBLOCK .
+
+    COMMENT         reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    COMMENT_HASHTAG reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    COMMENT_MULTI   reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    empty           reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    include         reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    const           reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    print           reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    echo            reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    while           reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    if              reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    function        reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    ID              reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    class           reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    new             reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    CLOSE_TAG       reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    VARIABLE        reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    $end            reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+    RBLOCK          reduce using rule 82 (obj_declaration -> class ID LBLOCK declaration RBLOCK .)
+
+
+state 144
+
+    (83) create_obj_declaration -> new ID LPAREN params RPAREN .
+
+    COMMENT         reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    COMMENT_HASHTAG reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    COMMENT_MULTI   reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    empty           reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    include         reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    const           reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    print           reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    echo            reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    while           reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    if              reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    function        reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    ID              reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    class           reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    new             reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    CLOSE_TAG       reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    VARIABLE        reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    $end            reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+    RBLOCK          reduce using rule 83 (create_obj_declaration -> new ID LPAREN params RPAREN .)
+
+
 state 145
+
+    (37) assignment_tail -> EQUAL NUMBER COMMA var_declaration2 .
+
+    SEMICOLON       reduce using rule 37 (assignment_tail -> EQUAL NUMBER COMMA var_declaration2 .)
+    RPAREN          reduce using rule 37 (assignment_tail -> EQUAL NUMBER COMMA var_declaration2 .)
+    COMMA           reduce using rule 37 (assignment_tail -> EQUAL NUMBER COMMA var_declaration2 .)
+
+
+state 146
+
+    (38) assignment_tail -> EQUAL VARIABLE COMMA var_declaration2 .
+
+    SEMICOLON       reduce using rule 38 (assignment_tail -> EQUAL VARIABLE COMMA var_declaration2 .)
+    RPAREN          reduce using rule 38 (assignment_tail -> EQUAL VARIABLE COMMA var_declaration2 .)
+    COMMA           reduce using rule 38 (assignment_tail -> EQUAL VARIABLE COMMA var_declaration2 .)
+
+
+state 147
+
+    (41) assignment_tail -> EQUAL LBRACKET expression COMMA . var_declaration2
+    (35) var_declaration2 -> . VARIABLE assignment_tail
+
+    VARIABLE        shift and go to state 34
+
+    var_declaration2               shift and go to state 153
+
+state 148
+
+    (42) assignment_tail -> EQUAL LBRACKET data_type COMMA . var_declaration2
+    (35) var_declaration2 -> . VARIABLE assignment_tail
+
+    VARIABLE        shift and go to state 34
+
+    var_declaration2               shift and go to state 154
+
+state 149
+
+    (44) iteration_stmt -> while LPAREN expression RPAREN LBLOCK declaration . RBLOCK
+
+    RBLOCK          shift and go to state 155
+
+
+state 150
+
+    (48) expression -> additive_expression comp_op additive_expression logical_op . additive_expression comp_op additive_expression
+    (49) additive_expression -> . term
+    (50) additive_expression -> . term math_op term
+    (51) term -> . factor
+    (52) term -> . factor increment_decrement_op
+    (53) term -> . increment_decrement_op factor
+    (54) factor -> . NUMBER
+    (55) factor -> . VARIABLE
+    (56) factor -> . LPAREN expression RPAREN
+    (57) increment_decrement_op -> . PLUSPLUS
+    (58) increment_decrement_op -> . MINUSMINUS
+
+    NUMBER          shift and go to state 77
+    VARIABLE        shift and go to state 78
+    LPAREN          shift and go to state 71
+    PLUSPLUS        shift and go to state 79
+    MINUSMINUS      shift and go to state 80
+
+    additive_expression            shift and go to state 156
+    term                           shift and go to state 74
+    factor                         shift and go to state 75
+    increment_decrement_op         shift and go to state 76
+
+state 151
+
+    (75) if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list . RBLOCK else_part
+    (5) declaration_list -> declaration_list . declaration
+    (6) declaration -> . COMMENT
+    (7) declaration -> . COMMENT_HASHTAG
+    (8) declaration -> . COMMENT_MULTI
+    (9) declaration -> . header_declaration
+    (10) declaration -> . var_declaration
+    (11) declaration -> . constant_declaration
+    (12) declaration -> . print_declaration
+    (13) declaration -> . echo_declaration
+    (14) declaration -> . iteration_stmt
+    (15) declaration -> . if_statement
+    (16) declaration -> . fun_declaration
+    (17) declaration -> . fun_call
+    (18) declaration -> . obj_declaration
+    (19) declaration -> . create_obj_declaration
+    (20) declaration -> . footer_declaration
+    (21) declaration -> . empty
+    (24) header_declaration -> . include CADENA SEMICOLON
+    (34) var_declaration -> . var_declaration2 SEMICOLON
+    (25) constant_declaration -> . const ID EQUAL data_type SEMICOLON
+    (26) print_declaration -> . print var_declaration2 SEMICOLON
+    (27) print_declaration -> . print LPAREN var_declaration2 RPAREN SEMICOLON
+    (28) print_declaration -> . print LPAREN data_type RPAREN SEMICOLON
+    (29) print_declaration -> . print data_type SEMICOLON
+    (30) echo_declaration -> . echo var_declaration2 SEMICOLON
+    (31) echo_declaration -> . echo LPAREN var_declaration2 RPAREN SEMICOLON
+    (32) echo_declaration -> . echo LPAREN data_type RPAREN SEMICOLON
+    (33) echo_declaration -> . echo data_type SEMICOLON
+    (44) iteration_stmt -> . while LPAREN expression RPAREN LBLOCK declaration RBLOCK
+    (75) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (80) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
+    (81) fun_call -> . ID LPAREN params RPAREN
+    (82) obj_declaration -> . class ID LBLOCK declaration RBLOCK
+    (83) create_obj_declaration -> . new ID LPAREN params RPAREN
+    (3) footer_declaration -> . CLOSE_TAG
+    (35) var_declaration2 -> . VARIABLE assignment_tail
+
+    RBLOCK          shift and go to state 157
+    COMMENT         shift and go to state 6
+    COMMENT_HASHTAG shift and go to state 7
+    COMMENT_MULTI   shift and go to state 8
+    empty           shift and go to state 21
+    include         shift and go to state 22
+    const           shift and go to state 24
+    print           shift and go to state 26
+    echo            shift and go to state 27
+    while           shift and go to state 28
+    if              shift and go to state 29
+    function        shift and go to state 30
+    ID              shift and go to state 25
+    class           shift and go to state 31
+    new             shift and go to state 32
+    CLOSE_TAG       shift and go to state 33
+    VARIABLE        shift and go to state 34
+
+    declaration                    shift and go to state 35
+    header_declaration             shift and go to state 9
+    var_declaration                shift and go to state 10
+    constant_declaration           shift and go to state 11
+    print_declaration              shift and go to state 12
+    echo_declaration               shift and go to state 13
+    iteration_stmt                 shift and go to state 14
+    if_statement                   shift and go to state 15
+    fun_declaration                shift and go to state 16
+    fun_call                       shift and go to state 17
+    obj_declaration                shift and go to state 18
+    create_obj_declaration         shift and go to state 19
+    footer_declaration             shift and go to state 20
+    var_declaration2               shift and go to state 23
+
+state 152
+
+    (80) fun_declaration -> function ID LPAREN params RPAREN LBLOCK . declaration RBLOCK
+    (6) declaration -> . COMMENT
+    (7) declaration -> . COMMENT_HASHTAG
+    (8) declaration -> . COMMENT_MULTI
+    (9) declaration -> . header_declaration
+    (10) declaration -> . var_declaration
+    (11) declaration -> . constant_declaration
+    (12) declaration -> . print_declaration
+    (13) declaration -> . echo_declaration
+    (14) declaration -> . iteration_stmt
+    (15) declaration -> . if_statement
+    (16) declaration -> . fun_declaration
+    (17) declaration -> . fun_call
+    (18) declaration -> . obj_declaration
+    (19) declaration -> . create_obj_declaration
+    (20) declaration -> . footer_declaration
+    (21) declaration -> . empty
+    (24) header_declaration -> . include CADENA SEMICOLON
+    (34) var_declaration -> . var_declaration2 SEMICOLON
+    (25) constant_declaration -> . const ID EQUAL data_type SEMICOLON
+    (26) print_declaration -> . print var_declaration2 SEMICOLON
+    (27) print_declaration -> . print LPAREN var_declaration2 RPAREN SEMICOLON
+    (28) print_declaration -> . print LPAREN data_type RPAREN SEMICOLON
+    (29) print_declaration -> . print data_type SEMICOLON
+    (30) echo_declaration -> . echo var_declaration2 SEMICOLON
+    (31) echo_declaration -> . echo LPAREN var_declaration2 RPAREN SEMICOLON
+    (32) echo_declaration -> . echo LPAREN data_type RPAREN SEMICOLON
+    (33) echo_declaration -> . echo data_type SEMICOLON
+    (44) iteration_stmt -> . while LPAREN expression RPAREN LBLOCK declaration RBLOCK
+    (75) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (80) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
+    (81) fun_call -> . ID LPAREN params RPAREN
+    (82) obj_declaration -> . class ID LBLOCK declaration RBLOCK
+    (83) create_obj_declaration -> . new ID LPAREN params RPAREN
+    (3) footer_declaration -> . CLOSE_TAG
+    (35) var_declaration2 -> . VARIABLE assignment_tail
+
+    COMMENT         shift and go to state 6
+    COMMENT_HASHTAG shift and go to state 7
+    COMMENT_MULTI   shift and go to state 8
+    empty           shift and go to state 21
+    include         shift and go to state 22
+    const           shift and go to state 24
+    print           shift and go to state 26
+    echo            shift and go to state 27
+    while           shift and go to state 28
+    if              shift and go to state 29
+    function        shift and go to state 30
+    ID              shift and go to state 25
+    class           shift and go to state 31
+    new             shift and go to state 32
+    CLOSE_TAG       shift and go to state 33
+    VARIABLE        shift and go to state 34
+
+    declaration                    shift and go to state 158
+    header_declaration             shift and go to state 9
+    var_declaration                shift and go to state 10
+    constant_declaration           shift and go to state 11
+    print_declaration              shift and go to state 12
+    echo_declaration               shift and go to state 13
+    iteration_stmt                 shift and go to state 14
+    if_statement                   shift and go to state 15
+    fun_declaration                shift and go to state 16
+    fun_call                       shift and go to state 17
+    obj_declaration                shift and go to state 18
+    create_obj_declaration         shift and go to state 19
+    footer_declaration             shift and go to state 20
+    var_declaration2               shift and go to state 23
+
+state 153
 
     (41) assignment_tail -> EQUAL LBRACKET expression COMMA var_declaration2 .
 
@@ -2992,7 +3210,7 @@ state 145
     COMMA           reduce using rule 41 (assignment_tail -> EQUAL LBRACKET expression COMMA var_declaration2 .)
 
 
-state 146
+state 154
 
     (42) assignment_tail -> EQUAL LBRACKET data_type COMMA var_declaration2 .
 
@@ -3001,7 +3219,7 @@ state 146
     COMMA           reduce using rule 42 (assignment_tail -> EQUAL LBRACKET data_type COMMA var_declaration2 .)
 
 
-state 147
+state 155
 
     (44) iteration_stmt -> while LPAREN expression RPAREN LBLOCK declaration RBLOCK .
 
@@ -3025,153 +3243,62 @@ state 147
     RBLOCK          reduce using rule 44 (iteration_stmt -> while LPAREN expression RPAREN LBLOCK declaration RBLOCK .)
 
 
-state 148
-
-    (68) if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK . else_part
-    (69) else_part -> . elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-    (70) else_part -> . else LBLOCK declaration_list RBLOCK
-    (71) else_part -> . endif
-    (72) else_part -> . empty
-
-    elseif          shift and go to state 151
-    else            shift and go to state 152
-    endif           shift and go to state 153
-    empty           shift and go to state 154
-
-    else_part                      shift and go to state 150
-
-state 149
-
-    (73) fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration . RBLOCK
-
-    RBLOCK          shift and go to state 155
-
-
-state 150
-
-    (68) if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .
-
-    COMMENT         reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    COMMENT_HASHTAG reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    COMMENT_MULTI   reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    empty           reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    include         reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    const           reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    print           reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    echo            reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    while           reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    if              reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    function        reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    ID              reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    class           reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    new             reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    CLOSE_TAG       reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    VARIABLE        reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    $end            reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    RBLOCK          reduce using rule 68 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-
-
-state 151
-
-    (69) else_part -> elseif . LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-
-    LPAREN          shift and go to state 156
-
-
-state 152
-
-    (70) else_part -> else . LBLOCK declaration_list RBLOCK
-
-    LBLOCK          shift and go to state 157
-
-
-state 153
-
-    (71) else_part -> endif .
-
-    COMMENT         reduce using rule 71 (else_part -> endif .)
-    COMMENT_HASHTAG reduce using rule 71 (else_part -> endif .)
-    COMMENT_MULTI   reduce using rule 71 (else_part -> endif .)
-    empty           reduce using rule 71 (else_part -> endif .)
-    include         reduce using rule 71 (else_part -> endif .)
-    const           reduce using rule 71 (else_part -> endif .)
-    print           reduce using rule 71 (else_part -> endif .)
-    echo            reduce using rule 71 (else_part -> endif .)
-    while           reduce using rule 71 (else_part -> endif .)
-    if              reduce using rule 71 (else_part -> endif .)
-    function        reduce using rule 71 (else_part -> endif .)
-    ID              reduce using rule 71 (else_part -> endif .)
-    class           reduce using rule 71 (else_part -> endif .)
-    new             reduce using rule 71 (else_part -> endif .)
-    CLOSE_TAG       reduce using rule 71 (else_part -> endif .)
-    VARIABLE        reduce using rule 71 (else_part -> endif .)
-    $end            reduce using rule 71 (else_part -> endif .)
-    RBLOCK          reduce using rule 71 (else_part -> endif .)
-
-
-state 154
-
-    (72) else_part -> empty .
-
-    COMMENT         reduce using rule 72 (else_part -> empty .)
-    COMMENT_HASHTAG reduce using rule 72 (else_part -> empty .)
-    COMMENT_MULTI   reduce using rule 72 (else_part -> empty .)
-    empty           reduce using rule 72 (else_part -> empty .)
-    include         reduce using rule 72 (else_part -> empty .)
-    const           reduce using rule 72 (else_part -> empty .)
-    print           reduce using rule 72 (else_part -> empty .)
-    echo            reduce using rule 72 (else_part -> empty .)
-    while           reduce using rule 72 (else_part -> empty .)
-    if              reduce using rule 72 (else_part -> empty .)
-    function        reduce using rule 72 (else_part -> empty .)
-    ID              reduce using rule 72 (else_part -> empty .)
-    class           reduce using rule 72 (else_part -> empty .)
-    new             reduce using rule 72 (else_part -> empty .)
-    CLOSE_TAG       reduce using rule 72 (else_part -> empty .)
-    VARIABLE        reduce using rule 72 (else_part -> empty .)
-    $end            reduce using rule 72 (else_part -> empty .)
-    RBLOCK          reduce using rule 72 (else_part -> empty .)
-
-
-state 155
-
-    (73) fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .
-
-    COMMENT         reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    COMMENT_HASHTAG reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    COMMENT_MULTI   reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    empty           reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    include         reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    const           reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    print           reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    echo            reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    while           reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    if              reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    function        reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    ID              reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    class           reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    new             reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    CLOSE_TAG       reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    VARIABLE        reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    $end            reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-    RBLOCK          reduce using rule 73 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
-
-
 state 156
 
-    (69) else_part -> elseif LPAREN . expression RPAREN LBLOCK declaration_list RBLOCK else_part
-    (45) expression -> . additive_expression
-    (46) expression -> . additive_expression comp_op additive_expression
-    (47) additive_expression -> . term
-    (48) additive_expression -> . term math_op term
-    (49) term -> . factor
-    (50) term -> . factor increment_decrement_op
-    (51) term -> . increment_decrement_op factor
-    (52) factor -> . NUMBER
-    (53) factor -> . VARIABLE
-    (54) factor -> . LPAREN expression RPAREN
-    (55) increment_decrement_op -> . PLUSPLUS
-    (56) increment_decrement_op -> . MINUSMINUS
+    (48) expression -> additive_expression comp_op additive_expression logical_op additive_expression . comp_op additive_expression
+    (63) comp_op -> . LESS
+    (64) comp_op -> . LESSEQUAL
+    (65) comp_op -> . GREATER
+    (66) comp_op -> . GREATEREQUAL
+    (67) comp_op -> . DEQUAL
+    (68) comp_op -> . DISTINT
+    (69) comp_op -> . ISEQUAL
+
+    LESS            shift and go to state 107
+    LESSEQUAL       shift and go to state 108
+    GREATER         shift and go to state 109
+    GREATEREQUAL    shift and go to state 110
+    DEQUAL          shift and go to state 111
+    DISTINT         shift and go to state 112
+    ISEQUAL         shift and go to state 113
+
+    comp_op                        shift and go to state 159
+
+state 157
+
+    (75) if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK . else_part
+    (76) else_part -> . elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (77) else_part -> . else LBLOCK declaration_list RBLOCK
+    (78) else_part -> . endif
+    (79) else_part -> . empty
+
+    elseif          shift and go to state 161
+    else            shift and go to state 162
+    endif           shift and go to state 163
+    empty           shift and go to state 164
+
+    else_part                      shift and go to state 160
+
+state 158
+
+    (80) fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration . RBLOCK
+
+    RBLOCK          shift and go to state 165
+
+
+state 159
+
+    (48) expression -> additive_expression comp_op additive_expression logical_op additive_expression comp_op . additive_expression
+    (49) additive_expression -> . term
+    (50) additive_expression -> . term math_op term
+    (51) term -> . factor
+    (52) term -> . factor increment_decrement_op
+    (53) term -> . increment_decrement_op factor
+    (54) factor -> . NUMBER
+    (55) factor -> . VARIABLE
+    (56) factor -> . LPAREN expression RPAREN
+    (57) increment_decrement_op -> . PLUSPLUS
+    (58) increment_decrement_op -> . MINUSMINUS
 
     NUMBER          shift and go to state 77
     VARIABLE        shift and go to state 78
@@ -3179,15 +3306,163 @@ state 156
     PLUSPLUS        shift and go to state 79
     MINUSMINUS      shift and go to state 80
 
-    expression                     shift and go to state 158
+    additive_expression            shift and go to state 166
+    term                           shift and go to state 74
+    factor                         shift and go to state 75
+    increment_decrement_op         shift and go to state 76
+
+state 160
+
+    (75) if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .
+
+    COMMENT         reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    COMMENT_HASHTAG reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    COMMENT_MULTI   reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    empty           reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    include         reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    const           reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    print           reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    echo            reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    while           reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    if              reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    function        reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    ID              reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    class           reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    new             reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    CLOSE_TAG       reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    VARIABLE        reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    $end            reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    RBLOCK          reduce using rule 75 (if_statement -> if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+
+
+state 161
+
+    (76) else_part -> elseif . LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+
+    LPAREN          shift and go to state 167
+
+
+state 162
+
+    (77) else_part -> else . LBLOCK declaration_list RBLOCK
+
+    LBLOCK          shift and go to state 168
+
+
+state 163
+
+    (78) else_part -> endif .
+
+    COMMENT         reduce using rule 78 (else_part -> endif .)
+    COMMENT_HASHTAG reduce using rule 78 (else_part -> endif .)
+    COMMENT_MULTI   reduce using rule 78 (else_part -> endif .)
+    empty           reduce using rule 78 (else_part -> endif .)
+    include         reduce using rule 78 (else_part -> endif .)
+    const           reduce using rule 78 (else_part -> endif .)
+    print           reduce using rule 78 (else_part -> endif .)
+    echo            reduce using rule 78 (else_part -> endif .)
+    while           reduce using rule 78 (else_part -> endif .)
+    if              reduce using rule 78 (else_part -> endif .)
+    function        reduce using rule 78 (else_part -> endif .)
+    ID              reduce using rule 78 (else_part -> endif .)
+    class           reduce using rule 78 (else_part -> endif .)
+    new             reduce using rule 78 (else_part -> endif .)
+    CLOSE_TAG       reduce using rule 78 (else_part -> endif .)
+    VARIABLE        reduce using rule 78 (else_part -> endif .)
+    $end            reduce using rule 78 (else_part -> endif .)
+    RBLOCK          reduce using rule 78 (else_part -> endif .)
+
+
+state 164
+
+    (79) else_part -> empty .
+
+    COMMENT         reduce using rule 79 (else_part -> empty .)
+    COMMENT_HASHTAG reduce using rule 79 (else_part -> empty .)
+    COMMENT_MULTI   reduce using rule 79 (else_part -> empty .)
+    empty           reduce using rule 79 (else_part -> empty .)
+    include         reduce using rule 79 (else_part -> empty .)
+    const           reduce using rule 79 (else_part -> empty .)
+    print           reduce using rule 79 (else_part -> empty .)
+    echo            reduce using rule 79 (else_part -> empty .)
+    while           reduce using rule 79 (else_part -> empty .)
+    if              reduce using rule 79 (else_part -> empty .)
+    function        reduce using rule 79 (else_part -> empty .)
+    ID              reduce using rule 79 (else_part -> empty .)
+    class           reduce using rule 79 (else_part -> empty .)
+    new             reduce using rule 79 (else_part -> empty .)
+    CLOSE_TAG       reduce using rule 79 (else_part -> empty .)
+    VARIABLE        reduce using rule 79 (else_part -> empty .)
+    $end            reduce using rule 79 (else_part -> empty .)
+    RBLOCK          reduce using rule 79 (else_part -> empty .)
+
+
+state 165
+
+    (80) fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .
+
+    COMMENT         reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    COMMENT_HASHTAG reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    COMMENT_MULTI   reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    empty           reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    include         reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    const           reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    print           reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    echo            reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    while           reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    if              reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    function        reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    ID              reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    class           reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    new             reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    CLOSE_TAG       reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    VARIABLE        reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    $end            reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+    RBLOCK          reduce using rule 80 (fun_declaration -> function ID LPAREN params RPAREN LBLOCK declaration RBLOCK .)
+
+
+state 166
+
+    (48) expression -> additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression .
+
+    RPAREN          reduce using rule 48 (expression -> additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression .)
+    SEMICOLON       reduce using rule 48 (expression -> additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression .)
+    COMMA           reduce using rule 48 (expression -> additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression .)
+
+
+state 167
+
+    (76) else_part -> elseif LPAREN . expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (45) expression -> . additive_expression
+    (46) expression -> . additive_expression logical_op additive_expression
+    (47) expression -> . additive_expression comp_op additive_expression
+    (48) expression -> . additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression
+    (49) additive_expression -> . term
+    (50) additive_expression -> . term math_op term
+    (51) term -> . factor
+    (52) term -> . factor increment_decrement_op
+    (53) term -> . increment_decrement_op factor
+    (54) factor -> . NUMBER
+    (55) factor -> . VARIABLE
+    (56) factor -> . LPAREN expression RPAREN
+    (57) increment_decrement_op -> . PLUSPLUS
+    (58) increment_decrement_op -> . MINUSMINUS
+
+    NUMBER          shift and go to state 77
+    VARIABLE        shift and go to state 78
+    LPAREN          shift and go to state 71
+    PLUSPLUS        shift and go to state 79
+    MINUSMINUS      shift and go to state 80
+
+    expression                     shift and go to state 169
     additive_expression            shift and go to state 73
     term                           shift and go to state 74
     factor                         shift and go to state 75
     increment_decrement_op         shift and go to state 76
 
-state 157
+state 168
 
-    (70) else_part -> else LBLOCK . declaration_list RBLOCK
+    (77) else_part -> else LBLOCK . declaration_list RBLOCK
     (4) declaration_list -> . declaration
     (5) declaration_list -> . declaration_list declaration
     (6) declaration -> . COMMENT
@@ -3218,11 +3493,11 @@ state 157
     (32) echo_declaration -> . echo LPAREN data_type RPAREN SEMICOLON
     (33) echo_declaration -> . echo data_type SEMICOLON
     (44) iteration_stmt -> . while LPAREN expression RPAREN LBLOCK declaration RBLOCK
-    (68) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-    (73) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
-    (74) fun_call -> . ID LPAREN params RPAREN
-    (75) obj_declaration -> . class ID LBLOCK declaration RBLOCK
-    (76) create_obj_declaration -> . new ID LPAREN params RPAREN
+    (75) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (80) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
+    (81) fun_call -> . ID LPAREN params RPAREN
+    (82) obj_declaration -> . class ID LBLOCK declaration RBLOCK
+    (83) create_obj_declaration -> . new ID LPAREN params RPAREN
     (3) footer_declaration -> . CLOSE_TAG
     (35) var_declaration2 -> . VARIABLE assignment_tail
 
@@ -3243,7 +3518,7 @@ state 157
     CLOSE_TAG       shift and go to state 33
     VARIABLE        shift and go to state 34
 
-    declaration_list               shift and go to state 159
+    declaration_list               shift and go to state 170
     declaration                    shift and go to state 5
     header_declaration             shift and go to state 9
     var_declaration                shift and go to state 10
@@ -3259,16 +3534,16 @@ state 157
     footer_declaration             shift and go to state 20
     var_declaration2               shift and go to state 23
 
-state 158
+state 169
 
-    (69) else_part -> elseif LPAREN expression . RPAREN LBLOCK declaration_list RBLOCK else_part
+    (76) else_part -> elseif LPAREN expression . RPAREN LBLOCK declaration_list RBLOCK else_part
 
-    RPAREN          shift and go to state 160
+    RPAREN          shift and go to state 171
 
 
-state 159
+state 170
 
-    (70) else_part -> else LBLOCK declaration_list . RBLOCK
+    (77) else_part -> else LBLOCK declaration_list . RBLOCK
     (5) declaration_list -> declaration_list . declaration
     (6) declaration -> . COMMENT
     (7) declaration -> . COMMENT_HASHTAG
@@ -3298,15 +3573,15 @@ state 159
     (32) echo_declaration -> . echo LPAREN data_type RPAREN SEMICOLON
     (33) echo_declaration -> . echo data_type SEMICOLON
     (44) iteration_stmt -> . while LPAREN expression RPAREN LBLOCK declaration RBLOCK
-    (68) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-    (73) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
-    (74) fun_call -> . ID LPAREN params RPAREN
-    (75) obj_declaration -> . class ID LBLOCK declaration RBLOCK
-    (76) create_obj_declaration -> . new ID LPAREN params RPAREN
+    (75) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (80) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
+    (81) fun_call -> . ID LPAREN params RPAREN
+    (82) obj_declaration -> . class ID LBLOCK declaration RBLOCK
+    (83) create_obj_declaration -> . new ID LPAREN params RPAREN
     (3) footer_declaration -> . CLOSE_TAG
     (35) var_declaration2 -> . VARIABLE assignment_tail
 
-    RBLOCK          shift and go to state 161
+    RBLOCK          shift and go to state 172
     COMMENT         shift and go to state 6
     COMMENT_HASHTAG shift and go to state 7
     COMMENT_MULTI   shift and go to state 8
@@ -3339,40 +3614,40 @@ state 159
     footer_declaration             shift and go to state 20
     var_declaration2               shift and go to state 23
 
-state 160
+state 171
 
-    (69) else_part -> elseif LPAREN expression RPAREN . LBLOCK declaration_list RBLOCK else_part
+    (76) else_part -> elseif LPAREN expression RPAREN . LBLOCK declaration_list RBLOCK else_part
 
-    LBLOCK          shift and go to state 162
-
-
-state 161
-
-    (70) else_part -> else LBLOCK declaration_list RBLOCK .
-
-    COMMENT         reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    COMMENT_HASHTAG reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    COMMENT_MULTI   reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    empty           reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    include         reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    const           reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    print           reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    echo            reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    while           reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    if              reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    function        reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    ID              reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    class           reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    new             reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    CLOSE_TAG       reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    VARIABLE        reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    $end            reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
-    RBLOCK          reduce using rule 70 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    LBLOCK          shift and go to state 173
 
 
-state 162
+state 172
 
-    (69) else_part -> elseif LPAREN expression RPAREN LBLOCK . declaration_list RBLOCK else_part
+    (77) else_part -> else LBLOCK declaration_list RBLOCK .
+
+    COMMENT         reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    COMMENT_HASHTAG reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    COMMENT_MULTI   reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    empty           reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    include         reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    const           reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    print           reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    echo            reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    while           reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    if              reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    function        reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    ID              reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    class           reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    new             reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    CLOSE_TAG       reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    VARIABLE        reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    $end            reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+    RBLOCK          reduce using rule 77 (else_part -> else LBLOCK declaration_list RBLOCK .)
+
+
+state 173
+
+    (76) else_part -> elseif LPAREN expression RPAREN LBLOCK . declaration_list RBLOCK else_part
     (4) declaration_list -> . declaration
     (5) declaration_list -> . declaration_list declaration
     (6) declaration -> . COMMENT
@@ -3403,11 +3678,11 @@ state 162
     (32) echo_declaration -> . echo LPAREN data_type RPAREN SEMICOLON
     (33) echo_declaration -> . echo data_type SEMICOLON
     (44) iteration_stmt -> . while LPAREN expression RPAREN LBLOCK declaration RBLOCK
-    (68) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-    (73) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
-    (74) fun_call -> . ID LPAREN params RPAREN
-    (75) obj_declaration -> . class ID LBLOCK declaration RBLOCK
-    (76) create_obj_declaration -> . new ID LPAREN params RPAREN
+    (75) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (80) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
+    (81) fun_call -> . ID LPAREN params RPAREN
+    (82) obj_declaration -> . class ID LBLOCK declaration RBLOCK
+    (83) create_obj_declaration -> . new ID LPAREN params RPAREN
     (3) footer_declaration -> . CLOSE_TAG
     (35) var_declaration2 -> . VARIABLE assignment_tail
 
@@ -3428,7 +3703,7 @@ state 162
     CLOSE_TAG       shift and go to state 33
     VARIABLE        shift and go to state 34
 
-    declaration_list               shift and go to state 163
+    declaration_list               shift and go to state 174
     declaration                    shift and go to state 5
     header_declaration             shift and go to state 9
     var_declaration                shift and go to state 10
@@ -3444,9 +3719,9 @@ state 162
     footer_declaration             shift and go to state 20
     var_declaration2               shift and go to state 23
 
-state 163
+state 174
 
-    (69) else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list . RBLOCK else_part
+    (76) else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list . RBLOCK else_part
     (5) declaration_list -> declaration_list . declaration
     (6) declaration -> . COMMENT
     (7) declaration -> . COMMENT_HASHTAG
@@ -3476,15 +3751,15 @@ state 163
     (32) echo_declaration -> . echo LPAREN data_type RPAREN SEMICOLON
     (33) echo_declaration -> . echo data_type SEMICOLON
     (44) iteration_stmt -> . while LPAREN expression RPAREN LBLOCK declaration RBLOCK
-    (68) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-    (73) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
-    (74) fun_call -> . ID LPAREN params RPAREN
-    (75) obj_declaration -> . class ID LBLOCK declaration RBLOCK
-    (76) create_obj_declaration -> . new ID LPAREN params RPAREN
+    (75) if_statement -> . if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (80) fun_declaration -> . function ID LPAREN params RPAREN LBLOCK declaration RBLOCK
+    (81) fun_call -> . ID LPAREN params RPAREN
+    (82) obj_declaration -> . class ID LBLOCK declaration RBLOCK
+    (83) create_obj_declaration -> . new ID LPAREN params RPAREN
     (3) footer_declaration -> . CLOSE_TAG
     (35) var_declaration2 -> . VARIABLE assignment_tail
 
-    RBLOCK          shift and go to state 164
+    RBLOCK          shift and go to state 175
     COMMENT         shift and go to state 6
     COMMENT_HASHTAG shift and go to state 7
     COMMENT_MULTI   shift and go to state 8
@@ -3517,48 +3792,48 @@ state 163
     footer_declaration             shift and go to state 20
     var_declaration2               shift and go to state 23
 
-state 164
+state 175
 
-    (69) else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK . else_part
-    (69) else_part -> . elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
-    (70) else_part -> . else LBLOCK declaration_list RBLOCK
-    (71) else_part -> . endif
-    (72) else_part -> . empty
+    (76) else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK . else_part
+    (76) else_part -> . elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
+    (77) else_part -> . else LBLOCK declaration_list RBLOCK
+    (78) else_part -> . endif
+    (79) else_part -> . empty
 
-    elseif          shift and go to state 151
-    else            shift and go to state 152
-    endif           shift and go to state 153
-    empty           shift and go to state 154
+    elseif          shift and go to state 161
+    else            shift and go to state 162
+    endif           shift and go to state 163
+    empty           shift and go to state 164
 
-    else_part                      shift and go to state 165
+    else_part                      shift and go to state 176
 
-state 165
+state 176
 
-    (69) else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .
+    (76) else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .
 
-    COMMENT         reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    COMMENT_HASHTAG reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    COMMENT_MULTI   reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    empty           reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    include         reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    const           reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    print           reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    echo            reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    while           reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    if              reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    function        reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    ID              reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    class           reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    new             reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    CLOSE_TAG       reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    VARIABLE        reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    $end            reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
-    RBLOCK          reduce using rule 69 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    COMMENT         reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    COMMENT_HASHTAG reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    COMMENT_MULTI   reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    empty           reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    include         reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    const           reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    print           reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    echo            reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    while           reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    if              reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    function        reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    ID              reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    class           reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    new             reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    CLOSE_TAG       reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    VARIABLE        reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    $end            reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
+    RBLOCK          reduce using rule 76 (else_part -> elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
 WARNING: shift/reduce conflict for COMMA in state 86 resolved as shift
 WARNING: shift/reduce conflict for COMMA in state 87 resolved as shift
-WARNING: reduce/reduce conflict in state 123 resolved using rule (data_type -> NUMBER)
-WARNING: rejected rule (factor -> NUMBER) in state 123
+WARNING: reduce/reduce conflict in state 129 resolved using rule (data_type -> NUMBER)
+WARNING: rejected rule (factor -> NUMBER) in state 129

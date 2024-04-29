@@ -10,18 +10,6 @@ if ($edad < 18) {
 } else {
     echo "Eres un adulto mayor.";
 }
-// Final del bloque condicional
-
-// Ejemplo utilizando la sintaxis alternativa con endif
-$temperatura = 30;
-
-if ($temperatura < 20):
-    echo "Hace bastante frío.";
-elseif ($temperatura >= 20 && $temperatura <= 30):
-    echo "La temperatura es agradable.";
-else:
-    echo "Hace calor.";
-endif;
 
 ?>
 

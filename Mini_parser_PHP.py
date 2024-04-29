@@ -7,9 +7,11 @@ VERBOSE = 1
 
 #nivel de prioridad de los operadores aritmeticos
 precedence = (
+    ('left', 'BOOL_OR', 'or'),
+    ('left', 'BOOL_AND', 'and'),
+    ('left', 'EQUAL'),
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE'),
-    ('right', 'EQUAL'),  # Asegurarse de que `EQUAL` tenga mayor precedencia para manejar asignaciones correctamente
 )
 
 def p_program(p):
@@ -122,9 +124,12 @@ def p_iteration_stmt_1(p):
 	'iteration_stmt : while LPAREN expression RPAREN LBLOCK declaration RBLOCK'
 	pass
 
+
 def p_expression_1(p):
 	'''expression : additive_expression
-					| additive_expression comp_op additive_expression'''
+ 					| additive_expression logical_op additive_expression
+					| additive_expression comp_op additive_expression
+     				| additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression'''
 	pass
 # Conflicto reduce/reduce con la gramatica original
 """ def p_additive_expression(p):
@@ -175,6 +180,15 @@ def p_comp_op(p):
 			| ISEQUAL
 	'''
 	pass
+
+def p_logical_op(p):
+    '''logical_op : BOOL_OR
+                    | BOOL_AND
+                    | NOT
+                    | or
+                    | and '''
+    pass
+
 def p_if_statement(p):
     '''if_statement : if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part'''
 
