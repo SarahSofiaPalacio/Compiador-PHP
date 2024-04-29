@@ -169,6 +169,7 @@ def p_expression_1(p):
  					| additive_expression logical_op additive_expression
 					| additive_expression comp_op additive_expression
      				| additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression
+					| additive_expression bits_op additive_expression
 '''
 	pass
 # Conflicto reduce/reduce con la gramatica original
@@ -246,6 +247,8 @@ def p_logical_op(p):
                     | or
                     | and '''
     pass
+
+
 
 def p_if_statement(p):
     '''if_statement : if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part'''
@@ -351,60 +354,13 @@ def p_Concatenar_Cadenas_declaration(p):
 	pass
 
 #.................................................................................................
-def p_expression_ampensant(p):
-	'expression : expression AMPERSANT expression'
-	pass 
 
-def p_expression_andequal(p):
-	'expression : expression ANDEQUAL expression'
-	pass
-
-def p_expression_assign(p):
-	'expression : expression ASSIGN expression'
-	pass
-
-def p_expression_backslash(p):
-	'expression : expression BACKSLASH expression'
-	pass
-
-def p_expression_colon(p):
-	'expression : expression COLON expression'
-	pass
-
-def p_expression_hashtag(p):
-	'expression : HASHTAG'
-	pass
-
-def p_expression_comillasdobles(p):
-	'expression : COMILLASDOBLES expression COMILLASDOBLES'
-	pass
-
-
-
-def p_expression_conditional(p):
-	'expression : expression QUESTIONMARK expression COLON expression SEMICOLON'
-	pass
-
-def p_expression_SL(p):
-	'expression : expression SL expression'
-	pass
-
-def p_expression_SLEQUAL(p):
-	'expression : expression SLEQUAL expression'
-	pass
-
-def p_expression_SR(p):
-	'expression : expression SR expression'
-	pass
-
-def p_expression_SREQUAL(p):
-	'expression : expression SREQUAL expression'
-	pass
-
-def p_expression_XOREQUAL(p):
-	'expression : expression XOREQUAL expression'
-	pass
-
+def p_bits_op(p):
+	'''bits_op : AMPERSANT
+		| SR
+                | SL
+				'''
+pass
 
 
 def p_empty_function(p):
