@@ -119,9 +119,9 @@ def p_var_declaration_3(p):
                         | VARIABLE EQUAL NUMBER
                         | VARIABLE EQUAL VARIABLE
                         | VARIABLE EQUAL CADENA
-						| VARIABLE EQUAL array_declaration
+						| VARIABLE EQUAL Built_In_Declaration
 						| VARIABLE EQUAL expression
-						| array_declaration
+						| Built_In_Declaration
 						| Concatenar_Cadenas_declaration
 
         '''
@@ -206,6 +206,10 @@ def p_math_op(p):
 				| MINUS
 				| TIMES
 				| DIVIDE
+				| MULEQUAL
+				| PLUSEQUAL
+				| MINUSEQUAL
+				| MOD
 	'''
 	pass
 
@@ -216,7 +220,10 @@ def p_comp_op(p):
 			| GREATEREQUAL
 			| DEQUAL
 			| DISTINT
+			| DIVEQUAL
 			| ISEQUAL
+			| ISIDENTICAL
+			| ISNOTIDENTICAL
 	'''
 	pass
 
@@ -299,9 +306,30 @@ def p_foreach_loop(p):
     'foreach_loop : foreach LPAREN expression as expression RPAREN LBLOCK declaration_list RBLOCK'
     pass
 
-def p_array(p):
-	'array_declaration : array LPAREN params RPAREN'
-	pass
+def p_Built_In_Declaration(p):
+    '''Built_In_Declaration : array LPAREN params RPAREN
+							| pow LPAREN params RPAREN
+							| POW LPAREN params RPAREN
+							| abs LPAREN params RPAREN
+							| cos LPAREN params RPAREN
+							| deg2rad LPAREN params RPAREN
+							| rad2deg LPAREN params RPAREN
+							| die LPAREN params RPAREN
+							| exp LPAREN params RPAREN
+							| floor LPAREN params RPAREN
+							| isset LPAREN params RPAREN
+							| list LPAREN params RPAREN
+							| log LPAREN params RPAREN
+							| log10 LPAREN params RPAREN
+							| max LPAREN params RPAREN
+							| min LPAREN params RPAREN
+							| rand LPAREN params RPAREN
+							| round LPAREN params RPAREN
+							| sin LPAREN params RPAREN
+							| sqrt LPAREN params RPAREN
+							| unset LPAREN params RPAREN
+							'''
+    pass
 
 def p_Concatenar_Cadenas_declaration(p):
 	'''Concatenar_Cadenas_declaration : VARIABLE DOT VARIABLE

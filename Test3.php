@@ -3,7 +3,7 @@
 include "a";
 
 // Definir un array de colores
-$colores = array(2);
+$colores = array(2, "a", $a[2]);
 
 $r = $a[2];
 
