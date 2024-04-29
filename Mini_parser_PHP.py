@@ -89,7 +89,11 @@ def p_var_declaration_1(p):
 def p_var_declaration_2(p):
 	'var_declaration : VARIABLE LBRACKET NUMBER RBRACKET SEMICOLON'
 	pass
-#original pero genera conflicto reduce/reduce con Number y Variable con la gramatica additive_expression
+
+
+#Eliminacion de conflictos con reglas que incluyen COMMA, debido a ya estar en params
+#Tambien eliminacion de algunas reglas que no existen en php como :VARIABLE EQUAL NUMBER COMMA var_declaration2
+	#$a = 2, $b; por ejemplo da error sintactico en el ","
 """ def p_var_declaration_3(p):                     
 	'''var_declaration2 : VARIABLE
                         | VARIABLE COMMA var_declaration2
@@ -98,6 +102,7 @@ def p_var_declaration_2(p):
                         | VARIABLE EQUAL VARIABLE COMMA var_declaration2
                         | VARIABLE EQUAL VARIABLE
                         | VARIABLE EQUAL CADENA
+						| VARIABLE EQUAL array_declaration
 						| VARIABLE EQUAL expression
                         | COMMA 
                         | data_type COMMA var_declaration2
@@ -107,7 +112,20 @@ def p_var_declaration_2(p):
                         | CADENA RBRACKET
 
         '''
-	pass """
+	pass"""
+
+def p_var_declaration_3(p):                     
+	'''var_declaration2 : VARIABLE
+                        | VARIABLE EQUAL NUMBER
+                        | VARIABLE EQUAL VARIABLE
+                        | VARIABLE EQUAL CADENA
+						| VARIABLE EQUAL array_declaration
+						| VARIABLE EQUAL expression
+                        | NUMBER RBRACKET
+                        | CADENA RBRACKET
+
+        '''
+	pass
  
 #modificado para evitar conflicto reduce/reduce 
 def p_var_declaration_2(p):
@@ -236,7 +254,8 @@ def p_params(p):
 
 def p_single_param(p):
     '''single_param : var_declaration2
-                    | empty_function'''
+                    | empty_function
+					'''
     pass
 #...............................................
 def p_for_loop(p):
@@ -262,6 +281,10 @@ def p_exit_statement(p):
 def p_foreach_loop(p):
     'foreach_loop : foreach LPAREN expression as expression RPAREN LBLOCK declaration_list RBLOCK'
     pass
+
+def p_array(p):
+	'array_declaration : array LPAREN params RPAREN'
+	pass
 
 def p_empty_function(p):
 	'empty_function :'
