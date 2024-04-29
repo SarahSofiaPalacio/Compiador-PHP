@@ -5,14 +5,16 @@ import sys
 
 VERBOSE = 1
 
-#nivel de prioridad de los operadores aritmeticos
+#nivel de prioridad de los operadores 
 precedence = (
-    ('left', 'BOOL_OR', 'or'),
-    ('left', 'BOOL_AND', 'and'),
-    ('left', 'EQUAL'),
+    ('left', 'or', 'BOOL_OR'),
+    ('left', 'and', 'BOOL_AND'),
+    ('nonassoc', 'EQUAL', 'DEQUAL', 'ISEQUAL', 'DISTINT', 'LESS', 'LESSEQUAL', 'GREATER', 'GREATEREQUAL'),
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE'),
+    ('right', 'NOT'),  
 )
+
 
 def p_program(p):
 	'program : header declaration_list'
@@ -47,6 +49,9 @@ def p_declaration(p):
 				   | obj_declaration
 				   | create_obj_declaration
 				   | footer_declaration
+       			   | for_loop
+				   | foreach_loop
+                   | exit_statement
                    | empty'''
     pass
 
@@ -124,12 +129,12 @@ def p_iteration_stmt_1(p):
 	'iteration_stmt : while LPAREN expression RPAREN LBLOCK declaration RBLOCK'
 	pass
 
-
 def p_expression_1(p):
 	'''expression : additive_expression
  					| additive_expression logical_op additive_expression
 					| additive_expression comp_op additive_expression
-     				| additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression'''
+     				| additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression
+'''
 	pass
 # Conflicto reduce/reduce con la gramatica original
 """ def p_additive_expression(p):
@@ -234,6 +239,30 @@ def p_single_param(p):
                     | empty_function'''
     pass
 #...............................................
+def p_for_loop(p):
+    'for_loop : for LPAREN for_init for_expr for_update RPAREN LBLOCK declaration_list RBLOCK'
+    pass
+
+def p_for_init(p):
+    'for_init : var_declaration2 SEMICOLON'
+    pass
+
+def p_for_expr(p):
+    'for_expr : expression SEMICOLON'
+    pass
+
+def p_for_update(p):
+    'for_update : expression'
+    pass
+
+def p_exit_statement(p):
+    'exit_statement : exit LPAREN expression RPAREN SEMICOLON'
+    pass
+
+def p_foreach_loop(p):
+    'foreach_loop : foreach LPAREN expression as expression RPAREN LBLOCK declaration_list RBLOCK'
+    pass
+
 def p_empty_function(p):
 	'empty_function :'
 	pass
