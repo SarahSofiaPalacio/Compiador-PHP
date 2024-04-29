@@ -308,16 +308,18 @@ def t_XOREQUAL(t):
     r'\^=' 
     return t
 
-def t_SL(t):
-	r'<<'
-	return t
-
 def t_SLEQUAL(t):
 	r'<<='
 	return t
 
+def t_SL(t):
+	r'<<'
+	return t
+
+
+
 def t_SR(t):
-	r'>>='
+	r'>>'
 	return t
 
 def t_SREQUAL(t):
@@ -338,15 +340,7 @@ def t_space(t):
     t.lexer.lineno += len(t.value)
     
 t_ignore = ' \t'
-"""
-def t_comments(t):
-    r'/\*(.|\n)*?\*/'
-    t.lexer.lineno += t.value.count('\n')
-	
-def t_comments_C99(t):
-    r'//(.)*?\n'
-    t.lexer.lineno += 1 
-    """
+
 
 def t_error(t):
     print ("Lexical error: " + str(t.value[0]))
