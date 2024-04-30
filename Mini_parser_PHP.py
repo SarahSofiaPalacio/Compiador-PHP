@@ -13,7 +13,6 @@ precedence = (
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE'),
 	('right', 'UMINUS'),
-    ('right', 'NOT'),  
 )
 
 
@@ -45,6 +44,9 @@ def p_declaration(p):
 				   | echo_declaration
 				   | iteration_stmt
 				   | if_statement
+				   | do_statement
+				   | break_statement
+				   | switch_statement
 				   | fun_declaration
 				   | fun_call
 				   | obj_declaration
@@ -259,6 +261,12 @@ def p_else_part(p):
                  | endif
                  | empty'''
                  
+				 
+
+
+def p_do_statement(p):
+	'''do_statement : do LBLOCK declaration_list RBLOCK while LPAREN expression RPAREN SEMICOLON'''
+	pass
 def p_fun_declaration(p):
 	'fun_declaration : function ID LPAREN params RPAREN LBLOCK declaration RBLOCK'
 	pass
@@ -357,10 +365,33 @@ def p_Concatenar_Cadenas_declaration(p):
 
 def p_bits_op(p):
 	'''bits_op : AMPERSANT
-		| SR
+				| SR
                 | SL
+				| xor
 				'''
 pass
+
+
+def p_break_statement(p):
+    'break_statement : break SEMICOLON'
+    pass
+
+#Falta agregarlo en una regla de produccion
+"""def p_expression_conditional(p): 
+    '''expression_conditional : expression QUESTIONMARK expression COLON expression'''
+    pass """
+
+def p_switch_statement(p):
+    '''switch_statement : switch LPAREN expression RPAREN LBLOCK case_list RBLOCK'''
+
+def p_case_list(p):
+    '''case_list : case_sta
+                 | case_list case_sta'''
+
+def p_case_sta(p):
+    '''case_sta : case expression COLON declaration_list
+            | default COLON declaration_list'''
+
 
 
 def p_empty_function(p):
