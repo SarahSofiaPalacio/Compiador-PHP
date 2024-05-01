@@ -1,17 +1,18 @@
 <?php
 
-include "a";
+// Definición de una función que suma dos números y devuelve el resultado
+function sumar($a, $b) {
+    // Calcula la suma
+    $resultado = $a + $b;
 
-// Definir un array de colores
-$colores = array(2, "a", $a[2]);
-
-$r = $a[2];
-
-// Uso de foreach para iterar sobre el array de colores
-echo "Lista de colores:";
-foreach ($colores as $color) {
-    echo " " . $color;
+    // Devuelve el resultado de la suma
+    return $resultado;
 }
-echo "\n";  // Salto de línea para separar las salidas
-?>
 
+// Llamada a la función y almacenamiento del valor devuelto en una variable
+$suma = sumar(5, 3);
+
+// Imprimir el valor devuelto
+echo "La suma de 5 y 3 es: $suma\n";
+
+?>

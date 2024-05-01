@@ -12,10 +12,9 @@ precedence = (
     ('nonassoc', 'EQUAL', 'DEQUAL', 'ISEQUAL', 'DISTINT', 'LESS', 'LESSEQUAL', 'GREATER', 'GREATEREQUAL'),
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE'),
-	('right', 'UMINUS'),
+    ('right', 'UMINUS'),
     ('right', 'NOT'),  
 )
-
 
 def p_program(p):
 	'program : header declaration_list'
@@ -47,19 +46,20 @@ def p_declaration(p):
 				   | if_statement
 				   | fun_declaration
 				   | fun_call
+				   | return_statement
 				   | obj_declaration
 				   | create_obj_declaration
 				   | footer_declaration
-       			   | for_loop
+				   | for_loop
 				   | foreach_loop
-                   | exit_statement
-                   | empty'''
+				   | switch_statement
+				   | exit_statement
+				   | empty'''
     pass
 
 def p_data_type(p):
 	'''data_type	: NUMBER
 					| CADENA'''
-
 
 def p_header_declaration(p):
     '''header_declaration : include CADENA SEMICOLON'''
@@ -91,29 +91,9 @@ def p_var_declaration_2(p):
 	'var_declaration : VARIABLE LBRACKET NUMBER RBRACKET SEMICOLON'
 	pass
 
-
 #Eliminacion de conflictos con reglas que incluyen COMMA, debido a ya estar en params
 #Tambien eliminacion de algunas reglas que no existen en php como :VARIABLE EQUAL NUMBER COMMA var_declaration2
 	#$a = 2, $b; por ejemplo da error sintactico en el ","
-""" def p_var_declaration_3(p):                     
-	'''var_declaration2 : VARIABLE
-                        | VARIABLE COMMA var_declaration2
-                        | VARIABLE EQUAL NUMBER COMMA var_declaration2
-                        | VARIABLE EQUAL NUMBER
-                        | VARIABLE EQUAL VARIABLE COMMA var_declaration2
-                        | VARIABLE EQUAL VARIABLE
-                        | VARIABLE EQUAL CADENA
-						| VARIABLE EQUAL array_declaration
-						| VARIABLE EQUAL expression
-                        | COMMA 
-                        | data_type COMMA var_declaration2
-                        | NUMBER RBRACKET
-                        | VARIABLE EQUAL LBRACKET data_type COMMA var_declaration2
-                        | CADENA COMMA var_declaration2
-                        | CADENA RBRACKET
-
-        '''
-	pass"""
 
 def p_var_declaration_3(p):                     
 	'''var_declaration2 : VARIABLE
@@ -122,9 +102,11 @@ def p_var_declaration_3(p):
                         | VARIABLE EQUAL CADENA
 						| VARIABLE EQUAL Built_In_Declaration
 						| VARIABLE EQUAL expression
+						| VARIABLE assignation VARIABLE 
+						| VARIABLE assignation NUMBER
 						| Built_In_Declaration
 						| Concatenar_Cadenas_declaration
-
+						| VARIABLE EQUAL ID LPAREN params RPAREN
         '''
 	pass
  
@@ -136,16 +118,6 @@ def p_var_declaration_2(p):
 
 
 #Eliminacion de conflictos con reglas que incluyen COMMA, debido a ya estar en params
-"""def p_assignment_tail(p):
-    '''assignment_tail : EQUAL expression
-                       | EQUAL NUMBER COMMA var_declaration2
-                       | EQUAL VARIABLE COMMA var_declaration2
-                       | EQUAL CADENA
-                       | COMMA var_declaration2
-                       | EQUAL LBRACKET expression COMMA var_declaration2
-                       | EQUAL LBRACKET data_type COMMA var_declaration2
-                       | RBRACKET'''
-    pass"""
 
 def p_assignment_tail(p):
     '''assignment_tail : COMMA var_declaration2
@@ -161,7 +133,13 @@ def p_assignment_tail(p):
 #...............................................
 
 def p_iteration_stmt_1(p):
-	'iteration_stmt : while LPAREN expression RPAREN LBLOCK declaration RBLOCK'
+	'''iteration_stmt : while LPAREN expression RPAREN LBLOCK declaration RBLOCK
+ 						| while LPAREN expression RPAREN COLON declaration endwhile SEMICOLON'''
+	pass
+
+def p_iteration_stmt_2(p):
+	'''iteration_stmt : do LBLOCK declaration RBLOCK while LPAREN expression RPAREN SEMICOLON
+						| do COLON declaration endwhile SEMICOLON'''
 	pass
 
 def p_expression_1(p):
@@ -172,15 +150,7 @@ def p_expression_1(p):
 					| additive_expression bits_op additive_expression
 '''
 	pass
-# Conflicto reduce/reduce con la gramatica original
-""" def p_additive_expression(p):
-	'''additive_expression : additive_expression math_op additive_expression
-							| NUMBER
-							| NUMBER MINUSMINUS
-							| NUMBER PLUSPLUS
-							| VARIABLE
-        '''
-	pass """
+
 # modificado para evitar conflicto reduce/reduce
 def p_additive_expression(p):
     '''additive_expression : term
@@ -188,7 +158,7 @@ def p_additive_expression(p):
     pass
 
 def p_expression_uminus(p):  	#UMINUS sirve cuando se tienen operaciones como 2 * -2;
-    '''term : MINUS term %prec UMINUS'''
+    '''term : MINUS term %prec UMINUS'''#????
 
 
 def p_term(p):
@@ -208,9 +178,6 @@ def p_increment_decrement_op(p):
     pass
 #...............................................
 
-
-
-
 def p_math_op(p):
 	'''math_op : PLUS 
 				| MINUS
@@ -222,9 +189,6 @@ def p_math_op(p):
 				| MOD
 	'''
 	pass
-
-
-	
 
 def p_comp_op(p):
 	'''comp_op : LESS 
@@ -245,7 +209,8 @@ def p_logical_op(p):
                     | BOOL_AND
                     | NOT
                     | or
-                    | and '''
+                    | and 
+                    | xor'''
     pass
 
 
@@ -257,15 +222,22 @@ def p_else_part(p):
     '''else_part : elseif LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part
                  | else LBLOCK declaration_list RBLOCK
                  | endif
-                 | empty'''
+                 | empty_function'''
                  
 def p_fun_declaration(p):
-	'fun_declaration : function ID LPAREN params RPAREN LBLOCK declaration RBLOCK'
+	'''fun_declaration : function ID LPAREN params RPAREN LBLOCK declaration_list RBLOCK
+       					| function ID LPAREN params RPAREN LBLOCK declaration_list return_statement RBLOCK'''
 	pass
 
 def p_fun_call(p):
 	'''fun_call : ID LPAREN params RPAREN'''
 	pass
+
+def p_return_statement(p):
+    '''return_statement : return expression SEMICOLON
+					   | return params SEMICOLON
+                       | return SEMICOLON'''
+    pass
 
 def p_obj_declaration(p):
 	'obj_declaration : class ID LBLOCK declaration RBLOCK'
@@ -275,16 +247,6 @@ def p_create_obj_declaration(p):
 	'create_obj_declaration : new ID LPAREN params RPAREN'
 	pass
 
-""" def p_params(p):
-	'''params : param_list
-			| var_declaration2
-			| empty_function'''
-	pass
-
-def p_param_list_1(p):
-	'''param_list : param_list COMMA params
-				| params'''
-	pass """
 #modificado para evitar conflicto reduce/reduce 
 def p_params(p):
     '''params : single_param
@@ -298,7 +260,8 @@ def p_single_param(p):
     pass
 #...............................................
 def p_for_loop(p):
-    'for_loop : for LPAREN for_init for_expr for_update RPAREN LBLOCK declaration_list RBLOCK'
+    '''for_loop : for LPAREN for_init for_expr for_update RPAREN LBLOCK declaration_list RBLOCK
+    			| for LPAREN for_init for_expr for_update RPAREN COLON declaration_list endfor SEMICOLON'''
     pass
 
 def p_for_init(p):
@@ -318,7 +281,35 @@ def p_exit_statement(p):
     pass
 
 def p_foreach_loop(p):
-    'foreach_loop : foreach LPAREN expression as expression RPAREN LBLOCK declaration_list RBLOCK'
+    '''foreach_loop : foreach LPAREN expression as expression RPAREN LBLOCK declaration_list RBLOCK
+    				| foreach LPAREN expression as expression RPAREN COLON declaration_list endforeach SEMICOLON'''
+    pass
+
+def p_switch_statement(p):
+    '''switch_statement : switch LPAREN expression RPAREN LBLOCK case_blocks default_block RBLOCK
+    					| switch LPAREN expression RPAREN COLON case_blocks default_block endswitch SEMICOLON'''
+    pass
+
+def p_case_blocks(p):
+    '''case_blocks : case_blocks case_block
+                   | case_block
+                   | empty_function'''
+    pass
+
+def p_case_block(p):
+    '''case_block : case expression COLON statement_list
+                  | case expression COLON statement_list break SEMICOLON'''
+    pass
+
+def p_default_block(p):
+    '''default_block : default COLON statement_list
+                     | empty_function'''
+    pass
+
+def p_statement_list(p):
+    '''statement_list : declaration
+                      | statement_list declaration
+                      | empty_function'''
     pass
 
 def p_Built_In_Declaration(p):
@@ -357,11 +348,19 @@ def p_Concatenar_Cadenas_declaration(p):
 
 def p_bits_op(p):
 	'''bits_op : AMPERSANT
-		| SR
+				| SR
                 | SL
+                
 				'''
 pass
-
+def p_assignation(p):
+	'''assignation : ASSIGN
+ 					| SREQUAL
+                	| SLEQUAL
+            		| XOREQUAL	
+                	| ANDEQUAL
+      				'''
+pass
 
 def p_empty_function(p):
 	'empty_function :'

@@ -316,8 +316,6 @@ def t_SL(t):
 	r'<<'
 	return t
 
-
-
 def t_SR(t):
 	r'>>'
 	return t
