@@ -10,6 +10,11 @@ trait MyTrait {
     }
 }
 
+class UseTrait{
+    use MyTrait;
+}
+
+
 $mensaje = "Esta es una cadena
 multilínea";
 
@@ -116,4 +121,18 @@ function fibonaci($i)
 $var1 = 5;
 $var2 = 1;
 echo "vaa2 es mayor a var1";
+
+
+class ko extends Exception{}
+
+try {
+    throw new ko("a");
+    print("Hello");
+} catch (ko $a) {
+    //throw $th;
+}finally{
+    //throw $x;
+}
+
+
 ?>

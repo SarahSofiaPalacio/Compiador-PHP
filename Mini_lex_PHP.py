@@ -87,7 +87,12 @@ reserved = {
     'VAR': 'var',
     'WHILE': 'while',
     'XOR': 'xor',
-  
+    'EXCEPTION': 'Exception',
+    'ERROREXCEPTION': 'ErrorException',
+    'ERROR': 'Error',
+    'PARSEERROR': 'ParseError',
+    'TYPEERROR': 'TypeError',
+
 }
 
 tokens = [
@@ -149,8 +154,8 @@ tokens = [
     'NUMBER',
     'CADENA',
     'ID',
-    'OBJ_OPERATOR'
-	
+    'OBJ_OPERATOR',
+	'PIPE'
 ]
 
 # TokensAll contiene el conjunto de simbolos y palabras reservadas
@@ -180,6 +185,7 @@ t_HASHTAG = r'\#'
 t_DOT = r'\.'
 t_QUESTIONMARK = r'\?'
 t_NOT = r'~'
+t_PIPE = R'\|'
 
 def t_OPEN_TAG(t): 
     r'<\?php'

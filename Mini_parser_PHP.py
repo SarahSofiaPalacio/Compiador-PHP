@@ -48,13 +48,18 @@ def p_declaration(p):
 				   | fun_call
 				   | return_statement
 				   | class_declaration
+                   | class_extension
 				   | create_obj_declaration
       			   | interface_declaration
                    | trait_declaration
+                   | use_declaration
+                   | continue_declaration
 				   | footer_declaration
 				   | for_loop
 				   | foreach_loop
 				   | switch_statement
+                   | try_statement
+                   | throw_statement
 				   | exit_statement
 				   | empty'''
     pass
@@ -252,6 +257,15 @@ def p_class_declaration(p):
     'class_declaration : class ID LBLOCK class_body RBLOCK'
     pass
 
+def p_class_extension(p):
+    '''class_extension : class ID extends ID LBLOCK RBLOCK 
+						| class ID extends Exception LBLOCK RBLOCK
+						| class ID extends ErrorException LBLOCK RBLOCK
+						| class ID extends Error LBLOCK RBLOCK
+						| class ID extends ParseError LBLOCK RBLOCK
+						| class ID extends TypeError LBLOCK RBLOCK'''
+    pass 
+
 def p_create_obj_declaration(p):
 	'create_obj_declaration : new ID LPAREN params RPAREN'
 	pass
@@ -297,11 +311,23 @@ def p_trait_element(p):
                      | visibility fun_declaration'''
     pass
 
+def p_use_declaration(p):
+    '''use_declaration : use ID SEMICOLON'''
+    pass
+
 def p_visibility(p):
     '''visibility : private
                   | protected
                   | public
                   | var'''
+    pass
+
+def p_continue_declaration(p):
+    '''continue_declaration : continue SEMICOLON'''
+    pass
+
+def p_callable_declaration(p):
+    '''callable_declaration : callable VARIABLE'''
     pass
 
 #modificado para evitar conflicto reduce/reduce 
@@ -313,6 +339,7 @@ def p_single_param(p):
     '''single_param : var_declaration2
 					| NUMBER
 					| CADENA
+                    | callable_declaration
                     | empty_function
 					'''
     pass
@@ -364,6 +391,42 @@ def p_default_block(p):
 					 | default COLON statement_list break SEMICOLON
                      | empty_function'''
     pass
+
+
+def p_try_statement(p):
+    'try_statement : try LBLOCK statement_list RBLOCK catch_blocks'
+    pass
+
+def p_catch_blocks(p):
+    '''catch_blocks : catch_blocks catch_block
+                   | catch_block
+                   | catch_blocks finally_block
+                   | finally_block'''
+    pass
+
+def p_catch_block(p):
+    '''catch_block : catch LPAREN list_exception RPAREN LBLOCK statement_list RBLOCK'''
+    pass
+
+def p_list_exception(p):
+	'''list_exception : list_exception PIPE exception_statement
+						| exception_statement'''
+	pass
+
+def p_exception_statement(p):
+	'''exception_statement : Exception VARIABLE
+                       | ID VARIABLE'''
+	pass
+
+def p_throw_statement(p):
+      '''throw_statement : throw create_obj_declaration SEMICOLON
+        				| throw new Exception LPAREN params RPAREN SEMICOLON'''
+      pass
+
+def p_finally_block(p):
+    '''finally_block : finally LBLOCK statement_list RBLOCK'''
+    pass
+
 
 def p_statement_list(p):
     '''statement_list : declaration
