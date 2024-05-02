@@ -92,6 +92,8 @@ reserved = {
     'ERROR': 'Error',
     'PARSEERROR': 'ParseError',
     'TYPEERROR': 'TypeError',
+    'TRUE': 'true',
+    'FALSE': 'false'
 
 }
 

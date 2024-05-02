@@ -38,6 +38,7 @@ def p_declaration(p):
                    | COMMENT_HASHTAG
                    | COMMENT_MULTI
                    | header_declaration
+                   | namespace_declaration
 				   | var_declaration
 				   | constant_declaration
 				   | print_declaration
@@ -54,6 +55,9 @@ def p_declaration(p):
                    | trait_declaration
                    | use_declaration
                    | continue_declaration
+                   | label_declaration
+                   | goto_declaration
+                   | match_declaration
 				   | footer_declaration
 				   | for_loop
 				   | foreach_loop
@@ -65,7 +69,14 @@ def p_declaration(p):
     pass
 
 def p_header_declaration(p):
-    '''header_declaration : include CADENA SEMICOLON'''
+    '''header_declaration : include CADENA SEMICOLON
+      					   | include_once CADENA SEMICOLON
+						   | require CADENA SEMICOLON
+                           | require_once CADENA SEMICOLON'''
+    pass
+
+def p_namespace_declaration(p):
+    '''namespace_declaration : namespace ID SEMICOLON'''
     pass
 
 def p_constant_declaration(p):
@@ -92,11 +103,15 @@ def p_echo_declaration(p):
 	pass
 
 def p_var_declaration_1(p):
-	'''var_declaration : var_declaration2 SEMICOLON'''
+	'''var_declaration : var_declaration2 SEMICOLON
+      					| global var_declaration2 SEMICOLON
+                        | visibility var_declaration2 SEMICOLON
+                        | visibility readonly var_declaration2 SEMICOLON'''
 	pass
 
 def p_var_declaration_2(p):
-	'var_declaration : VARIABLE LBRACKET NUMBER RBRACKET SEMICOLON'
+	'''var_declaration : VARIABLE LBRACKET NUMBER RBRACKET SEMICOLON
+      					| global VARIABLE LBRACKET NUMBER RBRACKET SEMICOLON'''
 	pass
 
 #Eliminacion de conflictos con reglas que incluyen COMMA, debido a ya estar en params
@@ -162,6 +177,7 @@ def p_expression_1(p):
 					| additive_expression comp_op additive_expression
      				| additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression
 					| additive_expression bits_op additive_expression
+                    | VARIABLE instanceof ID
 '''
 	pass
 
@@ -183,6 +199,7 @@ def p_term(p):
 def p_factor(p):
     '''factor : NUMBER
               | VARIABLE
+              | bool_type
               | LPAREN expression RPAREN'''
     pass
 
@@ -238,7 +255,11 @@ def p_else_part(p):
                  
 def p_fun_declaration(p):
 	'''fun_declaration : function ID LPAREN params RPAREN LBLOCK declaration_list RBLOCK
-       					| function ID LPAREN params RPAREN LBLOCK declaration_list return_statement RBLOCK'''
+       					| function ID LPAREN params RPAREN LBLOCK declaration_list return_statement RBLOCK
+                        | visibility function ID LPAREN params RPAREN LBLOCK declaration_list RBLOCK
+                        | visibility function ID LPAREN params RPAREN LBLOCK declaration_list return_statement RBLOCK
+                        | visibility static function ID LPAREN params RPAREN LBLOCK declaration_list RBLOCK 
+                        | visibility static function ID LPAREN params RPAREN LBLOCK declaration_list return_statement RBLOCK'''
 	pass
 
 def p_fun_call(p):
@@ -254,7 +275,10 @@ def p_return_statement(p):
 
 
 def p_class_declaration(p):
-    'class_declaration : class ID LBLOCK class_body RBLOCK'
+    '''class_declaration : class ID LBLOCK class_body RBLOCK
+    					| final class ID LBLOCK class_body RBLOCK
+                        | class ID implements ID LBLOCK class_body RBLOCK
+    					| final class ID implements ID LBLOCK class_body RBLOCK'''
     pass
 
 def p_class_extension(p):
@@ -312,7 +336,42 @@ def p_trait_element(p):
     pass
 
 def p_use_declaration(p):
-    '''use_declaration : use ID SEMICOLON'''
+    '''use_declaration : use ID SEMICOLON
+      					| use id_list LBLOCK use_body RBLOCK'''
+    pass
+
+def p_use_body(p):
+    '''use_body : use_body use_statement
+      			| use_statement
+                | empty_function'''
+    pass
+
+def p_use_statement(p):
+    '''use_statement : ID COLON COLON ID insteadof ID SEMICOLON'''
+    pass
+
+def p_id_list(p):
+    '''id_list : id_list COMMA id_declaration
+      					| id_declaration'''
+    pass
+
+def p_id_declaration(p):
+    '''id_declaration : ID'''
+    pass
+
+def p_match_declaration(p):
+    '''match_declaration : VARIABLE EQUAL match LPAREN single_param RPAREN LBLOCK match_body RBLOCK SEMICOLON'''
+    pass
+
+def p_match_body(p):
+    '''match_body : match_body match_statement COMMA
+      			| match_statement COMMA 
+                | empty_function'''
+    pass
+
+def p_match_statement(p):
+    '''match_statement : single_param ASSIGN single_param
+    					| expression ASSIGN single_param'''
     pass
 
 def p_visibility(p):
@@ -324,6 +383,14 @@ def p_visibility(p):
 
 def p_continue_declaration(p):
     '''continue_declaration : continue SEMICOLON'''
+    pass
+
+def p_label_declaration(p):
+    '''label_declaration : ID COLON'''
+    pass
+
+def p_goto_declaration(p):
+    '''goto_declaration : goto ID SEMICOLON'''
     pass
 
 def p_callable_declaration(p):
@@ -339,9 +406,15 @@ def p_single_param(p):
     '''single_param : var_declaration2
 					| NUMBER
 					| CADENA
+                    | bool_type
                     | callable_declaration
                     | empty_function
 					'''
+    pass
+
+def p_bool_type(p):
+    '''bool_type : true
+				| false'''
     pass
 #...............................................
 def p_for_loop(p):
@@ -456,6 +529,7 @@ def p_Built_In_Declaration(p):
 							| sin LPAREN params RPAREN
 							| sqrt LPAREN params RPAREN
 							| unset LPAREN params RPAREN
+                            | eval LPAREN params RPAREN
 							'''
     pass
 

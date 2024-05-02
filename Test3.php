@@ -19,7 +19,7 @@ $mensaje = "Esta es una cadena
 multilínea";
 
 // Definición de la clase
-class Coche {
+final class Coche{
     // Propiedades
     public $marca;
     public $modelo;
@@ -40,6 +40,10 @@ class Coche {
 
 // Instanciación de la clase
 $miCoche = new Coche("Toyota", "Corolla", "Rojo");
+
+class CocheAzul implements Coche{
+    
+}
 
 // Uso de métodos
 echo $miCoche->obtenerDescripcion(); // Este coche es un Toyota Corolla de color Rojo.
@@ -118,10 +122,14 @@ function fibonaci($i)
    return fibonaci($i-1) ;
 }
 
+goto a;
+
+
 $var1 = 5;
 $var2 = 1;
 echo "vaa2 es mayor a var1";
 
+a: 
 
 class ko extends Exception{}
 
@@ -134,5 +142,44 @@ try {
     //throw $x;
 }
 
+
+trait message1 {
+    public function msgA() {
+      echo "My favorite color is red. ";
+    }
+  
+    public function msgB() {
+      echo "My favorite number is 5. ";
+    }
+  }
+  
+  trait message2 {
+    public function msgA() {
+      echo "My favorite color is blue. ";
+    }
+  
+    public function msgB() {
+      echo "My favorite number is 7. ";
+    }
+  }
+  
+  class MyClass {
+    use message1, message2 {
+      message1::msgA insteadof message2;
+      message2::msgB insteadof message1;
+    }
+  }
+
+
+
+  $marks = 78; 
+  
+  $res = match (true) { 
+      $marks < 33 => 'Fail', 
+      $marks < 45 => 'Third Division', 
+      $marks < 60 => 'Second Division', 
+      $marks < 75 => 'First Division', 
+      $marks <= 100 => 'Distinction',
+  }; 
 
 ?>
