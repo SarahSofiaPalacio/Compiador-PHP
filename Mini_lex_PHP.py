@@ -14,7 +14,6 @@ reserved = {
     'CATCH': 'catch',
     'CLASS': 'class',
     'CLONE': 'clone',
-	'OBJECTOPERATOR' : 'objectoperator',
     'READONLY': 'readonly',
     'CONST': 'const',
     'CONTINUE': 'continue',
@@ -88,7 +87,7 @@ reserved = {
     'VAR': 'var',
     'WHILE': 'while',
     'XOR': 'xor',
-    'PHP': 'php'
+  
 }
 
 tokens = [
@@ -151,7 +150,8 @@ tokens = [
     'VARIABLE',  
     'NUMBER',
     'CADENA',
-    'ID'
+    'ID',
+    'OBJ_OPERATOR'
 	
 ]
 
@@ -180,8 +180,6 @@ t_COLON   = r':'
 t_AMPERSANT = r'\&'
 t_HASHTAG = r'\#'
 t_DOT = r'\.'
-t_COMILLASIMPLE = r'\''
-t_COMILLASDOBLES = r'\"'
 t_QUESTIONMARK = r'\?'
 t_NOT = r'~'
 
@@ -327,6 +325,10 @@ def t_SREQUAL(t):
 def t_PLUSPLUS(t):
 	r'\+\+'
 	return t
+
+def t_OBJ_OPERATOR(t):
+    r'->'
+    return t
 
 def t_newline(t):
     r'\n+'

@@ -47,8 +47,10 @@ def p_declaration(p):
 				   | fun_declaration
 				   | fun_call
 				   | return_statement
-				   | obj_declaration
+				   | class_declaration
 				   | create_obj_declaration
+      			   | interface_declaration
+                   | trait_declaration
 				   | footer_declaration
 				   | for_loop
 				   | foreach_loop
@@ -57,30 +59,31 @@ def p_declaration(p):
 				   | empty'''
     pass
 
-def p_data_type(p):
-	'''data_type	: NUMBER
-					| CADENA'''
-
 def p_header_declaration(p):
     '''header_declaration : include CADENA SEMICOLON'''
     pass
 
 def p_constant_declaration(p):
-	'''constant_declaration : const ID EQUAL data_type SEMICOLON'''
+	'''constant_declaration : const ID EQUAL CADENA SEMICOLON
+ 							| const ID EQUAL NUMBER SEMICOLON'''
 	pass
 
 def p_print_declaration(p):
 	'''print_declaration : print var_declaration2 SEMICOLON
 						| print LPAREN var_declaration2 RPAREN SEMICOLON
-						| print LPAREN data_type RPAREN SEMICOLON
-						| print data_type SEMICOLON'''
+						| print LPAREN NUMBER RPAREN SEMICOLON
+						| print LPAREN CADENA RPAREN SEMICOLON
+						| print NUMBER SEMICOLON
+      					| print CADENA SEMICOLON'''
 	pass
 
 def p_echo_declaration(p):
 	'''echo_declaration : echo var_declaration2 SEMICOLON
 						| echo LPAREN var_declaration2 RPAREN SEMICOLON
-						| echo LPAREN data_type RPAREN SEMICOLON
-						| echo data_type SEMICOLON'''
+						| echo LPAREN NUMBER RPAREN SEMICOLON
+						| echo LPAREN CADENA RPAREN SEMICOLON
+						| echo NUMBER SEMICOLON
+      					| echo CADENA SEMICOLON'''
 	pass
 
 def p_var_declaration_1(p):
@@ -97,6 +100,7 @@ def p_var_declaration_2(p):
 
 def p_var_declaration_3(p):                     
 	'''var_declaration2 : VARIABLE
+						| VARIABLE expression
                         | VARIABLE EQUAL NUMBER
                         | VARIABLE EQUAL VARIABLE
                         | VARIABLE EQUAL CADENA
@@ -107,6 +111,10 @@ def p_var_declaration_3(p):
 						| Built_In_Declaration
 						| Concatenar_Cadenas_declaration
 						| VARIABLE EQUAL ID LPAREN params RPAREN
+						| VARIABLE QUESTIONMARK var_declaration2 COLON var_declaration2
+						| VARIABLE OBJ_OPERATOR ID EQUAL expression
+						| VARIABLE OBJ_OPERATOR ID LPAREN params RPAREN
+						| VARIABLE EQUAL create_obj_declaration
         '''
 	pass
  
@@ -133,17 +141,18 @@ def p_assignment_tail(p):
 #...............................................
 
 def p_iteration_stmt_1(p):
-	'''iteration_stmt : while LPAREN expression RPAREN LBLOCK declaration RBLOCK
- 						| while LPAREN expression RPAREN COLON declaration endwhile SEMICOLON'''
+	'''iteration_stmt : while LPAREN expression RPAREN LBLOCK declaration_list RBLOCK
+ 						| while LPAREN expression RPAREN COLON declaration_list endwhile SEMICOLON'''
 	pass
 
 def p_iteration_stmt_2(p):
-	'''iteration_stmt : do LBLOCK declaration RBLOCK while LPAREN expression RPAREN SEMICOLON
-						| do COLON declaration endwhile SEMICOLON'''
+	'''iteration_stmt : do LBLOCK declaration_list RBLOCK while LPAREN expression RPAREN SEMICOLON
+						| do COLON declaration_list endwhile SEMICOLON'''
 	pass
 
 def p_expression_1(p):
 	'''expression : additive_expression
+				
  					| additive_expression logical_op additive_expression
 					| additive_expression comp_op additive_expression
      				| additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression
@@ -213,8 +222,6 @@ def p_logical_op(p):
                     | xor'''
     pass
 
-
-
 def p_if_statement(p):
     '''if_statement : if LPAREN expression RPAREN LBLOCK declaration_list RBLOCK else_part'''
 
@@ -236,16 +243,66 @@ def p_fun_call(p):
 def p_return_statement(p):
     '''return_statement : return expression SEMICOLON
 					   | return params SEMICOLON
-                       | return SEMICOLON'''
+                       | return SEMICOLON
+                       | return ID LPAREN expression RPAREN SEMICOLON'''
     pass
 
-def p_obj_declaration(p):
-	'obj_declaration : class ID LBLOCK declaration RBLOCK'
-	pass
+
+def p_class_declaration(p):
+    'class_declaration : class ID LBLOCK class_body RBLOCK'
+    pass
 
 def p_create_obj_declaration(p):
 	'create_obj_declaration : new ID LPAREN params RPAREN'
 	pass
+
+def p_class_body(p):
+    '''class_body : class_body_element
+                  | class_body class_body_element
+                  | empty_function'''
+    pass
+
+def p_class_body_element(p):
+    '''class_body_element : visibility var_declaration2 SEMICOLON
+                          | visibility fun_declaration
+                          | declaration'''
+    pass
+
+def p_interface_declaration(p):
+    '''interface_declaration : interface ID LBLOCK interface_body RBLOCK'''
+    pass
+
+def p_interface_body(p):
+    '''interface_body : interface_method_declaration
+                      | interface_body interface_method_declaration
+                      | empty_function'''
+    pass
+
+def p_interface_method_declaration(p):
+    '''interface_method_declaration : visibility function ID LPAREN params RPAREN SEMICOLON'''
+    pass
+
+def p_trait_declaration(p):
+    '''trait_declaration : trait ID LBLOCK trait_body RBLOCK'''
+    pass
+
+def p_trait_body(p):
+    '''trait_body : trait_element
+                  | trait_body trait_element
+                  | empty_function'''
+    pass
+
+def p_trait_element(p):
+    '''trait_element : visibility var_declaration SEMICOLON
+                     | visibility fun_declaration'''
+    pass
+
+def p_visibility(p):
+    '''visibility : private
+                  | protected
+                  | public
+                  | var'''
+    pass
 
 #modificado para evitar conflicto reduce/reduce 
 def p_params(p):
@@ -254,7 +311,8 @@ def p_params(p):
 
 def p_single_param(p):
     '''single_param : var_declaration2
-					| data_type
+					| NUMBER
+					| CADENA
                     | empty_function
 					'''
     pass
@@ -303,6 +361,7 @@ def p_case_block(p):
 
 def p_default_block(p):
     '''default_block : default COLON statement_list
+					 | default COLON statement_list break SEMICOLON
                      | empty_function'''
     pass
 
