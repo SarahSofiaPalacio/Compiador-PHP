@@ -52,12 +52,15 @@ echo $miCoche->obtenerDescripcion(); // Este coche es un Toyota Corolla de color
 // Definición de una función que suma dos números y devuelve el resultado
 function sumar($a, $b) {
     // Calcula la suma
-    $resultado = $a + $b;
-
+    $resultado =  ceil(9.4);
+    
     // Devuelve el resultado de la suma
     return $resultado;
 }
 
+$pepe = clone $resultado;
+print("ola");
+echo ceil(2.1);
 $b ? $a = 5 : $a = 3; 
 // Llamada a la función y almacenamiento del valor devuelto en una variable
 $suma = sumar(5, 3);
@@ -182,4 +185,6 @@ trait message1 {
       $marks <= 100 => 'Distinction',
   }; 
 
+  declare(ticks = 1);
 ?>
+
