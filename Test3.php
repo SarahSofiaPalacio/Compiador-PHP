@@ -1,5 +1,6 @@
 <?php
 
+
 interface MyInterface {
     public function myMethod();
 }

@@ -4,6 +4,7 @@ from Mini_lex_PHP import tokens, lexer
 import sys
 #import warnings
 #warnings.filterwarnings("ignore")
+error_found = False
 
 VERBOSE = 1
 
@@ -586,7 +587,11 @@ def p_empty_function(p):
 def p_error(p):
 	# Manejo de errores sintacticos (la libreria invoca este metodo de forma automatica)
 	# 'p' contiene el token que causo el error
+	global error_found
+	error_found = True
+    
 	if VERBOSE:
+			
 		if p is not None:
 			print ("ERROR SINTACTICO EN LA LINEA " + str(p.lexer.lineno) + " NO SE ESPERABA EL Token " + str(p.value) + ": " + str(p))
 		else:
@@ -594,7 +599,7 @@ def p_error(p):
 		return
 	else:
 		raise Exception('syntax', 'error')
-		
+	
 # Contruir el parser (con ayuda de la libreria ply)		
 parser = yacc.yacc()
 
@@ -616,6 +621,10 @@ if __name__ == '__main__':
 	data = file.read()
 	# Enviar el código fuente al parser para que lo analice
 	parser.parse(data, tracking=True)
-	print("Amiguito, tengo el placer de informar que Tu parser reconocio correctamente todo")
- 
+	
+ # Verificar si se encontraron errores
+	if error_found:
+		print("Errores fueron detectados durante el análisis.")
+	else:
+		print("El parser reconocio todo correctamente.")
 	#input() <--- Evaluar eliminación (funcion definida en otra libreria)
