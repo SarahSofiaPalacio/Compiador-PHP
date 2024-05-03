@@ -2,6 +2,8 @@ import ply.yacc as yacc
 # Importar el conjunto de palabras reservadas y simbolos reconocidos por el lexer
 from Mini_lex_PHP import tokens, lexer
 import sys
+#import warnings
+#warnings.filterwarnings("ignore")
 
 VERBOSE = 1
 
@@ -57,6 +59,7 @@ def p_declaration(p):
                    | continue_declaration
                    | label_declaration
                    | goto_declaration
+                   | declare_statement
                    | match_declaration
 				   | footer_declaration
 				   | for_loop
@@ -67,6 +70,8 @@ def p_declaration(p):
 				   | exit_statement
 				   | empty'''
     pass
+
+     
 
 def p_header_declaration(p):
     '''header_declaration : include CADENA SEMICOLON
@@ -99,6 +104,7 @@ def p_echo_declaration(p):
 						| echo LPAREN NUMBER RPAREN SEMICOLON
 						| echo LPAREN CADENA RPAREN SEMICOLON
 						| echo NUMBER SEMICOLON
+                        | echo ceil_expression SEMICOLON
       					| echo CADENA SEMICOLON'''
 	pass
 
@@ -128,6 +134,8 @@ def p_var_declaration_3(p):
 						| VARIABLE EQUAL expression
 						| VARIABLE assignation VARIABLE 
 						| VARIABLE assignation NUMBER
+                        | VARIABLE EQUAL ceil_expression 
+                        | VARIABLE EQUAL clone_declaration
 						| Built_In_Declaration
 						| Concatenar_Cadenas_declaration
 						| VARIABLE EQUAL ID LPAREN params RPAREN
@@ -141,8 +149,7 @@ def p_var_declaration_3(p):
 #modificado para evitar conflicto reduce/reduce
 #Añadido conexion con assignment_tail 
 def p_var_declaration_2(p):
-    '''var_declaration2 : VARIABLE assignment_tail
-						| VARIABLE EQUAL assignment_tail'''
+    '''var_declaration2 : VARIABLE EQUAL assignment_tail'''
 
 
 #Eliminacion de conflictos con reglas que incluyen COMMA, debido a ya estar en params
@@ -178,6 +185,7 @@ def p_expression_1(p):
      				| additive_expression comp_op additive_expression logical_op additive_expression comp_op additive_expression
 					| additive_expression bits_op additive_expression
                     | VARIABLE instanceof ID
+					
 '''
 	pass
 
@@ -557,6 +565,22 @@ def p_assignation(p):
                 	| ANDEQUAL
       				'''
 pass
+
+def p_ceil_expression(p):
+    '''ceil_expression : ceil LPAREN expression RPAREN'''
+    pass
+
+
+def p_clone_declaration(p):
+     '''clone_declaration : clone expression'''
+     pass
+    
+
+	 
+def p_declare_statement(p):
+    '''declare_statement : declare LPAREN ID EQUAL expression RPAREN SEMICOLON'''
+    pass
+
 
 def p_empty_function(p):
 	'empty_function :'
