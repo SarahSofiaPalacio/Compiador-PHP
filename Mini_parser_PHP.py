@@ -42,8 +42,7 @@ def p_declaration(p):
                    | COMMENT_MULTI
                    | header_declaration
                    | namespace_declaration
-                   | data_type
-                   | matrix_type
+                  
                    | var_declaration
                    | constant_declaration
                    | print_declaration
@@ -113,12 +112,13 @@ def p_echo_declaration(p):
                         | echo LPAREN CADENA RPAREN SEMICOLON
                         | echo NUMBER SEMICOLON
                         | echo ceil_expression SEMICOLON
-                          | echo CADENA SEMICOLON'''
+                        | echo CADENA SEMICOLON'''
     pass
 
 def p_var_declaration_1(p):
     '''var_declaration : var_declaration2 SEMICOLON
-                          | global var_declaration2 SEMICOLON
+                        | global var_declaration2 SEMICOLON
+                        | data_type VARIABLE  LBRACKET NUMBER RBRACKET  LBRACKET NUMBER RBRACKET EQUAL expression SEMICOLON
                        '''
     pass
 
@@ -128,9 +128,7 @@ def p_var_declaration_2(p):
                         '''
     pass
 
-def p_matrix_type(p):
-    '''matrix_type : data_type VARIABLE  LBRACKET NUMBER RBRACKET  LBRACKET NUMBER RBRACKET EQUAL expression SEMICOLON'''
-    pass
+
 #Eliminacion de conflictos con reglas que incluyen COMMA, debido a ya estar en params
 #Tambien eliminacion de algunas reglas que no existen en php como :VARIABLE EQUAL NUMBER COMMA var_declaration2
     #$a = 2, $b; por ejemplo da error sintactico en el ","
