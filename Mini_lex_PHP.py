@@ -25,7 +25,6 @@ reserved = {
     'ELSE': 'else',
     'ELSEIF': 'elseif',
     'EMPTY': 'empty',
-    'ENDCLARE': 'endclare',
     'ENDFOR': 'endfor',
     'ENDFOREACH': 'endforeach',
     'ENDIF': 'endif',
