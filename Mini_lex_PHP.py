@@ -92,8 +92,10 @@ reserved = {
     'PARSEERROR': 'ParseError',
     'TYPEERROR': 'TypeError',
     'TRUE': 'true',
-    'FALSE': 'false'
-
+    'FALSE': 'false',
+    'INT': 'int',
+    'FLOAT': 'float',
+    'DOUBLE': 'double', 
 }
 
 tokens = [

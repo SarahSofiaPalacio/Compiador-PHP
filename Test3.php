@@ -1,5 +1,6 @@
 <?php
 
+int $a[5][1] = 20 ;
 
 interface MyInterface {
     public function myMethod();
