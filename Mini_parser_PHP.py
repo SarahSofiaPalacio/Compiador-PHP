@@ -111,8 +111,7 @@ def p_echo_declaration(p):
 def p_var_declaration_1(p):
 	'''var_declaration : var_declaration2 SEMICOLON
       					| global var_declaration2 SEMICOLON
-                        | visibility var_declaration2 SEMICOLON
-                        | visibility readonly var_declaration2 SEMICOLON'''
+                       '''
 	pass
 
 def p_var_declaration_2(p):
@@ -264,8 +263,6 @@ def p_else_part(p):
 def p_fun_declaration(p):
 	'''fun_declaration : function ID LPAREN params RPAREN LBLOCK declaration_list RBLOCK
        					| function ID LPAREN params RPAREN LBLOCK declaration_list return_statement RBLOCK
-                        | visibility function ID LPAREN params RPAREN LBLOCK declaration_list RBLOCK
-                        | visibility function ID LPAREN params RPAREN LBLOCK declaration_list return_statement RBLOCK
                         | visibility static function ID LPAREN params RPAREN LBLOCK declaration_list RBLOCK 
                         | visibility static function ID LPAREN params RPAREN LBLOCK declaration_list return_statement RBLOCK'''
 	pass
@@ -374,7 +371,7 @@ def p_match_declaration(p):
 def p_match_body(p):
     '''match_body : match_body match_statement COMMA
       			| match_statement COMMA 
-                | empty_function'''
+                '''
     pass
 
 def p_match_statement(p):
